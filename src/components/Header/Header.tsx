@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button/Button';
 import { userLogin } from "../../actions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
+import TOEIC_ICON from '../../assets/images/TOEIC_ICON.svg';
 
 export interface UserInfo {
   email: string,
@@ -38,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({ userLogin, user }) => {
       <Container fixed>
         <Grid container justify="space-between" alignItems="center" spacing={3}>
           <Grid item xs={3}>
-            <Styled.Header__Brand to="/"><h1>WBook</h1></Styled.Header__Brand>
+            <Styled.Header__Brand to="/"><img src={TOEIC_ICON} alt="TOEIC_TEST" /></Styled.Header__Brand>
           </Grid>
           <Grid item xs>
               <Styled.Header__Form onSubmit={handleSubmit}>

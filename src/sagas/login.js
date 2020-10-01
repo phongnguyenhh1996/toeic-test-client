@@ -11,9 +11,9 @@ function* userLogin(action) {
     localStorage.setItem('token', token)
     yield put(userLoginSuccess())
     yield action.push('/')
-  } 
+  }
 }
 
-export default function* login(){
+export default function* login() {
   yield takeLatest(USER_LOGIN_REQUEST, userLogin)
 }
