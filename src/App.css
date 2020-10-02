@@ -6,3 +6,7 @@
 #root > div {
   flex: 1;
 }
+/*** box sizing border-box for all elements ***/
+*,
+*::before,
+*::after{box-sizing:border-box;}
