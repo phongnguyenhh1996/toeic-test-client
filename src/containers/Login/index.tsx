@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Styled } from "./styled"
-import LOGO from "../../assets/images/TOEIC_ICON.svg"
 import { TextField, InputAdornment, Button } from '@material-ui/core'
 import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
 import bgRightSide from "../../assets/images/learning-english-online.jpg"
 import { userLogin } from '../../actions';
 import { useHistory } from "react-router";
 import { connect } from 'react-redux';
+import { Logo } from '../../components/Logo'
 
 export interface UserInfo {
   email: string,
@@ -40,7 +40,7 @@ const Login: React.FC<LoginProps> = ({ userLogin, user }) => {
     <Styled.Login>
       <Styled.Login__Inner>
         <Styled.Login__Side>
-          <img width={180} height={100} src={LOGO} alt="Logo" />
+          <Logo />
           <Styled.Login__Form onSubmit={handleSubmit}>
             <TextField
               autoFocus
