@@ -14,7 +14,7 @@ const routes: RouteItem[] = [
     path: '/',
     layout: MainLayout,
     component: Home,
-    isAuthRoute: true,
+    isAuthRoute: false,
     exact: true
   }
 ]

@@ -6,7 +6,8 @@ import Button from '@material-ui/core/Button/Button';
 import { userLogin } from "../../actions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
-import TOEIC_ICON from '../../assets/images/TOEIC_ICON.svg';
+import { Logo } from '../Logo';
+import { Link } from 'react-router-dom';
 
 export interface UserInfo {
   email: string,
@@ -39,30 +40,23 @@ const Header: React.FC<HeaderProps> = ({ userLogin, user }) => {
       <Container fixed>
         <Grid container justify="space-between" alignItems="center" spacing={3}>
           <Grid item xs={3}>
-            <Styled.Header__Brand to="/"><img src={TOEIC_ICON} alt="TOEIC_TEST" /></Styled.Header__Brand>
+            <Styled.Header__Brand to="/">
+              <Logo />
+            </Styled.Header__Brand>
           </Grid>
           <Grid item xs>
-              <Styled.Header__Form onSubmit={handleSubmit}>
-                <Styled.Header__Input
-                  autoFocus
-                  label="Email hoặc điện thoại"
-                  margin="dense"
-                  variant="outlined"
-                  name="email"
-                  onChange={handleInputChange}
-                />
-                <Styled.Header__Input
-                  type="password"
-                  name="password"
-                  label="Mật khẩu"
-                  margin="dense"
-                  variant="outlined"
-                  onChange={handleInputChange}
-                />
-                <Button disabled={isLoading} variant="contained" color="primary" type="submit" size="small">
-                  Đăng nhập
-                </Button>
-              </Styled.Header__Form>
+              <Styled.Header__navigation>
+                <Styled.Header__navigationItem>
+                  <Link to="/login">
+                    <Button color="primary">Login</Button>
+                  </Link>
+                </Styled.Header__navigationItem>
+                <Styled.Header__navigationItem>
+                  <Link to="/sign-up">
+                    <Button variant="outlined" color="primary">Sign Up</Button>
+                  </Link>
+                </Styled.Header__navigationItem>
+              </Styled.Header__navigation>
           </Grid>
         </Grid>
       </Container>
