@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Styled } from "./Header.styled";
 import Container from '@material-ui/core/Container/Container';
 import Grid from '@material-ui/core/Grid/Grid';
 import Button from '@material-ui/core/Button/Button';
 import { userLogin } from "../../actions";
 import { connect } from "react-redux";
-import { useHistory } from "react-router";
 import { Logo } from '../Logo';
 import { Link } from 'react-router-dom';
+import { Dialog, DialogTitle, DialogContent} from '@material-ui/core';
+import Login from '../../containers/Login';
 
 export interface UserInfo {
   email: string,
@@ -19,21 +20,17 @@ interface HeaderProps {
   user: any
 }
 
-const Header: React.FC<HeaderProps> = ({ userLogin, user }) => {
+const Header: React.FC<HeaderProps> = () => {
 
-  const [userinfo, setUserinfo] = useState<UserInfo>({} as UserInfo)
-  const history = useHistory();
-  const { isLoading } = user;
-  const handleInputChange = (e: React.SyntheticEvent) => {
-    const { name, value } = e.target as HTMLInputElement
-    setUserinfo({...userinfo, [name]: value})
-  }
+  const [open, setOpen] = React.useState(false);
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    userLogin(userinfo, history.push);
-    console.log(userinfo);
-  }
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Styled.Header>
@@ -47,9 +44,7 @@ const Header: React.FC<HeaderProps> = ({ userLogin, user }) => {
           <Grid item xs>
               <Styled.Header__navigation>
                 <Styled.Header__navigationItem>
-                  <Link to="/login">
-                    <Button color="primary">Login</Button>
-                  </Link>
+                  <Button color="primary" onClick={handleClickOpen}>Login</Button>
                 </Styled.Header__navigationItem>
                 <Styled.Header__navigationItem>
                   <Link to="/sign-up">
@@ -60,6 +55,12 @@ const Header: React.FC<HeaderProps> = ({ userLogin, user }) => {
           </Grid>
         </Grid>
       </Container>
+      <Dialog maxWidth="xs" fullWidth open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Login</DialogTitle>
+        <DialogContent>
+          <Login />
+        </DialogContent>
+      </Dialog>
     </Styled.Header>
   )
 }

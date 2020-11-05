@@ -1,4 +1,4 @@
-import { USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS } from "../constants";
+import { USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAILED } from "../constants";
 import { UserInfo } from "../components/Header/Header";
 
 export const userLogin = (userInfo: UserInfo, push: any) => {
@@ -9,8 +9,15 @@ export const userLogin = (userInfo: UserInfo, push: any) => {
   }
 }
 
-export const userLoginSuccess = () => {
+export const userLoginSuccess = (userData: any) => {
   return {
-    type: USER_LOGIN_SUCCESS
+    type: USER_LOGIN_SUCCESS,
+    data: userData
+  }
+}
+
+export const userLoginFailed = () => {
+  return {
+    type: USER_LOGIN_FAILED
   }
 }
