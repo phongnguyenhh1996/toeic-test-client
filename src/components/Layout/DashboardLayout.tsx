@@ -4,7 +4,7 @@ import HeaderDashboard from "../HeaderDashboard/HeaderDashboard";
 const DashboardLayout: React.FC = (props) => {
   return (
     <div className="main-wrapper">
-      <HeaderDashboard />
+      <HeaderDashboard><p>Header</p></HeaderDashboard>
       {props.children}
     </div>
   )

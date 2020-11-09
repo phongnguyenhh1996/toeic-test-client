@@ -1,28 +1,19 @@
-import React from 'react'
-import { connect } from "react-redux";
+import React from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-
-export interface UserInfo {
-  email: string,
-  password: string
+interface Props {
 }
 
-interface HeaderProps {
-
-}
-
-const HeaderDashboard: React.FC<HeaderProps> = () => {
-
+export default function ElevateAppBar(props: Props) {
   return (
-    <p>Header</p>
-  )
+    <React.Fragment>
+      <CssBaseline />
+        <AppBar>
+            <Typography variant="h6">Scroll to Elevate App Bar</Typography>
+        </AppBar>
+    </React.Fragment>
+  );
 }
-
-const mapStateToProps = (state: any) => ({
-  user: state.user
-})
-
-const mapDispatchToProps = {
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderDashboard)
