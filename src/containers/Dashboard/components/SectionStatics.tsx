@@ -18,7 +18,7 @@ export const SectionStatics: React.FC<SectionStaticsProps> = ({icon, colorArr, p
       <div className="content-wrapper">
         <div className="info">
           <div className="name">{title}</div>
-          <div className="percent">80%</div>
+          <div className="percent">{percent}%</div>
         </div>
         <div className="progress-bar"></div>
       </div>

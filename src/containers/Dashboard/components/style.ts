@@ -51,6 +51,7 @@ export const SectionStaticsStyled = styled.div<SectionStaticsProps>`
         width: ${props => props.percent}%;
         height: 100%;
         background: linear-gradient(90deg, ${props => props.colorArr[0]} 0%, ${props => props.colorArr[1]} 100%);
+        box-shadow: 0px 4px 10px rgba(${props => props.colorArr[2]});
       }
     }
   }

@@ -1,5 +1,6 @@
 export const theme = {
   textPrimary: '#1D976C',
+  textPrimary2: '#6CC57C',
   backgroundPrimary: '#1D976C',
   backgroundSecondary: '#6CC57C',
   textSecondarySuperLight: '#F0FFF3',

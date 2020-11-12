@@ -43,9 +43,52 @@ export const WeeklyOverview = styled.div`
       color: ${theme.textDarkSecondary};
     }
   }
+  .list-test {
+    margin-top: 20px;
+  }
+  .bottom {
+    margin-top: 20px;
+    display:flex;
+    flex-direction: row;
+    align-items: flex-end;
+    &--test {
+      align-items: center;
+      margin-top: 0;
+      padding: 15px 10px;
+      &:not(:last-child) {
+        border-bottom: 1px solid ${theme.backgroundDarkSecondary};
+      }
+    }
+    .title {
+      font-weight: bold;
+      font-size: 13px;
+      color: ${theme.textDarkPrimary};
+      margin-bottom: 10px;
+    }
+    .total {
+      font-weight: bold;
+      font-size: 13px;
+      color: ${theme.textDarkSecondary};
+    }
+    .show-detail {
+      margin-left: auto;
+      text-decoration: none;
+      color: ${theme.textPrimary2};
+      font-weight: 500;
+      font-size: 12px;
+      Button {
+        background: linear-gradient(90deg, #2770C7 0%, #3499DA 100%);
+        box-shadow: 0px 4px 10px rgba(50, 145, 217, 0.5);
+        border-radius: 5px;
+        text-transform: none;
+        color: ${theme.textLight};
+        font-size: 13px;
+      }
+    }
+  }
 `
 
 export const SectionStaticsWrapper = styled.div`
   flex: 1;
-  margin-left: 5px;
+  margin-left: 10px;
 `
