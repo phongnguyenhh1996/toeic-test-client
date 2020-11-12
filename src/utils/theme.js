@@ -3,5 +3,9 @@ export const theme = {
   backgroundPrimary: '#1D976C',
   backgroundSecondary: '#6CC57C',
   textSecondarySuperLight: '#F0FFF3',
-  textLight: '#fff'
+  textLight: '#fff',
+  backgroundBody: "#F3F3F3",
+  backgroundDarkSecondary: "#E2E2E2",
+  textDarkSecondary: '#B1B1B1',
+  textDarkPrimary: '#575757'
 }
