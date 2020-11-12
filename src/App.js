@@ -9,10 +9,14 @@ import { sagaMiddleware } from "./middleware";
 import rootSaga from "./sagas";
 import store from "./store";
 import RouterCustom from './routes'
+import { Reset } from 'styled-reset'
+import { Normalize } from 'styled-normalize'
 
 export default function App() {
   return (
     <Provider store={store}>
+      <Reset />
+      <Normalize />
       <StylesProvider injectFirst>
         <Router>
           <RouterCustom/>
