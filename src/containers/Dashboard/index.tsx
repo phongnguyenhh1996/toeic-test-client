@@ -3,11 +3,13 @@ import { Grid, Container, Button } from "@material-ui/core";
 import {
   WeeklyOverview,
   SectionStaticsWrapper,
+  AvatarSection
 } from "./style";
 import CircularProgress from "../../components/CircularProgress";
 import { FaBook, FaHeadphones } from "react-icons/fa";
 import { SectionStatics } from "./components/SectionStatics";
 import clsx from "clsx";
+import CustomButton from "../../components/CustomButton";
 
 const Dashboard: React.FC = () => {
   const percent = 75;
@@ -15,7 +17,7 @@ const Dashboard: React.FC = () => {
   return (
     <Container fixed>
       <Grid container spacing={3}>
-        <Grid item xs={4}>
+        <Grid item xs>
           <WeeklyOverview>
             <h2 className="title">Weekly Overview</h2>
             <div className="statitics">
@@ -57,7 +59,7 @@ const Dashboard: React.FC = () => {
             </div>
           </WeeklyOverview>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs>
           <WeeklyOverview>
             <h2 className="title">Lastest attempted</h2>
             <div className="list-test">
@@ -88,8 +90,17 @@ const Dashboard: React.FC = () => {
             </div>
           </WeeklyOverview>
         </Grid>
-        <Grid item xs={4}>
-          <WeeklyOverview>xs=6</WeeklyOverview>
+        <Grid item md={4} lg={3}>
+          <WeeklyOverview>
+            <AvatarSection>
+              <div className="avatar-wrapper" style={{backgroundImage: 'url(https://firebasestorage.googleapis.com/v0/b/social-ape-43919.appspot.com/o/avatar.jpg?alt=media&token=b59aff30-58d4-47f4-8d26-84ee205d8deb)'}}></div>
+              <div className="info-wrapper">
+                <p className="name">Phong Nguyen</p>
+                <p className="role">Student</p>
+                <CustomButton theme="green" className="edit-btn">Edit profile</CustomButton>
+              </div>
+            </AvatarSection>
+          </WeeklyOverview>
         </Grid>
       </Grid>
     </Container>

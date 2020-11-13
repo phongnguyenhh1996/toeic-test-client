@@ -111,3 +111,40 @@ export const SectionStaticsWrapper = styled.div`
   flex: 1;
   margin-left: 10px;
 `
+
+export const AvatarSection = styled.div`
+  display: flex;
+  .avatar-wrapper{
+    width: 90px;
+    height: 90px;
+    background-size: cover;
+    border-radius: 50%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  .info-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 10px;
+    margin-left: 10px;
+    .name {
+      font-size: 15px;
+      font-weight: bold;
+      color: ${theme.textDarkPrimary};
+      margin-bottom: 10px;
+    }
+    .role {
+      font-weight: bold;
+      font-size: 14px;
+      color: ${theme.textDarkSecondary};
+    }
+    .edit-btn {
+      margin-top: auto;
+      flex-grow: 0;
+      padding: 0 8px;
+      margin-left: auto;
+    }
+  }
+
+`
