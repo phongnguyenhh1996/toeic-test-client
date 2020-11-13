@@ -4,6 +4,7 @@ import { DashboardWrapper, WeeklyOverview, SectionStaticsWrapper } from './style
 import CircularProgress from '../../components/CircularProgress'
 import { FaBook, FaHeadphones } from 'react-icons/fa'
 import { SectionStatics } from './components/SectionStatics'
+import clsx from 'clsx'
 
 const Dashboard: React.FC = () => {
 
@@ -13,7 +14,7 @@ const Dashboard: React.FC = () => {
     <DashboardWrapper>
       <Container fixed>
         <Grid container spacing={3}>
-          <Grid item xs={5}>
+          <Grid item xs={4}>
             <WeeklyOverview>
               <h2 className="title">Weekly Overview</h2>
               <div className="statitics">
@@ -47,28 +48,34 @@ const Dashboard: React.FC = () => {
               </div>
             </WeeklyOverview>
           </Grid>
-          <Grid item xs={5}>
+          <Grid item xs={4}>
             <WeeklyOverview>
               <h2 className="title">Lastest attempted</h2>
               <div className="list-test">
-                {[1, 2, 3].map(i =>
-                  <div key={i} className="bottom bottom--test">
+                {[true, false, true].map((isDone, index) =>
+                  <div key={index} className="bottom bottom--test">
                     <div>
-                      <p className="title">EST 2019 Test 1</p>
+                      <p className={clsx('title', {
+                        'done': isDone,
+                        'not-done': !isDone
+                      })}>EST 2019 Test 1</p>
                       <p className="total">29/10/2020</p>
                     </div>
-                    <a href="/" className="show-detail">
+                    <a href="/" className={clsx('show-detail', {
+                      'done': isDone,
+                      'not-done': !isDone
+                    })}>
                       <Button>
-                        Result
+                        {isDone ? 'Result' : 'Retest'}
                       </Button>
                     </a>
                   </div>
                 )}
-                
+
               </div>
             </WeeklyOverview>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={4}>
             <WeeklyOverview>xs=6</WeeklyOverview>
           </Grid>
         </Grid>

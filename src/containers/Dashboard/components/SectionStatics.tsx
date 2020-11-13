@@ -1,6 +1,5 @@
 import React from "react";
 import { SectionStaticsStyled } from "./style";
-import { IconType } from "react-icons/lib/cjs";
 
 export interface SectionStaticsProps {
   icon?: () => JSX.Element

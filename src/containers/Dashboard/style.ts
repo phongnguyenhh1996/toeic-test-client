@@ -64,6 +64,22 @@ export const WeeklyOverview = styled.div`
       font-size: 13px;
       color: ${theme.textDarkPrimary};
       margin-bottom: 10px;
+      &.done::after, &.not-done::after {
+        font-size: 10px;
+        text-transform: uppercase;
+        border-radius: 2px;
+        color: ${theme.textLight};
+        padding: 4px;
+        margin-left: 5px;
+      }
+      &.done:after {
+        content: 'done';
+        background: #4080E0;
+      }
+      &.not-done::after {
+        content: 'not done';
+        background: #F67A7C;
+      }
     }
     .total {
       font-weight: bold;
@@ -77,12 +93,18 @@ export const WeeklyOverview = styled.div`
       font-weight: 500;
       font-size: 12px;
       Button {
-        background: linear-gradient(90deg, #2770C7 0%, #3499DA 100%);
-        box-shadow: 0px 4px 10px rgba(50, 145, 217, 0.5);
         border-radius: 5px;
         text-transform: none;
         color: ${theme.textLight};
         font-size: 13px;
+      }
+      &.done Button {
+        background: linear-gradient(90deg, #2770C7 0%, #3499DA 100%);
+        box-shadow: 0px 4px 10px rgba(50, 145, 217, 0.5);
+      }
+      &.not-done Button {
+        background: linear-gradient(90deg, #F66469 0%, #F7864B 100%);
+        box-shadow: 0px 4px 10px rgba(247, 134, 75, 0.5);
       }
     }
   }
