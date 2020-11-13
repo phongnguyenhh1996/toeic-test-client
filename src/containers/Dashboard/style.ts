@@ -1,12 +1,6 @@
 import styled, { css } from "styled-components";
 import { theme } from "../../utils/theme";
 
-export const DashboardWrapper = styled.div`
-  background: ${theme.backgroundBody};
-  margin-top: 50px;
-  padding-top: 20px;
-  min-height: calc(100vh - 70px);
-`
 export const ContentWrapperCss = () => css`
   display: flex;
   flex-direction: column;
@@ -71,14 +65,17 @@ export const WeeklyOverview = styled.div`
         color: ${theme.textLight};
         padding: 4px;
         margin-left: 5px;
+        border: 1px solid;
       }
       &.done:after {
         content: 'done';
-        background: #4080E0;
+        color: #4080E0;
+        border-color: #4080E0;
       }
       &.not-done::after {
         content: 'not done';
-        background: #F67A7C;
+        color: #F67A7C;
+        border-color: #F67A7C;
       }
     }
     .total {
