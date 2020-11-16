@@ -20,6 +20,7 @@ const MainContainer = styled.div`
   & > * {
     animation: ${fadeInBottom} 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
   }
+  padding-bottom: 20px;
 `
 
 export default MainContainer

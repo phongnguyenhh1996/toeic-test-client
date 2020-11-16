@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { theme } from "../../utils/theme";
+import Button from "@material-ui/core/Button";
 
 export const ContentWrapperCss = () => css`
   display: flex;
@@ -146,5 +147,128 @@ export const AvatarSection = styled.div`
       margin-left: auto;
     }
   }
+`
 
+export const TitleSection = styled.div`
+  margin-top: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  .icon-wrapper {
+    background: linear-gradient(135deg, #1D976C 0%, #6CC57C 100%);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    display: flex;
+    width: 35px;
+    height: 35px;
+    align-items: center;
+    justify-content: center;
+    color: ${theme.textLight};
+    font-size: 20px;
+    margin-right: 10px;
+  }
+  .title {
+    font-weight: bold;
+    font-size: 18px;
+    color: ${theme.textDarkPrimary};
+  }
+`
+export const TestItem = styled.div`
+  ${ContentWrapperCss()}
+  padding: 10px;
+  overflow: hidden;
+  .bg-img {
+    margin: -10px;
+    margin-bottom: 10px;
+    padding-top: 56.25%;
+    background-color: ${theme.backgroundDarkSecondary};
+  }
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    .title {
+      font-weight: bold;
+      font-size: 13px;
+      color: ${theme.textDarkPrimary};
+      margin-bottom: 5px;
+    }
+    .author {
+      font-weight: bold;
+      font-size: 11px;
+      color: ${theme.textDarkSecondary};
+    }
+  }
+  .info-wrapper {
+    margin-top: 10px;
+    display: flex;
+  }
+  .status-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    flex-wrap: wrap;
+    .status-label {
+      flex-grow: 0;
+      background: linear-gradient(90deg, #1D976C 0%, #6CC57C 100%);
+      box-shadow: 0px 2px 2px rgba(108, 197, 124, 0.5);
+      &.done {
+        background: linear-gradient(90deg, #2770C7 0%, #3499DA 100%);
+        box-shadow: 0px 2px 2px rgba(52, 153, 218, 0.5);
+      }
+      border-radius: 2px;
+      padding: 4px 6px;
+      color: ${theme.textLight};
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 600;
+      &:not(:last-child) {
+        margin-right: 5px;
+        @media (max-width: 1279px) {
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+  .viewer-wrapper {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    @media (max-width: 1279px) {
+      align-items: flex-end;
+    }
+  }
+  .viewer-item {
+    display: flex;
+    font-size: 12px;
+    .viewer-icon {
+      color: #4080E0;
+      margin-right: 2px;
+      &.heart {
+        color: #F66469;
+      }
+    }
+    .viewer-count {
+      font-weight: bold;
+      color: ${theme.textDarkPrimary};
+    }
+    &:not(:last-child) {
+      margin-right: 7px;
+    }
+  }
+`
+
+export const TestSectionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+export const SeeMoreBtn = styled(Button)`
+  background: rgba(108, 197, 124, 0.31);
+  border-radius: 4px;
+  color: ${theme.textPrimary};
+  margin-left: auto;
+  margin-top: 20px;
+  padding: 6px 12px;
+  font-size: 13px;
+  text-transform: none;
+  font-weight: bold;
 `
