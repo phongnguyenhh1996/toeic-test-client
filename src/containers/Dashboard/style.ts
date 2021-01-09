@@ -155,7 +155,7 @@ export const TitleSection = styled.div`
   display: flex;
   align-items: center;
   .icon-wrapper {
-    background: linear-gradient(135deg, #1D976C 0%, #6CC57C 100%);
+    background: ${theme.backgroundSecondary};
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
     display: flex;
@@ -209,15 +209,17 @@ export const TestItem = styled.div`
     flex-wrap: wrap;
     .status-label {
       flex-grow: 0;
-      background: linear-gradient(90deg, #1D976C 0%, #6CC57C 100%);
-      box-shadow: 0px 2px 2px rgba(108, 197, 124, 0.5);
+      background: #fff;
+      border: 1px solid ${theme.textPrimary};
+      box-sizing: border-box;
+    
       &.done {
-        background: linear-gradient(90deg, #2770C7 0%, #3499DA 100%);
-        box-shadow: 0px 2px 2px rgba(52, 153, 218, 0.5);
+        color: ${theme.textPrimary3};
+        border-color:${theme.textPrimary3}
       }
       border-radius: 2px;
       padding: 4px 6px;
-      color: ${theme.textLight};
+      color: ${theme.textPrimary};
       font-size: 10px;
       text-transform: uppercase;
       font-weight: 600;

@@ -19,7 +19,7 @@ import {
   FaBook,
   FaHeadphones,
 } from "react-icons/fa";
-import { MdExpandLess, MdExpandMore } from "react-icons/md"
+import { MdExpandLess, MdExpandMore } from "react-icons/md";
 import {
   Popover,
   ListItem,
@@ -28,7 +28,7 @@ import {
   ListItemText,
   Collapse,
 } from "@material-ui/core";
-interface Props {}
+interface Props { }
 
 export default function ElevateAppBar(props: Props) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -73,6 +73,12 @@ export default function ElevateAppBar(props: Props) {
             <ButtonNavigation>
               <FaChartPie className="nav-icon" />
               Statitics
+            </ButtonNavigation>
+          </li>
+          <li className="nav-item">
+            <ButtonNavigation>
+              <FaFileAlt className="nav-icon" />
+              List Tests
             </ButtonNavigation>
           </li>
         </Navigation>
