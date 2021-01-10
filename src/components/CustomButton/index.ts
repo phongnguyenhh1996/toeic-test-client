@@ -18,16 +18,34 @@ const themeBtn: any = {
     bg2: "#6CC57C",
     shadow: "rgba(108, 197, 124, 0.5)"
   },
+  'green-solid-no-shadow': {
+    bg1: "#1D976C",
+    bg2: "#1D976C",
+    shadow: "rgba(108, 197, 124, 0.0)"
+  },
+  "white": {
+    bg1: "#fff",
+    bg2: "#fff",
+    shadow: "rgba(0, 0, 0, 0.25)",
+    shadowProperty: "0px 2px 4px",
+    text: "#1D976C"
+  }
 }
 
-const CustomButton = styled(Button)`
-  border-radius: 5px;
+interface BtnProps {
+  borderCircle?: boolean
+}
+
+const CustomButton = styled(Button)<BtnProps>`
+  border-radius: ${props => props.borderCircle ? "40px" : "5px"};
   text-transform: none;
-  color: ${theme.textLight};
   font-size: 13px;
+  padding-left: 30px;
+  padding-right: 30px;
   ${props => css`
     background: linear-gradient(90deg, ${themeBtn[props.theme].bg1} 0%, ${themeBtn[props.theme].bg2} 100%);
-    box-shadow: 0px 4px 10px ${themeBtn[props.theme].shadow};
+    box-shadow: ${themeBtn[props.theme].shadowProperty || "0px 4px 10px"} ${themeBtn[props.theme].shadow};
+    color: ${themeBtn[props.theme].text || theme.textLight};
   `}
 `
 
