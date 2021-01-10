@@ -1,49 +1,66 @@
 import styled from "styled-components"
-interface SideProps {
-  right?: boolean
-}
+import loginSideImg from '../../assets/images/login-side-img.jpg'
+import { theme } from "../../utils/theme"
 
-const Login = styled.div`
-  background-color: #F2F2F2;
+export const Wrapper = styled.div`
+  height: 100vh;
+  position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  justify-content: center;
 `
-
-const Login__Inner = styled.div`
-  max-width: 1100px;
-  background-color: #fff;
+export const Inner = styled.div`
+  width: 1000px;
+  height: 600px;
+  background: #FFFFFF;
+  box-shadow: 0px 30px 71px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
   display: flex;
-  flex: 1;
   overflow: hidden;
 `
 
-const Login__Side = styled.div<SideProps>`
-  flex: 0 0 100%;
-  max-width: 100%;
+export const LeftContent = styled.div`
+  background-image: url(${loginSideImg});
+  background-size: cover;
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  & > *:not(:last-child) {
-    margin-bottom: 20px;
-  }
 `
-const Login__Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  & > *:not(:last-child) {
-    margin-bottom: 20px;
+export const LeftInner = styled.div`
+  flex-grow: 1;
+  padding-left: 65px;
+  padding-top: 65px;
+  background-color: rgba(0, 0, 0, 0.3);
+`
+
+export const Heading = styled.h1`
+  font-weight: 900;
+  font-size: 25px;
+  color: ${props => props.color};
+  strong {
+    font-size: 60px;
+    line-height: 90px;
   }
 `
 
-const Login__Right = styled.div`
+export const SubHeading = styled.h2`
+  font-size: 18px;
+  line-height: 35px;
+  color: ${props => props.color};
 `
 
-export const Styled = {
-  Login,
-  Login__Inner,
-  Login__Side,
-  Login__Right,
-  Login__Form
-}
+export const RightContent = styled.div`
+  display: flex;
+  height: 100%;
+  padding: 60px;
+  flex-direction: column;
+`
+
+export const RegisterSuggest = styled.div`
+  font-size: 16px;
+  color: ${theme.textDarkPrimary};
+  line-height: 19px;
+  a {
+    text-decoration: none;
+    color: ${theme.textPrimary2};
+  }
+`
