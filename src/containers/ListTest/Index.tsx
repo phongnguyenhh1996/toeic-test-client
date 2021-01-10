@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Container } from "@material-ui/core";
-import { PaperListTest, TabsListTest, TabListTest, ContainerPagin, PaginationTest } from './style';
+import { PaperListTest, TabsListTest, TabListTest, ContainerPagin, PaginationTest, GridListTest } from './style';
 import { TestItem } from '../Dashboard/components/TestItem';
 import { range } from 'lodash';
 
@@ -30,7 +30,7 @@ const ListTest: React.FC = () => {
                     </PaperListTest>
                 </Grid>
 
-                <Grid item xs={12} style={{ margin: "50px 0 0" }}>
+                <GridListTest item xs={12}>
                     <Grid container spacing={2}>
                         {
                             range(0, 8).map((item, index) => <Grid item xs={3} key={index}>
@@ -38,10 +38,10 @@ const ListTest: React.FC = () => {
                             </Grid>)
                         }
                     </Grid>
-                </Grid>
+                </GridListTest>
                 <Grid item xs={12} >
                     <ContainerPagin>
-                        <PaginationTest className="pagination____test" count={10} variant="outlined" shape="rounded" />
+                        <PaginationTest count={10} variant="outlined" shape="rounded" />
                     </ContainerPagin>
                 </Grid>
             </Grid>

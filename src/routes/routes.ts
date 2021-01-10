@@ -28,7 +28,7 @@ const routes: RouteItem[] = [
     exact: true
   },
   {
-    path: '/listtest',
+    path: '/list-test',
     layout: DashboardLayout,
     component: ListTest,
     isAuthRoute: false,
