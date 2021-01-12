@@ -1,7 +1,7 @@
 
 import Grid from '@material-ui/core/Grid'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Background } from './components/Background';
 import CustomButton from "../../components/CustomButton";
 import {FaFacebookF,FaTwitter,FaGooglePlusG} from "react-icons/fa";
@@ -14,10 +14,11 @@ import {
   RightContent,
   SubHeading, 
   Wrapper,
-  TextFieldLogin,
   ContainerForm ,
   SocialsBtnGround,
   RightContentBottom} from './styled'
+import { LoginForm } from './components/LoginForm';
+import { SignUpForm } from './components/SignUpForm';
 export interface UserInfo {
   email: string,
   password: string
@@ -29,7 +30,11 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = () => {
 
-  
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/login'
+  console.log(isLoginPage);
+
+
   return (
     <Wrapper>
       <Background />
@@ -52,35 +57,29 @@ const Login: React.FC<LoginProps> = () => {
           <Grid item xs={6}>
             <RightContent>
               <Heading color="#000">
-                Login
+                {isLoginPage ? 'Login' : 'Sign up'}
               </Heading>
-              <RegisterSuggest>
-                Don’t have an account? <Link to="/sign-up">Create your account</Link>, it takes less than a minute
-              </RegisterSuggest>
+              {isLoginPage && (
+                <RegisterSuggest>
+                  Don’t have an account? <Link to="/sign-up">Create your account</Link>, it takes less than a minute
+                </RegisterSuggest>
+              )}
               <ContainerForm>
-                  <form action="" >
-                  <TextFieldLogin  label="EMAIL" />
-                  <TextFieldLogin  label="PASSWORD" />
-                  </form>
-                  <CustomButton theme="green" borderCircle={true} className="btnLogin">
-                    LOGIN
-                  </CustomButton>
+                {isLoginPage ? <LoginForm /> : <SignUpForm />}
               </ContainerForm>
-              <RightContentBottom
-                
-              >
-                 <RegisterSuggest>
-                 Login with social media
-              </RegisterSuggest>
+              <RightContentBottom>
+                  <RegisterSuggest>
+                    Login with social media
+                  </RegisterSuggest>
                   <SocialsBtnGround >
                     <CustomButton borderCircle={true} startIcon={<FaFacebookF/>} theme="facebook"  className="btnLoginIcon">
-                      facebook
+                      Facebook
                     </CustomButton>
                     <CustomButton borderCircle={true} startIcon={<FaTwitter/>} theme="twitter" className="btnLoginIcon">
-                      twitter
+                      Twitter
                     </CustomButton>
                     <CustomButton borderCircle={true} startIcon={<FaGooglePlusG/>} theme="google" className="btnLoginIcon">
-                      google +
+                      Google +
                     </CustomButton>
                   </SocialsBtnGround>
               </RightContentBottom>
