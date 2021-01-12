@@ -1,7 +1,5 @@
 import { RouteItem } from "./routeItem.interface";
 import Login from "../containers/Login";
-import MainLayout from "../components/Layout/MainLayout";
-import Home from "../containers/Home";
 import Dashboard from "../containers/Dashboard";
 import ListTest from "../containers/ListTest/Index";
 import DashboardLayout from "../components/Layout/DashboardLayout";
@@ -14,14 +12,14 @@ const routes: RouteItem[] = [
     exact: true
   },
   {
-    path: '/',
-    layout: MainLayout,
-    component: Home,
+    path: '/sign-up',
+    component: Login,
     isAuthRoute: false,
     exact: true
   },
+
   {
-    path: '/dashboard',
+    path: '/',
     layout: DashboardLayout,
     component: Dashboard,
     isAuthRoute: false,
