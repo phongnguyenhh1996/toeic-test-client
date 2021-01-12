@@ -53,7 +53,7 @@ export default function ElevateAppBar(props: Props) {
     <React.Fragment>
       <CssBaseline />
       <Header>
-        <Logo>EasyToeic</Logo>
+        <Logo>EasyTOEIC</Logo>
         <Search>
           <input
             className="input-search"

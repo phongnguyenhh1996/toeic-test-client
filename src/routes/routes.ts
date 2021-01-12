@@ -5,6 +5,8 @@ import Home from "../containers/Home";
 import Dashboard from "../containers/Dashboard";
 import ListTest from "../containers/ListTest/Index";
 import DashboardLayout from "../components/Layout/DashboardLayout";
+import CreateTestLayout from "../components/Layout/CreateTestLayout";
+import CreateTest from "../containers/CreateTest";
 
 const routes: RouteItem[] = [
   {
@@ -15,13 +17,6 @@ const routes: RouteItem[] = [
   },
   {
     path: '/',
-    layout: MainLayout,
-    component: Home,
-    isAuthRoute: false,
-    exact: true
-  },
-  {
-    path: '/dashboard',
     layout: DashboardLayout,
     component: Dashboard,
     isAuthRoute: false,
@@ -31,6 +26,13 @@ const routes: RouteItem[] = [
     path: '/list-test',
     layout: DashboardLayout,
     component: ListTest,
+    isAuthRoute: false,
+    exact: true
+  },
+  {
+    path: '/create-test',
+    layout: CreateTestLayout,
+    component: CreateTest,
     isAuthRoute: false,
     exact: true
   }
