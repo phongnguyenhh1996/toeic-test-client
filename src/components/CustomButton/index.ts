@@ -29,7 +29,29 @@ const themeBtn: any = {
     shadow: "rgba(0, 0, 0, 0.25)",
     shadowProperty: "0px 2px 4px",
     text: "#1D976C"
+  },
+  "facebook":{
+    bg1: "#1D5096",
+    bg2: "#1D5096",
+    shadow: "rgba(0, 0, 0, 0.0)",
+    shadowProperty: "0px 0px 0px",
+    text: "#fff"
+  },
+  "twitter":{
+    bg1: "#1DA0F0",
+    bg2: "#1DA0F0",
+    shadow: "rgba(0, 0, 0, 0.0)",
+    shadowProperty: "0px 0px 0px",
+    text: "#fff"
+  },
+  "google":{
+    bg1: "#DB5043",
+    bg2: "#DB5043",
+    shadow: "rgba(0, 0, 0, 0.0)",
+    shadowProperty: "0px 0px 0px",
+    text: "#fff"
   }
+  
 }
 
 interface BtnProps {

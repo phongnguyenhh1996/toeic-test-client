@@ -1,8 +1,23 @@
+
 import Grid from '@material-ui/core/Grid'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Background } from './components/Background'
-import { Heading, Inner, LeftContent, LeftInner, RegisterSuggest, RightContent, SubHeading, Wrapper } from './styled'
+import { Background } from './components/Background';
+import CustomButton from "../../components/CustomButton";
+import {FaFacebookF,FaTwitter,FaGooglePlusG} from "react-icons/fa";
+import { 
+  Heading,
+  Inner,
+  LeftContent,
+  LeftInner, 
+  RegisterSuggest,
+  RightContent,
+  SubHeading, 
+  Wrapper,
+  TextFieldLogin,
+  ContainerForm ,
+  SocialsBtnGround,
+  RightContentBottom} from './styled'
 export interface UserInfo {
   email: string,
   password: string
@@ -42,6 +57,33 @@ const Login: React.FC<LoginProps> = () => {
               <RegisterSuggest>
                 Don’t have an account? <Link to="/sign-up">Create your account</Link>, it takes less than a minute
               </RegisterSuggest>
+              <ContainerForm>
+                  <form action="" >
+                  <TextFieldLogin  label="EMAIL" />
+                  <TextFieldLogin  label="PASSWORD" />
+                  </form>
+                  <CustomButton theme="green" borderCircle={true} className="btnLogin">
+                    LOGIN
+                  </CustomButton>
+              </ContainerForm>
+              <RightContentBottom
+                
+              >
+                 <RegisterSuggest>
+                 Login with social media
+              </RegisterSuggest>
+                  <SocialsBtnGround >
+                    <CustomButton borderCircle={true} startIcon={<FaFacebookF/>} theme="facebook"  className="btnLoginIcon">
+                      facebook
+                    </CustomButton>
+                    <CustomButton borderCircle={true} startIcon={<FaTwitter/>} theme="twitter" className="btnLoginIcon">
+                      twitter
+                    </CustomButton>
+                    <CustomButton borderCircle={true} startIcon={<FaGooglePlusG/>} theme="google" className="btnLoginIcon">
+                      google +
+                    </CustomButton>
+                  </SocialsBtnGround>
+              </RightContentBottom>
             </RightContent>
           </Grid>
         </Grid>
@@ -51,3 +93,10 @@ const Login: React.FC<LoginProps> = () => {
 }
 
 export default Login
+
+
+
+
+
+
+
