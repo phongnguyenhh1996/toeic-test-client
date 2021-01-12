@@ -1,132 +1,101 @@
-import React, { useState, useEffect } from 'react'
-import { Styled } from "./styled"
-import { TextField, InputAdornment, Button, CircularProgress, Snackbar } from '@material-ui/core'
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
-import { userLogin } from '../../actions';
-import { useHistory } from "react-router";
-import { connect } from 'react-redux';
-import { isEmpty } from "lodash";
-import { usePrevious } from '../../utils/hooks';
 
+import Grid from '@material-ui/core/Grid'
+import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { Background } from './components/Background';
+import CustomButton from "../../components/CustomButton";
+import {FaFacebookF,FaTwitter,FaGooglePlusG} from "react-icons/fa";
+import { 
+  Heading,
+  Inner,
+  LeftContent,
+  LeftInner, 
+  RegisterSuggest,
+  RightContent,
+  SubHeading, 
+  Wrapper,
+  ContainerForm ,
+  SocialsBtnGround,
+  RightContentBottom} from './styled'
+import { LoginForm } from './components/LoginForm';
+import { SignUpForm } from './components/SignUpForm';
 export interface UserInfo {
   email: string,
   password: string
 }
 
 interface LoginProps {
-  userLogin(userInfor: UserInfo, push: any): void
-  user: any
+ 
 }
 
-const Login: React.FC<LoginProps> = ({ userLogin, user }) => {
+const Login: React.FC<LoginProps> = () => {
 
-  const history = useHistory();
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/login'
+  console.log(isLoginPage);
 
-  const [userinfo, setUserinfo] = useState<UserInfo>({} as UserInfo)
-  const [validation, setValidation]: any = useState({})
-  const [openAlert, setOpen] = useState<boolean>(false);
-
-  const { isLoading, isFailed } = user;
-  const prevIsFailed = usePrevious(isFailed)
-  const handleInputChange = (e: React.SyntheticEvent) => {
-    const { name, value } = e.target as HTMLInputElement
-    setUserinfo({...userinfo, [name]: value})
-  }
-
-  const handleSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    let validation: any = {}
-    if (!userinfo.email) validation.email = "Username is required!"
-    if (!userinfo.password) validation.password = "Password is required!"
-    setValidation(validation)
-    if (isEmpty(validation)) {
-      userLogin(userinfo, history.push);
-    }
-  }
-
-  useEffect(() => {
-    if (prevIsFailed === false && isFailed) {
-      handleClick()
-    }
-  }, [isFailed, prevIsFailed])
-
-  const handleClick = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
 
   return (
-    <Styled.Login>
-      <Styled.Login__Inner>
-        <Styled.Login__Side>
-          <Styled.Login__Form onSubmit={handleSubmit}>
-            <TextField
-              fullWidth
-              autoFocus
-              onChange={handleInputChange}
-              id="input-with-icon-textfield"
-              name="email"
-              label="Username"
-              error={validation.email}
-              helperText={validation.email}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AiOutlineUser />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              fullWidth
-              onChange={handleInputChange}
-              id="input-with-icon-textfield"
-              label="Password"
-              type="password"
-              name="password"
-              error={validation.password}
-              helperText={validation.password}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AiOutlineLock />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Button disabled={isLoading} type="submit" variant="contained" color="primary">
-              {isLoading ? <CircularProgress size="24px" color="secondary" /> : 'Login'}
-            </Button>
-          </Styled.Login__Form>
-        </Styled.Login__Side>
-      </Styled.Login__Inner>
-      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
-          Username or password is incorrect!
-        </Alert>
-      </Snackbar>
-    </Styled.Login>
+    <Wrapper>
+      <Background />
+      <Inner>
+        <Grid container spacing={0}>
+          <Grid item xs={6}>
+            <LeftContent>
+              <LeftInner>
+                <Heading color="#fff">
+                  welcome to<br/>
+                  <strong>EasyTOEIC</strong>
+                </Heading>
+                <SubHeading color="#fff">
+                  Place to practice your TOEIC skills.<br/>
+                  Prepare for the real test !
+                </SubHeading>
+              </LeftInner>
+            </LeftContent>
+          </Grid>
+          <Grid item xs={6}>
+            <RightContent>
+              <Heading color="#000">
+                {isLoginPage ? 'Login' : 'Sign up'}
+              </Heading>
+              {isLoginPage && (
+                <RegisterSuggest>
+                  Don’t have an account? <Link to="/sign-up">Create your account</Link>, it takes less than a minute
+                </RegisterSuggest>
+              )}
+              <ContainerForm>
+                {isLoginPage ? <LoginForm /> : <SignUpForm />}
+              </ContainerForm>
+              <RightContentBottom>
+                  <RegisterSuggest>
+                    Login with social media
+                  </RegisterSuggest>
+                  <SocialsBtnGround >
+                    <CustomButton borderCircle={true} startIcon={<FaFacebookF/>} theme="facebook"  className="btnLoginIcon">
+                      Facebook
+                    </CustomButton>
+                    <CustomButton borderCircle={true} startIcon={<FaTwitter/>} theme="twitter" className="btnLoginIcon">
+                      Twitter
+                    </CustomButton>
+                    <CustomButton borderCircle={true} startIcon={<FaGooglePlusG/>} theme="google" className="btnLoginIcon">
+                      Google +
+                    </CustomButton>
+                  </SocialsBtnGround>
+              </RightContentBottom>
+            </RightContent>
+          </Grid>
+        </Grid>
+      </Inner>
+    </Wrapper>
   )
 }
 
-const mapStateToProps = (state: any) => ({
-  user: state.user
-})
+export default Login
 
-const mapDispatchToProps = {
-  userLogin
-}
 
-function Alert(props: AlertProps) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+
+
+
+

@@ -1,49 +1,97 @@
-import styled from "styled-components"
-interface SideProps {
-  right?: boolean
-}
+import styled from "styled-components";
+import loginSideImg from "../../assets/images/login-side-img.jpg";
+import { theme } from "../../utils/theme";
 
-const Login = styled.div`
-  background-color: #F2F2F2;
+export const Wrapper = styled.div`
+  height: 100vh;
+  position: relative;
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-`
-
-const Login__Inner = styled.div`
-  max-width: 1100px;
-  background-color: #fff;
+`;
+export const Inner = styled.div`
+  width: 1000px;
+  height: 600px;
+  background: #ffffff;
+  box-shadow: 0px 30px 71px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
   display: flex;
-  flex: 1;
   overflow: hidden;
-`
+`;
 
-const Login__Side = styled.div<SideProps>`
-  flex: 0 0 100%;
-  max-width: 100%;
+export const LeftContent = styled.div`
+  background-image: url(${loginSideImg});
+  background-size: cover;
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  & > *:not(:last-child) {
-    margin-bottom: 20px;
+  align-items: flex-end;
+  padding: 0 0 65px 65px;
+  position: relative;
+  &::after {
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
   }
-`
-const Login__Form = styled.form`
+`;
+export const LeftInner = styled.div`
+  position: relative;
+  z-index: 10;
+`;
+
+export const Heading = styled.h1`
+  font-weight: 900;
+  font-size: 25px;
+  color: ${(props) => props.color};
+  strong {
+    font-size: 60px;
+    line-height: 90px;
+  }
+`;
+
+export const SubHeading = styled.h2`
+  font-size: 18px;
+  line-height: 35px;
+  color: ${(props) => props.color};
+`;
+
+export const RightContent = styled.div`
   display: flex;
+  height: 100%;
+  padding: 60px;
   flex-direction: column;
-  align-items: center;
-  & > *:not(:last-child) {
-    margin-bottom: 20px;
+  position: relative;
+`;
+
+export const RegisterSuggest = styled.div`
+  font-size: 15px;
+  color: ${theme.textDarkPrimary};
+  line-height: 19px;
+  a {
+    text-decoration: none;
+    color: ${theme.textPrimary2};
   }
-`
+`;
 
-const Login__Right = styled.div`
-`
+export const ContainerForm = styled.div`
+  margin-top: 35px;
+  .btnLogin {
+    float: right;
+    padding: 5px 35px;
+  }
+`;
 
-export const Styled = {
-  Login,
-  Login__Inner,
-  Login__Side,
-  Login__Right,
-  Login__Form
-}
+export const SocialsBtnGround = styled.div`
+  margin-top: 20px;
+  .btnLoginIcon {
+    margin-right: 10px;
+    padding: 3px 20px;
+  }
+`;
+export const RightContentBottom = styled.div`
+  position: absolute;
+  bottom: 60px;
+`;
