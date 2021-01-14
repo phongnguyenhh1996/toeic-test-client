@@ -50,7 +50,20 @@ const themeBtn: any = {
     shadow: "rgba(0, 0, 0, 0.0)",
     shadowProperty: "0px 0px 0px",
     text: "#fff"
-  }
+  },
+  "gray": {
+    bg1: theme.backgroundGray,
+    bg2: theme.backgroundGray,
+    shadow: "rgba(0, 0, 0, 0)",
+    text: theme.textDarkPrimary
+  },
+  "nav-button": {
+    bg1: "#fff",
+    bg2: "#fff",
+    shadow: "rgba(0, 0, 0, 0.10)",
+    shadowProperty: "0px 2px 2px",
+    text: theme.textDarkPrimary
+  },
   
 }
 
@@ -69,6 +82,9 @@ const CustomButton = styled(Button)<BtnProps>`
     box-shadow: ${themeBtn[props.theme].shadowProperty || "0px 4px 10px"} ${themeBtn[props.theme].shadow};
     color: ${themeBtn[props.theme].text || theme.textLight};
   `}
+  svg {
+    margin-right: 5px;
+  }
 `
 
 export default CustomButton

@@ -3,6 +3,8 @@ import Login from "../containers/Login";
 import Dashboard from "../containers/Dashboard";
 import ListTest from "../containers/ListTest/Index";
 import DashboardLayout from "../components/Layout/DashboardLayout";
+import CreateTestLayout from "../components/Layout/CreateTestLayout";
+import CreateTest from "../containers/CreateTest";
 
 const routes: RouteItem[] = [
   {
@@ -29,6 +31,13 @@ const routes: RouteItem[] = [
     path: '/list-test',
     layout: DashboardLayout,
     component: ListTest,
+    isAuthRoute: false,
+    exact: true
+  },
+  {
+    path: '/create-test',
+    layout: CreateTestLayout,
+    component: CreateTest,
     isAuthRoute: false,
     exact: true
   }

@@ -11,6 +11,7 @@ export const Header = styled(AppBar)`
   align-items: center;
   background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  height: 50px;
 `
 
 export const Logo = styled.p`
