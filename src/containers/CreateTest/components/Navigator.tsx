@@ -1,11 +1,30 @@
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Grid from '@material-ui/core/Grid'
-import { range } from 'lodash'
+import { get, range } from 'lodash'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { goToQuestion } from '../../../actions'
 import { theme } from '../../../utils/theme'
 import { Wrapper } from './TestInfo'
+
+const GridQuestions = styled(Grid)`
+    max-height: calc(100vh - 615px);
+    overflow: auto;
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: #F5F5F5;
+    }
+    &::-webkit-scrollbar {
+        width: 2px;
+        background-color: #F5F5F5;
+    }
+
+    &::-webkit-scrollbar-thumb {
+	    background-color: ${theme.textPrimary2};
+    }
+`
 
 const ButtonPrimary = styled(Button)`
     font-size: 11px;
@@ -51,6 +70,14 @@ const Question = styled(Button)`
 `
 
 export const MapNavigator: React.FC = () => {
+
+    const dispatcher = useDispatch()
+    const currentQuestion = useSelector(state => get(state, 'tests.currentQuestion'))
+
+    const handleClickQuestion = (item: number) => () => {
+        dispatcher(goToQuestion(item))
+    }
+
     return (
         <Wrapper>
             <PartGroup aria-label="outlined button group">
@@ -64,14 +91,19 @@ export const MapNavigator: React.FC = () => {
                 <ButtonPrimary>Part 6</ButtonPrimary>
                 <ButtonPrimary>Part 7</ButtonPrimary>
             </PartGroup>
-            <Grid container spacing={0}>
-                {range(100,113).map(item => (
+            <GridQuestions container spacing={0}>
+                {range(1,100).map(item => (
                     <QuestionWrapper key={item} item xs={2}>
-                        <Question variant={item === 100 ? "contained" : "outlined"}>{item}</Question>
+                        <Question
+                            onClick={handleClickQuestion(item)}
+                            variant={item === currentQuestion ? "contained" : "outlined"}
+                        >
+                            {item}
+                        </Question>
                     </QuestionWrapper>
                 ))}
                 
-            </Grid>
+            </GridQuestions>
         </Wrapper>
     )
 }

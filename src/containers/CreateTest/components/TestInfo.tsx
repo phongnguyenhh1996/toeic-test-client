@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import UploadImg from '../../../assets/images/image_upload.svg'
 import { theme } from '../../../utils/theme'
 
-export const Wrapper = styled.div`
+export const Wrapper : any = styled.div`
     background: #FEFEFE;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
@@ -37,7 +37,11 @@ const AddImg = styled.div`
     }
 `
 
-const Input = styled(TextField)`
+interface InputProps {
+    bg?: string;
+}
+
+export const Input = styled(TextField)<InputProps>`
     margin-bottom: 10px;
     .MuiOutlinedInput-notchedOutline {
         border-color: #E4E4E4;
@@ -51,6 +55,9 @@ const Input = styled(TextField)`
     label.Mui-focused, label.MuiInputLabel-shrink {
         color: ${theme.textPrimary2};
     }
+    .MuiInputBase-root {
+        background-color: ${props => props.bg || 'transparent'};
+    }
 `
 
 interface Props {
@@ -59,20 +66,20 @@ interface Props {
 
 const currencies = [
     {
-      value: 'USD',
-      label: '$',
+      value: '0',
+      label: 'Part 1',
     },
     {
-      value: 'EUR',
-      label: '€',
+      value: '1',
+      label: 'Part 2',
     },
     {
-      value: 'BTC',
-      label: '฿',
+      value: '2',
+      label: 'Part 3',
     },
     {
-      value: 'JPY',
-      label: '¥',
+      value: '3',
+      label: 'Part 4',
     },
   ];
 
