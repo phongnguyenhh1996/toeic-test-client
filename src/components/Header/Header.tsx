@@ -3,7 +3,7 @@ import { Styled } from "./Header.styled";
 import Container from '@material-ui/core/Container/Container';
 import Grid from '@material-ui/core/Grid/Grid';
 import Button from '@material-ui/core/Button/Button';
-import { userLogin } from "../../actions";
+import { userLogin } from "../../actions/user";
 import { connect } from "react-redux";
 import { Logo } from '../Logo';
 import { Link } from 'react-router-dom';
@@ -11,7 +11,7 @@ import { Dialog, DialogTitle, DialogContent} from '@material-ui/core';
 import Login from '../../containers/Login';
 
 export interface UserInfo {
-  email: string,
+  username: string,
   password: string
 }
 

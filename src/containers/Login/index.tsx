@@ -19,6 +19,7 @@ import {
   RightContentBottom} from './styled'
 import { LoginForm } from './components/LoginForm';
 import { SignUpForm } from './components/SignUpForm';
+import LOGO from "../../assets/images/logo.svg";
 export interface UserInfo {
   email: string,
   password: string
@@ -45,7 +46,7 @@ const Login: React.FC<LoginProps> = () => {
               <LeftInner>
                 <Heading color="#fff">
                   welcome to<br/>
-                  <strong>EasyTOEIC</strong>
+                  <strong><img width="300px" src={LOGO} alt="Logo" /></strong>
                 </Heading>
                 <SubHeading color="#fff">
                   Place to practice your TOEIC skills.<br/>

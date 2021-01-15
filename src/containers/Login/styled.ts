@@ -49,6 +49,8 @@ export const Heading = styled.h1`
   strong {
     font-size: 60px;
     line-height: 90px;
+    margin-top: 20px;
+    display: inline-block;
   }
 `;
 

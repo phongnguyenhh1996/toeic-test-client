@@ -5,7 +5,7 @@ import { get, range } from 'lodash'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { goToQuestion } from '../../../actions'
+import { goToQuestion } from '../../../actions/tests'
 import { theme } from '../../../utils/theme'
 import { Wrapper } from './TestInfo'
 

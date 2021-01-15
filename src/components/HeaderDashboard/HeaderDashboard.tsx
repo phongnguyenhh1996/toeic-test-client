@@ -28,6 +28,8 @@ import {
   ListItemText,
   Collapse,
 } from "@material-ui/core";
+import LOGO from "../../assets/images/logo.svg"
+
 interface Props { }
 
 export default function ElevateAppBar(props: Props) {
@@ -53,7 +55,9 @@ export default function ElevateAppBar(props: Props) {
     <React.Fragment>
       <CssBaseline />
       <Header>
-        <Logo>EasyTOEIC</Logo>
+        <Logo>
+          <img width="145px" src={LOGO} alt="Logo" />
+        </Logo>
         <Search>
           <input
             className="input-search"
