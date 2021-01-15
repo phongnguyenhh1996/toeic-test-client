@@ -14,12 +14,9 @@ export const Header = styled(AppBar)`
   height: 50px;
 `
 
-export const Logo = styled.p`
-  font-weight: bold;
-  font-size: 18px;
+export const LogoWrapper = styled.div`
   margin-left: 20px;
   margin-right: 25px;
-
 `
 
 export const Search = styled.div`

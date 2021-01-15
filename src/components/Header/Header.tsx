@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid/Grid';
 import Button from '@material-ui/core/Button/Button';
 import { userLogin } from "../../actions/user";
 import { connect } from "react-redux";
-import { Logo } from '../Logo';
 import { Link } from 'react-router-dom';
 import { Dialog, DialogTitle, DialogContent} from '@material-ui/core';
 import Login from '../../containers/Login';
@@ -38,7 +37,6 @@ const Header: React.FC<HeaderProps> = () => {
         <Grid container justify="space-between" alignItems="center" spacing={3}>
           <Grid item xs={3}>
             <Styled.Header__Brand to="/">
-              <Logo />
             </Styled.Header__Brand>
           </Grid>
           <Grid item xs>

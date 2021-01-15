@@ -1,16 +1,14 @@
 import React from 'react'
-import LOGO from "../../assets/images/TOEIC_ICON.svg"
-import styled from 'styled-components'
+import LOGO from "../../assets/images/logo.svg"
 
-const LogoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`
+interface LoginProps {
+  width: string
+}
 
-export const Logo = () => {
+export const Logo : React.FC<LoginProps> = ({width}) => {
     return (
-        <LogoWrapper>
-          <img width={120} height={100} src={LOGO} alt="Logo" />
-        </LogoWrapper>
+        <>
+          <img width={width} src={LOGO} alt="Logo" />
+        </>
     )
 }

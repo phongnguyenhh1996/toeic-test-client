@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {
-  Logo,
   Header,
   Search,
   Navigation,
   CreateButton,
   HambergerButton,
   ButtonNavigation,
+  LogoWrapper,
 } from "./Header.styled";
 import {
   FaSearch,
@@ -28,7 +28,7 @@ import {
   ListItemText,
   Collapse,
 } from "@material-ui/core";
-import LOGO from "../../assets/images/logo.svg"
+import { Logo } from "../Logo";
 
 interface Props { }
 
@@ -55,9 +55,9 @@ export default function ElevateAppBar(props: Props) {
     <React.Fragment>
       <CssBaseline />
       <Header>
-        <Logo>
-          <img width="145px" src={LOGO} alt="Logo" />
-        </Logo>
+        <LogoWrapper>
+          <Logo width="145px" />
+        </LogoWrapper>
         <Search>
           <input
             className="input-search"
