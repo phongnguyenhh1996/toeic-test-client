@@ -5,6 +5,7 @@ export const theme = {
     backgroundPrimary: '#1D976C',
     backgroundSecondary: '#6CC57C',
     backgroundGray: '#E4E4E4',
+    backgroundErrorInput: '#f44336',
     backgroundPaginationBtn: '#D2F8D9',
     textSecondarySuperLight: '#F0FFF3',
     textLight: '#fff',

@@ -24,21 +24,21 @@ const routes: RouteItem[] = [
     path: '/',
     layout: DashboardLayout,
     component: Dashboard,
-    isAuthRoute: false,
+    isAuthRoute: true,
     exact: true
   },
   {
     path: '/list-test',
     layout: DashboardLayout,
     component: ListTest,
-    isAuthRoute: false,
+    isAuthRoute: true,
     exact: true
   },
   {
     path: '/create-test',
     layout: CreateTestLayout,
     component: CreateTest,
-    isAuthRoute: false,
+    isAuthRoute: true,
     exact: true
   }
 ]
