@@ -20,10 +20,6 @@ import {
 import { LoginForm } from './components/LoginForm';
 import { SignUpForm } from './components/SignUpForm';
 import LOGO from "../../assets/images/logo.svg";
-export interface UserInfo {
-  email: string,
-  password: string
-}
 
 interface LoginProps {
  
