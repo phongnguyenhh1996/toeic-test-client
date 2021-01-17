@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { theme } from "../../utils/theme";
 
 export const Wrapper = styled.div`
@@ -48,13 +48,27 @@ export const PartDescription = styled.div`
     line-height: 21px;
 `
 
-export const UploadWrapper = styled.div`
+interface UploadWrapperProps {
+    isRowDirection: boolean
+}
+
+export const UploadWrapper = styled.div<UploadWrapperProps>`
     margin-top: 20px;
-    margin-bottom: 20px;
     display: flex;
-    justify-content: center;
-    & > *:not(:last-child) {
-        margin-right: 20px;
+    ${props => !props.isRowDirection ? css`
+        flex-direction: column;
+        align-items: center;
+        & > * {
+            margin-bottom: 20px;
+        }
+    }
+    ` : css`
+        justify-content: center;
+        & > *:not(:last-child) {
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+    `
     }
 `
 
@@ -66,4 +80,33 @@ export const NavigationBtnGroup = styled.div`
         margin-right: 20px;
     }
     margin-top: 20px;
+`
+
+interface MediaWrapperProps {
+    width: string;
+}
+
+export const MediaWrapper = styled.div<MediaWrapperProps>`
+    position: relative;
+    width: ${props => props.width};
+`
+
+export const RemoveMedia = styled.div`
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0,0,0,0.25);
+    top: -15px;
+    right: -12px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .2s ease;
+    transform: scale(1.0);
+    &:hover {
+        transform: scale(1.1);
+    }
 `

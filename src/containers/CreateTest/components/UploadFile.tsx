@@ -3,7 +3,9 @@ import { FaMicrophone, FaRegImage } from 'react-icons/fa'
 import styled from 'styled-components'
 import { theme } from '../../../utils/theme'
 
-const Wrapper = styled.div`
+const Wrapper = styled.label`
+    cursor: pointer;
+    position: relative;
     width: 70px;
     height: 70px;
     border-radius: 5px;
@@ -20,26 +22,56 @@ const Wrapper = styled.div`
     }
 `
 
+const FileInput = styled.input`
+    position: absolute;
+    display: none;
+`
+
 interface Props {
     type: "image" | "audio";
+    onLoadedFile: (arg0: any) => void
 }
 
-export const UploadFile : React.FC<Props> = ({ type }) => {
+export const UploadFile : React.FC<Props> = ({ type, onLoadedFile }) => {
+
+
+    const onUploadImage = (e: any) => {
+        console.log(e.target.files[0]);
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onloadend = function () {
+            onLoadedFile([reader.result])
+        }
+    }
 
     const renderContent = (type: string) => {
         switch (type) {
             case 'audio':
                 return (
-                    <>
-                        <FaMicrophone />
-                        Audio
-                    </>
-                )
+                        <>
+                            <FaMicrophone />
+                            Audio
+                            <FileInput
+                                onChange={onUploadImage}
+                                name="audioFile"
+                                type="file"
+                                accept=".mp3,audio/*"
+                            />
+                        </>
+                    )
             case 'image':
-                return (
+                return  (
                     <>
                         <FaRegImage />
                         Image
+                        <FileInput
+                            onChange={onUploadImage}
+                            name="imageFile"
+                            type="file"
+                            accept="image/*"
+                        />
                     </>
                 )
         }

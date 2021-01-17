@@ -1,16 +1,21 @@
-import * as TYPES from "../constants";
+import * as CONSTANT from "../constants";
 
 const initialState = {
-  currentQuestion: 1
-
+  currentQuestion: 1,
+  test: {}
 }
 
 const testsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TYPES.GO_TO_QUESTION:
+    case CONSTANT.GO_TO_QUESTION:
       return {
         ...state,
         currentQuestion: action.toQuestion
+      }
+    case CONSTANT.INIT_TEST:
+      return {
+        ...state,
+        test: action.test
       }
     default:
       return state

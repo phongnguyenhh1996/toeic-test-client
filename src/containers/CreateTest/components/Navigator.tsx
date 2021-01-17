@@ -6,6 +6,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { goToQuestion } from '../../../actions/tests'
+import { TEST_TYPE, TEST_TYPE_INFO } from '../../../constants'
 import { theme } from '../../../utils/theme'
 import { Wrapper } from './TestInfo'
 
@@ -69,7 +70,12 @@ const Question = styled(Button)`
     font-size: 12px;
 `
 
-export const MapNavigator: React.FC = () => {
+interface NavigationProps {
+    testType: number
+    testPart: number
+}
+
+export const MapNavigator: React.FC<NavigationProps> = ({ testType, testPart }) => {
 
     const dispatcher = useDispatch()
     const currentQuestion = useSelector(state => get(state, 'tests.currentQuestion'))
@@ -78,21 +84,53 @@ export const MapNavigator: React.FC = () => {
         dispatcher(goToQuestion(item))
     }
 
+    const renderPartNav = () => {
+        if (testType === TEST_TYPE.PART) {
+            const title = `Part ${testPart + 1}`
+
+            return (
+                <PartGroup aria-label="outlined button group">
+                    <ButtonPrimary variant="contained">{title}</ButtonPrimary>
+                </PartGroup>
+            )
+        } else {
+            return (
+                <>
+                    {(testType === TEST_TYPE.FULL || testType === TEST_TYPE.LISTENING) && (
+                        <PartGroup aria-label="outlined button group">
+                            {range(1, 5).map(numb => {
+                                return (
+                                    <ButtonPrimary key={numb}>Part {numb}</ButtonPrimary>
+                                )
+                            })}
+                        </PartGroup>
+                    )}
+                    {(testType === TEST_TYPE.FULL || testType === TEST_TYPE.READING) && (
+                        <PartGroup aria-label="outlined button group">
+                            {range(5, 8).map(numb => {
+                                return (
+                                    <ButtonPrimary key={numb}>Part {numb}</ButtonPrimary>
+                                )
+                            })}
+                        </PartGroup>
+                    )}
+                </>
+            )
+        }
+    }
+
+    const isTestPart = testType === TEST_TYPE.PART
+    const startQuestion = isTestPart
+        ? get(TEST_TYPE_INFO, `${TEST_TYPE.PART}.${testPart}.fromNumb`)
+        : get(TEST_TYPE_INFO, `${testType}.fromNumb`)
+    const endQuestion = isTestPart
+        ? startQuestion + get(TEST_TYPE_INFO, `${TEST_TYPE.PART}.${testPart}.totalQuestion`)
+        : startQuestion + get(TEST_TYPE_INFO, `${testType}.totalQuestion`)
     return (
         <Wrapper>
-            <PartGroup aria-label="outlined button group">
-                <ButtonPrimary variant="contained">Part 1</ButtonPrimary>
-                <ButtonPrimary>Part 2</ButtonPrimary>
-                <ButtonPrimary>Part 3</ButtonPrimary>
-                <ButtonPrimary>Part 4</ButtonPrimary>
-            </PartGroup>
-            <PartGroup aria-label="outlined button group">
-                <ButtonPrimary>Part 5</ButtonPrimary>
-                <ButtonPrimary>Part 6</ButtonPrimary>
-                <ButtonPrimary>Part 7</ButtonPrimary>
-            </PartGroup>
+            {renderPartNav()}
             <GridQuestions container spacing={0}>
-                {range(1,100).map(item => (
+                {range(startQuestion, endQuestion).map(item => (
                     <QuestionWrapper key={item} item xs={2}>
                         <Question
                             onClick={handleClickQuestion(item)}
@@ -102,7 +140,7 @@ export const MapNavigator: React.FC = () => {
                         </Question>
                     </QuestionWrapper>
                 ))}
-                
+
             </GridQuestions>
         </Wrapper>
     )

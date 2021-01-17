@@ -1,10 +1,14 @@
+import Grid from '@material-ui/core/Grid'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
+import { get, range } from 'lodash'
 import React from 'react'
 import { FaPlus } from 'react-icons/fa'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import UploadImg from '../../../assets/images/image_upload.svg'
+import { TEST_TYPE, TEST_TYPE_INFO } from '../../../constants'
 import { theme } from '../../../utils/theme'
 
 export const Wrapper : any = styled.div`
@@ -42,6 +46,7 @@ interface InputProps {
 }
 
 export const Input = styled(TextField)<InputProps>`
+    width: 100%;
     margin-bottom: 10px;
     .MuiOutlinedInput-notchedOutline {
         border-color: #E4E4E4;
@@ -59,31 +64,20 @@ export const Input = styled(TextField)<InputProps>`
         background-color: ${props => props.bg || 'transparent'};
     }
 `
-
-interface Props {
-
+interface TestInfoProps {
+    testType: number
+    testPart: number
 }
 
-const currencies = [
-    {
-      value: '0',
-      label: 'Part 1',
-    },
-    {
-      value: '1',
-      label: 'Part 2',
-    },
-    {
-      value: '2',
-      label: 'Part 3',
-    },
-    {
-      value: '3',
-      label: 'Part 4',
-    },
-  ];
 
-export const TestInfo : React.FC<Props> = () => {
+export const TestInfo : React.FC<TestInfoProps> = ({ testType, testPart}) => {
+
+    const history = useHistory()
+
+    const handleChangeType = (testType: number, testPart?: number) => () => {
+        history.replace('/create-test', {testType, testPart})
+    }
+
     return (
         <Wrapper>
             <ImageUploadWrapper>
@@ -94,13 +88,32 @@ export const TestInfo : React.FC<Props> = () => {
                 </AddImg>
             </ImageUploadWrapper>
             <Input size="small" id="outlined-basic" label="Test name" variant="outlined" />
-            <Input size="small" id="outlined-basic" select rows={4} label="Test type" variant="outlined">
-                {currencies.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                    </MenuItem>
-                ))}
-            </Input>
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    <Input size="small" id="outlined-basic" value={testType} select rows={4} label="Test type" variant="outlined">
+                        {Object.values(TEST_TYPE).map((type) => type !== TEST_TYPE.PART ? (
+                            <MenuItem onClick={handleChangeType(type, undefined)} key={type} value={type}>
+                                {get(TEST_TYPE_INFO, `${type}.title`, '').split(' ')[0]}
+                            </MenuItem>
+                        ) : (
+                            <MenuItem onClick={handleChangeType(type, 0)} key={type} value={type}>
+                                Part test
+                            </MenuItem>
+                        ))}
+                    </Input>
+                </Grid>
+                {testPart >= 0 && (
+                    <Grid item xs={6}>
+                        <Input size="small" id="outlined-basic" value={testPart} select rows={4} label="Test type" variant="outlined">
+                            {range(0, 7).map((numb: number) => (
+                                <MenuItem onClick={handleChangeType(testType, numb)} key={numb} value={numb}>
+                                    Part {numb + 1}
+                                </MenuItem>
+                            ))}
+                        </Input>
+                    </Grid>
+                )}
+            </Grid>
             <Input size="small" id="outlined-basic" multiline rows={2} label="Test description" variant="outlined" />
         </Wrapper>
     )

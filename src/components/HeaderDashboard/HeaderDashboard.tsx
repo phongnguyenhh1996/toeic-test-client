@@ -16,7 +16,6 @@ import {
   FaPlus,
   FaBars,
   FaFileAlt,
-  FaBook,
   FaHeadphones,
 } from "react-icons/fa";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
@@ -29,16 +28,31 @@ import {
   Collapse,
 } from "@material-ui/core";
 import { Logo } from "../Logo";
+import { TEST_TYPE, TEST_TYPE_INFO } from "../../constants";
+import { useHistory } from "react-router-dom";
 
 interface Props { }
 
 export default function ElevateAppBar(props: Props) {
+
+  const history = useHistory()
+
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [openCreateTest, setOpenCreateTest] = useState(true);
+  const [openCreateTest, setOpenCreateTest] = useState(false);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const navToCreateTest = (testType: any, testPart: any) => (e: any) => {
+    history.push({
+      pathname: '/create-test',
+      state: {
+        testType,
+        testPart
+      }
+    })
+  }
 
   const handleClickCreateTest = () => {
     setOpenCreateTest(!openCreateTest);
@@ -105,35 +119,45 @@ export default function ElevateAppBar(props: Props) {
           }}
         >
           <List component="nav" aria-labelledby="nested-list-subheader">
-            <ListItem button>
-              <ListItemIcon>
-                <FaFileAlt />
-              </ListItemIcon>
-              <ListItemText primary="Full test" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <FaBook />
-              </ListItemIcon>
-              <ListItemText primary="Reading test" />
-            </ListItem>
-            <ListItem button onClick={handleClickCreateTest}>
-              <ListItemIcon>
-                <FaHeadphones />
-              </ListItemIcon>
-              <ListItemText primary="Listening test" />
-              {openCreateTest ? <MdExpandLess /> : <MdExpandMore />}
-            </ListItem>
-            <Collapse in={openCreateTest} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItem button>
-                  <ListItemIcon>
-                    <FaHeadphones />
-                  </ListItemIcon>
-                  <ListItemText primary="Part 1" />
-                </ListItem>
-              </List>
-            </Collapse>
+            {Object.values(TEST_TYPE).map((testType: any) => 
+              {
+                const isTestPart = testType === TEST_TYPE.PART
+                let title
+                let testPartData
+                if (isTestPart) {
+                  title = 'Part test'
+                  testPartData = TEST_TYPE_INFO[testType]
+                } else {
+                  title = TEST_TYPE_INFO[testType].title
+                }
+                return (
+                  <>
+                    <ListItem button onClick={isTestPart ? handleClickCreateTest : navToCreateTest(testType, null)}>
+                      <ListItemIcon>
+                        <FaFileAlt />
+                      </ListItemIcon>
+                      <ListItemText primary={title} />
+                      { isTestPart && (openCreateTest ? <MdExpandLess /> : <MdExpandMore />)}
+                    </ListItem>
+                    {isTestPart && testPartData && (
+                      <Collapse in={openCreateTest} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                          {Object.keys(testPartData).map((testPart: any, index: number) => {
+                            return (
+                              <ListItem button onClick={navToCreateTest(testType, parseInt(testPart) )}>
+                                <ListItemIcon>
+                                  <FaHeadphones />
+                                </ListItemIcon>
+                                <ListItemText primary={"Part " + (index + 1)} />
+                              </ListItem>
+                            )
+                          })}
+                        </List>
+                      </Collapse>
+                    )}
+                  </>
+                 
+            )})}
           </List>
         </Popover>
         <HambergerButton>
