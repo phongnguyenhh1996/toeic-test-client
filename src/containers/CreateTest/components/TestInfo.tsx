@@ -3,13 +3,16 @@ import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import { get, range } from 'lodash'
 import React from 'react'
-import { FaPlus } from 'react-icons/fa'
+import { FaPlus, FaTimes } from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import { changeTestInfo } from '../../../actions/tests'
 
 import UploadImg from '../../../assets/images/image_upload.svg'
 import { TEST_TYPE, TEST_TYPE_INFO } from '../../../constants'
 import { theme } from '../../../utils/theme'
+import { MediaWrapper, RemoveMedia } from '../style'
 
 export const Wrapper : any = styled.div`
     background: #FEFEFE;
@@ -20,7 +23,7 @@ export const Wrapper : any = styled.div`
     flex-direction: column;
     margin-bottom: 20px;
 `
-const ImageUploadWrapper = styled.div`
+const ImageUploadWrapper = styled.label`
     background: #E5E5E5;
     display: flex;
     align-items: center;
@@ -28,6 +31,7 @@ const ImageUploadWrapper = styled.div`
     flex-direction: column;
     padding: 30px;
     margin-bottom: 10px;
+    cursor: pointer;
 `
 
 const AddImg = styled.div`
@@ -40,7 +44,19 @@ const AddImg = styled.div`
         margin-right: 10px;
     }
 `
+const FileInput = styled.input`
+    position: absolute;
+    display: none;
+`
 
+const AvatarImg = styled.img`
+    width: 285px;
+    height: 174px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 4px  rgba(0, 0, 0, 0.1);
+    background: #fff;
+`
 interface InputProps {
     bg?: string;
 }
@@ -73,21 +89,68 @@ interface TestInfoProps {
 export const TestInfo : React.FC<TestInfoProps> = ({ testType, testPart}) => {
 
     const history = useHistory()
+    const dispatch = useDispatch()
+
+    const testName = useSelector(state => get(state, 'tests.test.name'))
+    const testDescription = useSelector(state => get(state, 'tests.test.description'))
+    const avatarSrc = useSelector(state => get(state, 'tests.test.avatarSrc'))
 
     const handleChangeType = (testType: number, testPart?: number) => () => {
         history.replace('/create-test', {testType, testPart})
     }
 
+    const onInputChange = (e: any) => {
+        dispatch(changeTestInfo(e.target.value, e.target.name))
+    }
+
+    const onUploadImage = (e: any) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onloadend = function () {
+            dispatch(changeTestInfo([reader.result], 'avatarSrc'))
+        }
+    }
+
+    const removeImage = () => {
+        dispatch(changeTestInfo(null, 'avatarSrc'))
+    }
+
     return (
         <Wrapper>
-            <ImageUploadWrapper>
-                <img src={UploadImg} alt="upload"/>
-                <AddImg>
-                    <FaPlus />
-                    Add image
-                </AddImg>
-            </ImageUploadWrapper>
-            <Input size="small" id="outlined-basic" label="Test name" variant="outlined" />
+            {avatarSrc &&
+                <MediaWrapper width="auto">
+                    <AvatarImg src={avatarSrc} alt="Uploaded img" />
+                    <RemoveMedia onClick={removeImage}>
+                        <FaTimes />
+                    </RemoveMedia>
+                </MediaWrapper>
+            }
+            {!avatarSrc &&
+                <ImageUploadWrapper>
+                    <img src={UploadImg} alt="upload"/>
+                    <AddImg>
+                        <FaPlus />
+                        Add image
+                    </AddImg>
+                    <FileInput
+                        onChange={onUploadImage}
+                        name="imageFile"
+                        type="file"
+                        accept="image/*"
+                    />
+                </ImageUploadWrapper>
+            }
+            <Input
+                onChange={onInputChange}
+                name="name"
+                size="small"
+                id="outlined-basic"
+                label="Test name"
+                variant="outlined"
+                value={testName}
+            />
             <Grid container spacing={2}>
                 <Grid item xs={6}>
                     <Input size="small" id="outlined-basic" value={testType} select rows={4} label="Test type" variant="outlined">
@@ -114,7 +177,17 @@ export const TestInfo : React.FC<TestInfoProps> = ({ testType, testPart}) => {
                     </Grid>
                 )}
             </Grid>
-            <Input size="small" id="outlined-basic" multiline rows={2} label="Test description" variant="outlined" />
+            <Input
+                onChange={onInputChange}
+                name="description"
+                size="small"
+                id="outlined-basic"
+                multiline
+                rows={2}
+                label="Test description"
+                variant="outlined"
+                value={testDescription}
+            />
         </Wrapper>
     )
 }

@@ -17,6 +17,14 @@ const testsReducer = (state = initialState, action) => {
         ...state,
         test: action.test
       }
+    case CONSTANT.CHANGE_TEST_INFO:
+      return {
+        ...state,
+        test: {
+          ...state.test,
+          [action.data.key]: action.data.data
+        }
+      }
     default:
       return state
   }

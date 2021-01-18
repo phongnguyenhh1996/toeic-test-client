@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {
   Header,
@@ -16,13 +16,11 @@ import {
   FaPlus,
   FaBars,
   FaFileAlt,
-  FaHeadphones,
 } from "react-icons/fa";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
 import {
   Popover,
   ListItem,
-  ListItemIcon,
   List,
   ListItemText,
   Collapse,
@@ -131,23 +129,18 @@ export default function ElevateAppBar(props: Props) {
                   title = TEST_TYPE_INFO[testType].title
                 }
                 return (
-                  <>
-                    <ListItem button onClick={isTestPart ? handleClickCreateTest : navToCreateTest(testType, null)}>
-                      <ListItemIcon>
-                        <FaFileAlt />
-                      </ListItemIcon>
+                  <Fragment key={testType}>
+                    <ListItem button onClick={isTestPart ? handleClickCreateTest : navToCreateTest(testType, undefined)}>
+
                       <ListItemText primary={title} />
-                      { isTestPart && (openCreateTest ? <MdExpandLess /> : <MdExpandMore />)}
-                    </ListItem>
+                        { isTestPart && (openCreateTest ? <MdExpandLess /> : <MdExpandMore />)}
+                      </ListItem>
                     {isTestPart && testPartData && (
                       <Collapse in={openCreateTest} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
                           {Object.keys(testPartData).map((testPart: any, index: number) => {
                             return (
-                              <ListItem button onClick={navToCreateTest(testType, parseInt(testPart) )}>
-                                <ListItemIcon>
-                                  <FaHeadphones />
-                                </ListItemIcon>
+                              <ListItem key={testPart} button onClick={navToCreateTest(testType, parseInt(testPart) )}>
                                 <ListItemText primary={"Part " + (index + 1)} />
                               </ListItem>
                             )
@@ -155,7 +148,7 @@ export default function ElevateAppBar(props: Props) {
                         </List>
                       </Collapse>
                     )}
-                  </>
+                  </Fragment>
                  
             )})}
           </List>

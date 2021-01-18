@@ -50,7 +50,7 @@ export const TestSection: React.FC<TestSectionProps> = ({ type }) => {
           <TestItem />
         </Grid>
       </Grid>
-      <Grid item xs={12} wrap="nowrap">
+      <Grid item xs={12}>
         <Grid container>
           <SeeMoreBtn>See more</SeeMoreBtn>
         </Grid>
