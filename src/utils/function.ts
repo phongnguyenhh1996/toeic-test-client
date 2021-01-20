@@ -1,4 +1,4 @@
-import { get, keyBy, range } from "lodash"
+import { get, range } from "lodash"
 import { TEST_TYPE, TEST_TYPE_INFO } from "../constants"
 
 export interface Answer {
@@ -11,9 +11,12 @@ export interface Question {
     question: string
     imageSrc: any
     audioSrc: any
-    answers: Answer[]
 }
 
+export interface CorrectAnswer {
+    answerNumb: number
+    explanation: string
+}
 export interface Test {
     name: string
     description: string
@@ -22,6 +25,12 @@ export interface Test {
     avatarSrc: any
     questions: {
         [key: string]: Question
+    }
+    answers: {
+        [key: string]: Answer[]
+    }
+    correctAnswer: {
+        [key: string]: CorrectAnswer
     }
 }
 
@@ -38,19 +47,20 @@ const createAnswers = (totalAnswer: number) => {
 }
 
 const createQuestions = (partInfo: any) => {
-    
-    const questions = range(partInfo.fromNumb, partInfo.fromNumb + partInfo.totalQuestion).map(numb => {
+    const questions: any = {}
+    const answers: any = {}
+    range(partInfo.fromNumb, partInfo.fromNumb + partInfo.totalQuestion).forEach(numb => {
         const question: Question = {
             questionNumb: numb,
             question: '',
             imageSrc: null,
             audioSrc: null,
-            answers: createAnswers(partInfo.isThreeAnswer ? 3 : 4)
         }
-        return question
+        answers[numb] = createAnswers(partInfo.isThreeAnswer ? 3 : 4)
+        questions[numb] = question
     })
 
-    return questions
+    return {questions, answers}
 }
 
 export const createTestData = (testType: number, testPart: number) => {
@@ -60,24 +70,39 @@ export const createTestData = (testType: number, testPart: number) => {
         description: '',
         testType: testType,
         testPart: testPart,
-        questions: {}
+        questions: {},
+        answers: {},
+        correctAnswer: {}
     }
 
     if (testType === TEST_TYPE.PART) {
         const partInfo = get(TEST_TYPE_INFO, `${TEST_TYPE.PART}.${testPart}`)
-        const questions: Question[]= createQuestions(partInfo)
-        test.questions = keyBy(questions, o => o.questionNumb)
+        const {questions, answers} = createQuestions(partInfo)
+        test.questions = questions
+        test.answers = answers
     } else {
         const parts = get(TEST_TYPE_INFO, `${testType}.parts`, [])
-        let questions: Question[] = []
+        let questionsList: any = {}
+        let answersList: any = {}
         parts.forEach((part: number) => {
             const partInfo = get(TEST_TYPE_INFO, `${TEST_TYPE.PART}.${part}`)
-            questions = [...questions, ...createQuestions(partInfo)]
+            const {questions, answers} = createQuestions(partInfo)
+            questionsList = {...questionsList, ...questions}
+            answersList = {...answersList, ...answers}
         })
-        test.questions = keyBy(questions, o => o.questionNumb)
+        test.questions = questionsList
+        test.answers = answersList
     }
 
-
-
     return test
+}
+
+export const getFirstQuestion = (testType: number, testPart: number) => {
+    if (testType === TEST_TYPE.PART) {
+        const partInfo = get(TEST_TYPE_INFO, `${TEST_TYPE.PART}.${testPart}`)
+        return partInfo.fromNumb
+    } else {
+        const testTypeInfo = get(TEST_TYPE_INFO, `${testType}`, [])
+        return testTypeInfo.fromNumb
+    }
 }
