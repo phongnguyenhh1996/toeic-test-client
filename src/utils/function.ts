@@ -1,5 +1,5 @@
 import { get, range } from "lodash"
-import { TEST_TYPE, TEST_TYPE_INFO } from "../constants"
+import { TEST_PART, TEST_TYPE, TEST_TYPE_INFO } from "../constants"
 
 export interface Answer {
     answerNumb: number
@@ -105,4 +105,14 @@ export const getFirstQuestion = (testType: number, testPart: number) => {
         const testTypeInfo = get(TEST_TYPE_INFO, `${testType}`, [])
         return testTypeInfo.fromNumb
     }
+}
+
+export const getPartInfoFromQuestion = (questionNumb: number) => {
+    const testPartId = Object.values(TEST_PART).find(testPart => {
+        const partInfo = get(TEST_TYPE_INFO, `${TEST_TYPE.PART}.${testPart}`)
+        return (questionNumb >= partInfo.fromNumb &&
+            questionNumb < (partInfo.fromNumb + partInfo.totalQuestion))
+    })
+    
+    return get(TEST_TYPE_INFO, `${TEST_TYPE.PART}.${testPartId}`)
 }
