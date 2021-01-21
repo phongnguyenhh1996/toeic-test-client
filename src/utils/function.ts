@@ -11,6 +11,7 @@ export interface Question {
     question: string
     imageSrc: any
     audioSrc: any
+    questionGroupId?: number
 }
 
 export interface CorrectAnswer {
@@ -113,6 +114,6 @@ export const getPartInfoFromQuestion = (questionNumb: number) => {
         return (questionNumb >= partInfo.fromNumb &&
             questionNumb < (partInfo.fromNumb + partInfo.totalQuestion))
     })
-    
+
     return get(TEST_TYPE_INFO, `${TEST_TYPE.PART}.${testPartId}`)
 }

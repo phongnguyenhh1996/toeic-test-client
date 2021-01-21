@@ -1,6 +1,7 @@
 import * as CONSTANT from "../constants";
 import {getFirstQuestion} from '../utils/function';
 import produce from "immer"
+import { set } from "lodash"
 
 const initialState = {
   currentQuestion: 1,
@@ -26,6 +27,9 @@ const testsReducer = (state = initialState, action) =>
       case CONSTANT.CHANGE_ANSWER_DATA:
         draft.test.answers[action.data.questionNumb][action.data.answerNumb].answer = action.data.data
         break
+      case CONSTANT.CHANGE_CORRECTION_DATA:
+         set(draft.test.correctAnswer, `${action.data.questionNumb}.${action.data.key}`, action.data.data)
+         break
       default:
         break
     }

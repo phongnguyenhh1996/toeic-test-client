@@ -48,40 +48,54 @@ export const TEST_TYPE_INFO = {
     },
     [TEST_TYPE.PART]: {
         [TEST_PART.PART_1]: {
+            description: 'Look at the picture and listen to the sentences. Choose the sentence that best describes the picture:',
             partNumb: TEST_PART.PART_1,
             totalQuestion: 6,
             fromNumb: 1
         },
         [TEST_PART.PART_2]: {
+            description: 'Listen to the question and the three responses. Choose the response that best answers the question:',
             partNumb: TEST_PART.PART_2,
             totalQuestion: 25,
             fromNumb: 7,
             isThreeAnswer: true
         },
         [TEST_PART.PART_3]: {
+            description: 'Listen to the dialogue. Then read each question and choose the best answer:',
             partNumb: TEST_PART.PART_3,
             totalQuestion: 39,
             fromNumb: 32
         },
         [TEST_PART.PART_4]: {
+            description: 'Listen to the talk. Then read each question and choose the best answer:',
             partNumb: TEST_PART.PART_4,
             totalQuestion: 30,
             fromNumb: 71,
         },
         [TEST_PART.PART_5]: {
+            description: 'Choose the word that best completes the sentence:',
             partNumb: TEST_PART.PART_5,
             totalQuestion: 30,
             fromNumb: 101
         },
         [TEST_PART.PART_6]: {
+            description: 'Choose the word or phrase that best completes the blanks:',
             partNumb: TEST_PART.PART_6,
             totalQuestion: 16,
             fromNumb: 131
         },
         [TEST_PART.PART_7]: {
+            description: 'Read the passage and choose the correct answer:',
             partNumb: TEST_PART.PART_7,
             totalQuestion: 54,
             fromNumb:147
         }
     }
+}
+
+export const ALPHABEL_ANSWER: {[key: number]: string} = {
+  1: 'A',
+  2: 'B',
+  3: 'C',
+  4: 'D'
 }

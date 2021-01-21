@@ -6,8 +6,8 @@ import { useLocation } from 'react-router-dom'
 import { changeQuestionData, initTest } from '../../actions/tests'
 import CustomButton from '../../components/CustomButton'
 import { Player } from '../../components/Player'
-import { createTestData, Question as IQuestion } from '../../utils/function'
-import { MapNavigator } from './components/Navigator'
+import { createTestData, Question as IQuestion, getPartInfoFromQuestion } from '../../utils/function'
+import MapNavigator from './components/Navigator'
 import { Question } from './components/Question'
 import { TestInfo } from './components/TestInfo'
 import { UploadFile } from './components/UploadFile'
@@ -20,17 +20,17 @@ const CreateTest: React.FC = () => {
 
   const testType = get(location, 'state.testType')
   const testPart = get(location, 'state.testPart')
-  
+
   const currentQuestionNumb = useSelector(state => get(state, `tests.currentQuestion`))
 
   const currentQuestion = useSelector(state => get(state, `tests.test.questions.${currentQuestionNumb}`, {})) as IQuestion
   const currentAnswers = useSelector(state => get(state, `tests.test.answers.${currentQuestionNumb}`, {}))
   const currentCorrectAnswer = useSelector(state => get(state, `tests.test.correctAnswer.${currentQuestionNumb}`, {}))
-  
+
   useEffect(() => {
     const test = createTestData(testType, testPart)
     dispatch(initTest(test))
-    
+
   }, [testType, testPart, dispatch])
 
   const onUploadImage = (result: any) => {
@@ -45,6 +45,8 @@ const CreateTest: React.FC = () => {
     dispatch(changeQuestionData(null, key, currentQuestionNumb))
   }
 
+  const partInfo = getPartInfoFromQuestion(currentQuestionNumb)
+
   return (
     <Wrapper>
       <SideContainer>
@@ -57,7 +59,7 @@ const CreateTest: React.FC = () => {
       </SideContainer>
       <MainContainer>
         <PartDescription>
-          Look at the picture and listen to the sentences. Choose the sentence that best describes the picture:
+          Part {partInfo.partNumb + 1} - {partInfo.description}
         </PartDescription>
         <UploadWrapper isRowDirection={!currentQuestion.audioSrc && !currentQuestion.imageSrc}>
           {currentQuestion.audioSrc ?

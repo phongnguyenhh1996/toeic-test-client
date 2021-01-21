@@ -7,6 +7,8 @@ import { changeAnswerData, changeCorrectAnswerData, changeQuestionData } from '.
 import { Question as IQuestion, Answer as IAnswer, CorrectAnswer as ICorrectAnswer} from '../../../utils/function'
 import { theme } from '../../../utils/theme'
 import { Input, Wrapper } from './TestInfo'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import { ALPHABEL_ANSWER } from '../../../constants'
 
 const Header = styled.div`
     height: 50px;
@@ -93,16 +95,20 @@ export const Question : React.FC<QuestionProps> = ({question, answers, correctAn
 
     const dispatch = useDispatch()
 
-    const onChange = (type: string) => (e: any) => {
+    const onChange = (type: string, answerNumb?: number) => (e: any) => {
         switch (type) {
-            case 'question': 
+            case 'question':
                 dispatch(changeQuestionData(e.target.value, e.target.name, question.questionNumb))
                 break
             case 'answer':
                 dispatch(changeAnswerData(e.target.value, parseInt(e.target.name), question.questionNumb))
                 break
             case 'correctAnswer':
-                dispatch(changeCorrectAnswerData(e.target.value, e.target.name, question.questionNumb))
+                dispatch(changeCorrectAnswerData(
+                  e.target.name === 'answerNumb' ? answerNumb : e.target.value,
+                  e.target.name,
+                  question.questionNumb
+                ))
                 break
             default:
                 return
@@ -133,6 +139,9 @@ export const Question : React.FC<QuestionProps> = ({question, answers, correctAn
                 {Object.values(answers).map(answer => (
                     <AnswerWrapper key={answer.answerNumb}>
                         <CheckboxPrimary
+                            checked={correctAnswer.answerNumb === answer.answerNumb}
+                            onChange={onChange('correctAnswer', answer.answerNumb)}
+                            name='answerNumb'
                             color="default"
                             icon={<FaCheckCircle />}
                             checkedIcon={<FaCheckCircle />}
@@ -146,9 +155,11 @@ export const Question : React.FC<QuestionProps> = ({question, answers, correctAn
                             multiline
                             fullWidth
                             rowsMax={3}
-                            label={"Answer " + answer.answerNumb}
                             variant="outlined"
                             placeholder="Write your answer here"
+                            InputProps={{
+                              startAdornment: <InputAdornment position="start">{ALPHABEL_ANSWER[answer.answerNumb]}.</InputAdornment>,
+                            }}
                         />
                     </AnswerWrapper>
                 ))}

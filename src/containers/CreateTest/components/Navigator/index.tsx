@@ -6,12 +6,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { scroller } from 'react-scroll'
 
-import { goToQuestion } from '../../../actions/tests'
-import { TEST_TYPE, TEST_TYPE_INFO } from '../../../constants'
-import { getFirstQuestion, getPartInfoFromQuestion } from '../../../utils/function'
-import { theme } from '../../../utils/theme'
-import { Wrapper } from './TestInfo'
-import { usePrevious } from '../../../utils/hooks'
+import { goToQuestion } from '../../../../actions/tests'
+import { TEST_TYPE, TEST_TYPE_INFO } from '../../../../constants'
+import { getFirstQuestion, getPartInfoFromQuestion } from '../../../../utils/function'
+import { theme } from '../../../../utils/theme'
+import { Wrapper } from '../TestInfo'
+import { usePrevious } from '../../../../utils/hooks'
 import QuestionContainer from './QuestionContainer'
 import QuestionItemLink from './QuestionItemLink'
 
@@ -56,7 +56,7 @@ interface NavigationProps {
     testPart: number
 }
 
-export const MapNavigator: React.FC<NavigationProps> = ({ testType, testPart }) => {
+const MapNavigator: React.FC<NavigationProps> = ({ testType, testPart }) => {
 
     const dispatcher = useDispatch()
     const currentQuestionNumb = useSelector(state => get(state, 'tests.currentQuestion'))
@@ -153,7 +153,9 @@ export const MapNavigator: React.FC<NavigationProps> = ({ testType, testPart }) 
                     </QuestionItemLink>
                 ))}
             </QuestionContainer>
-            
+
         </Wrapper>
     )
 }
+
+export default MapNavigator

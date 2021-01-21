@@ -2,11 +2,11 @@ import Grid from '@material-ui/core/Grid';
 import React from 'react'
 import { ScrollElement } from 'react-scroll';
 import styled from 'styled-components';
-import { theme } from '../../../utils/theme';
+import { theme } from '../../../../utils/theme';
 
 const GridQuestions = styled(Grid)`
     position: relative;
-    height: calc(100vh - 615px);
+    max-height: calc(100vh - 615px);
     overflow: auto;
     &::-webkit-scrollbar-track {
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);

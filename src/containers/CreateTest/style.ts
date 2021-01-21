@@ -12,7 +12,6 @@ export const MainContainer = styled.div`
     width: 660px;
     display: flex;
     flex-direction: column;
-    height: 3000px;
     position: relative;
     z-index: 2;
 `
