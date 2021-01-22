@@ -36,14 +36,8 @@ export const UploadFile : React.FC<Props> = ({ type, onLoadedFile }) => {
 
 
     const onUploadImage = (e: any) => {
-        console.log(e.target.files[0]);
         const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-
-        reader.onloadend = function () {
-            onLoadedFile([reader.result])
-        }
+        onLoadedFile(file)
     }
 
     const renderContent = (type: string) => {

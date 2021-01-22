@@ -35,7 +35,6 @@ export const Player : React.FC<PlayerProps> = ({src}) => {
       <AudioPlayerStyled
         autoPlay
         src={src}
-        onPlay={e => console.log("onPlay")}
         layout="horizontal-reverse"
         customVolumeControls={[]}
         customAdditionalControls={[]}

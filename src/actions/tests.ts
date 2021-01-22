@@ -1,9 +1,10 @@
 import {
+  ADD_NEW_QUESTION_TO_GROUP,
   CHANGE_ANSWER_DATA,
   CHANGE_CORRECTION_DATA,
   CHANGE_QUESTION_DATA,
   CHANGE_TEST_INFO,
-  GO_TO_QUESTION, INIT_TEST
+  GO_TO_QUESTION, INIT_TEST, REMOVE_QUESTION_FROM_GROUP
 } from "../constants";
 import { Test } from "../utils/function";
 
@@ -60,6 +61,25 @@ export const changeCorrectAnswerData = (data: any, key: string, questionNumb: nu
       data,
       key,
       questionNumb
+    }
+  }
+}
+
+export const addNewQuestionToGroup = (questionNumb: number, groupQuestionId?: number) => {
+  return {
+    type: ADD_NEW_QUESTION_TO_GROUP,
+    data: {
+      questionNumb: questionNumb,
+      groupQuestionId
+    }
+  }
+}
+
+export const removeQuestionFromGroup = (groupQuestionId: number) => {
+  return {
+    type: REMOVE_QUESTION_FROM_GROUP,
+    data: {
+      groupQuestionId
     }
   }
 }

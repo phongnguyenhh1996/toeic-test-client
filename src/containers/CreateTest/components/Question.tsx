@@ -7,7 +7,6 @@ import { changeAnswerData, changeCorrectAnswerData, changeQuestionData } from '.
 import { Question as IQuestion, Answer as IAnswer, CorrectAnswer as ICorrectAnswer} from '../../../utils/function'
 import { theme } from '../../../utils/theme'
 import { Input, Wrapper } from './TestInfo'
-import InputAdornment from '@material-ui/core/InputAdornment'
 import { ALPHABEL_ANSWER } from '../../../constants'
 
 const Header = styled.div`
@@ -46,7 +45,7 @@ const AnswerWrapper = styled.div`
     display: flex;
     align-items: flex-start;
     margin-left: -10px;
-    margin-top: 5px;
+    margin-top: 10px;
 `
 
 const CheckboxPrimary = styled(Checkbox)`
@@ -89,9 +88,10 @@ interface QuestionProps {
     question: IQuestion
     answers: IAnswer[]
     correctAnswer: ICorrectAnswer
+    onClick?: () => void
 }
 
-export const Question : React.FC<QuestionProps> = ({question, answers, correctAnswer}) => {
+export const Question : React.FC<QuestionProps> = ({question, answers, correctAnswer, onClick}) => {
 
     const dispatch = useDispatch()
 
@@ -116,13 +116,14 @@ export const Question : React.FC<QuestionProps> = ({question, answers, correctAn
     }
 
     return (
-        <WrapperQuestion>
+        <WrapperQuestion onClick={onClick}>
             <Header>
                 <HeaderTitle>Question {question.questionNumb}</HeaderTitle>
                 <HeaderMenuIcon/>
             </Header>
             <Content>
                 <Input
+                    InputLabelProps={{ shrink: true }}
                     onChange={onChange("question")}
                     value={question.question}
                     name="question"
@@ -147,6 +148,7 @@ export const Question : React.FC<QuestionProps> = ({question, answers, correctAn
                             checkedIcon={<FaCheckCircle />}
                         />
                         <Input
+                            InputLabelProps={{ shrink: true }}
                             onChange={onChange('answer')}
                             name={(answer.answerNumb - 1).toString()}
                             value={answer.answer}
@@ -155,11 +157,9 @@ export const Question : React.FC<QuestionProps> = ({question, answers, correctAn
                             multiline
                             fullWidth
                             rowsMax={3}
+                            label={`Answer ${ALPHABEL_ANSWER[answer.answerNumb]}`}
                             variant="outlined"
                             placeholder="Write your answer here"
-                            InputProps={{
-                              startAdornment: <InputAdornment position="start">{ALPHABEL_ANSWER[answer.answerNumb]}.</InputAdornment>,
-                            }}
                         />
                     </AnswerWrapper>
                 ))}

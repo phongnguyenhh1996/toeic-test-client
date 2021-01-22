@@ -29,7 +29,6 @@ const Login: React.FC<LoginProps> = () => {
 
   const location = useLocation();
   const isLoginPage = location.pathname === '/login'
-  console.log(isLoginPage);
 
 
   return (

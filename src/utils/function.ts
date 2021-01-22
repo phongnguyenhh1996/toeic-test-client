@@ -7,6 +7,7 @@ export interface Answer {
 }
 
 export interface Question {
+    [key: string]: any
     questionNumb: number
     question: string
     imageSrc: any
@@ -19,6 +20,7 @@ export interface CorrectAnswer {
     explanation: string
 }
 export interface Test {
+    [key: string]: any
     name: string
     description: string
     testType: number
