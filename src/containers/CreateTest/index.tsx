@@ -29,7 +29,7 @@ const CreateTest: React.FC = () => {
   const testPart = get(location, 'state.testPart')
 
   const [media, setMedia] = useState({ audio: undefined, image: undefined })
-  
+
 
   const currentQuestionNumb = useSelector(state => get(state, `tests.currentQuestion`))
   const currentQuestion = useSelector(state => get(state, `tests.test.questions.${currentQuestionNumb}`, {})) as IQuestion
@@ -37,7 +37,7 @@ const CreateTest: React.FC = () => {
   const questionList = useSelector(state => get(state, `tests.test.questions`, {})) as {[key: string]: IQuestion}
   const answerList = useSelector(state => get(state, `tests.test.answers`, {})) as {[key: string]: IAnswer[]}
   const correctAnswerList = useSelector(state => get(state, `tests.test.correctAnswer`, {})) as {[key: string]: ICorrectAnswer}
-  
+
   const listQuestionGroup = useMemo(() => {
     if (currentQuestion.questionGroupId) {
       const currentGroupQuestion = groupQuestion[currentQuestion.questionGroupId]
@@ -70,7 +70,7 @@ const CreateTest: React.FC = () => {
     }
   }
 
-  useEffect(() => { 
+  useEffect(() => {
     if (prevAudioFile && !audioFile) {
       setMedia(media => ({...media, audio: undefined}))
     }
@@ -130,7 +130,7 @@ const CreateTest: React.FC = () => {
     }
     if (questionData.length >= 2) {
       const numbCheck = questionData[0].question.questionGroupId as number + questionData.length - 1
-      
+
       const partInfo = getPartInfoFromQuestion(numbCheck)
       const lastQuestionNumb = partInfo.totalQuestion + partInfo.fromNumb - 1
       if (numbCheck === lastQuestionNumb) {
@@ -152,7 +152,7 @@ const CreateTest: React.FC = () => {
         <SideInner>
           <SideContent>
             <TestInfo testType={testType} testPart={testPart}/>
-            <MapNavigator testType={testType} testPart={testPart}/>
+            <MapNavigator groupQuestion={groupQuestion} testType={testType} testPart={testPart}/>
           </SideContent>
         </SideInner>
       </SideContainer>

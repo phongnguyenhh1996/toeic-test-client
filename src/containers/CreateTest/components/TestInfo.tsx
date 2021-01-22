@@ -91,8 +91,8 @@ export const TestInfo : React.FC<TestInfoProps> = ({ testType, testPart}) => {
     const history = useHistory()
     const dispatch = useDispatch()
 
-    const testName = useSelector(state => get(state, 'tests.test.name'))
-    const testDescription = useSelector(state => get(state, 'tests.test.description'))
+    const testName = useSelector(state => get(state, 'tests.test.name', ''))
+    const testDescription = useSelector(state => get(state, 'tests.test.description', ''))
     const avatarSrc = useSelector(state => get(state, 'tests.test.avatarSrc'))
 
     const handleChangeType = (testType: number, testPart?: number) => () => {
