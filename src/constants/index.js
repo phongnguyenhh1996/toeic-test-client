@@ -2,6 +2,9 @@
 export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
 export const USER_LOGIN_FAILED = 'USER_LOGIN_FAILED';
+export const USER_REGISTER_REQUEST = 'USER_REGISTER_REQUEST';
+export const USER_REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS';
+export const USER_REGISTER_FAILED = 'USER_REGISTER_FAILED';
 export const GO_TO_QUESTION = 'GO_TO_QUESTION';
 export const INIT_TEST = 'INIT_TEST';
 export const CHANGE_TEST_INFO = 'CHANGE_TEST_INFO';
@@ -72,7 +75,7 @@ export const TEST_TYPE_INFO = {
         },
         [TEST_PART.PART_7]: {
             totalQuestion: 54,
-            fromNumb:147
+            fromNumb: 147
         }
     }
 }

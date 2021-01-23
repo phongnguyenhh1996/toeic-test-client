@@ -72,19 +72,18 @@ export const LoginForm : React.FC = () => {
             history.push('/')
           },
           onFailure: () => {
-            
+            // hiện thông báo lỗi
+          },
+          onFinish: () => {
+            // hiện thông báo lỗi
           }
         }))
       }
-
-      
-     
     }
 
     const handleInput = (e: any) => {
       setUserInfo({...userInfo, [e.target.name]: e.target.value})
       console.log(e.target.name, e.target.value);
-
     }
 
     return (

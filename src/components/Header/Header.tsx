@@ -13,7 +13,11 @@ export interface UserInfo {
   username: string,
   password: string
 }
-
+export interface UserInfoRegister{
+  username: string,
+  password: string,
+  email:string;
+}
 interface HeaderProps {
   userLogin(userInfor: UserInfo, push: any): void
   user: any
