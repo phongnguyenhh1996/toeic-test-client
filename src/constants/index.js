@@ -8,7 +8,9 @@ export const USER_REGISTER_FAILED = 'USER_REGISTER_FAILED';
 export const GO_TO_QUESTION = 'GO_TO_QUESTION';
 export const INIT_TEST = 'INIT_TEST';
 export const CHANGE_TEST_INFO = 'CHANGE_TEST_INFO';
-
+export const CHANGE_QUESTION_DATA = 'CHANGE_QUESTION_DATA';
+export const CHANGE_ANSWER_DATA = 'CHANGE_ANSWER_DATA';
+export const CHANGE_CORRECTION_DATA = 'CHANGE_CORRECTION_DATA';
 //
 
 export const TEST_TYPE = {
@@ -49,31 +51,38 @@ export const TEST_TYPE_INFO = {
     },
     [TEST_TYPE.PART]: {
         [TEST_PART.PART_1]: {
+            partNumb: TEST_PART.PART_1,
             totalQuestion: 6,
             fromNumb: 1
         },
         [TEST_PART.PART_2]: {
+            partNumb: TEST_PART.PART_2,
             totalQuestion: 25,
             fromNumb: 7,
             isThreeAnswer: true
         },
         [TEST_PART.PART_3]: {
+            partNumb: TEST_PART.PART_3,
             totalQuestion: 39,
             fromNumb: 32
         },
         [TEST_PART.PART_4]: {
+            partNumb: TEST_PART.PART_4,
             totalQuestion: 30,
             fromNumb: 71,
         },
         [TEST_PART.PART_5]: {
+            partNumb: TEST_PART.PART_5,
             totalQuestion: 30,
             fromNumb: 101
         },
         [TEST_PART.PART_6]: {
+            partNumb: TEST_PART.PART_6,
             totalQuestion: 16,
             fromNumb: 131
         },
         [TEST_PART.PART_7]: {
+            partNumb: TEST_PART.PART_7,
             totalQuestion: 54,
             fromNumb: 147
         }

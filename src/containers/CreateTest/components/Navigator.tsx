@@ -1,31 +1,19 @@
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
-import Grid from '@material-ui/core/Grid'
 import { get, range } from 'lodash'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { scroller } from 'react-scroll'
+
 import { goToQuestion } from '../../../actions/tests'
 import { TEST_TYPE, TEST_TYPE_INFO } from '../../../constants'
+import { getFirstQuestion, getPartInfoFromQuestion } from '../../../utils/function'
 import { theme } from '../../../utils/theme'
 import { Wrapper } from './TestInfo'
-
-const GridQuestions = styled(Grid)`
-    max-height: calc(100vh - 615px);
-    overflow: auto;
-    &::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-        background-color: #F5F5F5;
-    }
-    &::-webkit-scrollbar {
-        width: 2px;
-        background-color: #F5F5F5;
-    }
-
-    &::-webkit-scrollbar-thumb {
-	    background-color: ${theme.textPrimary2};
-    }
-`
+import { usePrevious } from '../../../utils/hooks'
+import QuestionContainer from './QuestionContainer'
+import QuestionItemLink from './QuestionItemLink'
 
 const ButtonPrimary = styled(Button)`
     font-size: 11px;
@@ -38,13 +26,6 @@ const ButtonPrimary = styled(Button)`
 
 const PartGroup = styled(ButtonGroup)`
     margin-bottom: 15px;
-`
-
-const QuestionWrapper = styled(Grid)`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
 `
 
 const Question = styled(Button)`
@@ -78,13 +59,32 @@ interface NavigationProps {
 export const MapNavigator: React.FC<NavigationProps> = ({ testType, testPart }) => {
 
     const dispatcher = useDispatch()
-    const currentQuestion = useSelector(state => get(state, 'tests.currentQuestion'))
+    const currentQuestionNumb = useSelector(state => get(state, 'tests.currentQuestion'))
+    const prevCurrentQuestion = usePrevious(currentQuestionNumb)
+
+    useEffect(() => {
+        if (currentQuestionNumb !== prevCurrentQuestion) {
+            scroller.scrollTo(currentQuestionNumb.toString(), {
+                duration: 500,
+                delay: 0,
+                smooth: true,
+                containerId: 'containerElement',
+            })
+        }
+    }, [currentQuestionNumb, prevCurrentQuestion])
 
     const handleClickQuestion = (item: number) => () => {
         dispatcher(goToQuestion(item))
     }
 
+    const goToPart = (partNumb: number) => () => {
+        const questionToGo = getFirstQuestion(TEST_TYPE.PART, partNumb)
+        dispatcher(goToQuestion(questionToGo))
+    }
+
     const renderPartNav = () => {
+        const partInfo = getPartInfoFromQuestion(currentQuestionNumb)
+
         if (testType === TEST_TYPE.PART) {
             const title = `Part ${testPart + 1}`
 
@@ -100,7 +100,13 @@ export const MapNavigator: React.FC<NavigationProps> = ({ testType, testPart }) 
                         <PartGroup aria-label="outlined button group">
                             {range(1, 5).map(numb => {
                                 return (
-                                    <ButtonPrimary key={numb}>Part {numb}</ButtonPrimary>
+                                    <ButtonPrimary
+                                        onClick={goToPart(numb-1)}
+                                        variant={partInfo.partNumb === numb - 1 ? 'contained' : 'outlined'}
+                                        key={numb}
+                                    >
+                                        Part {numb}
+                                    </ButtonPrimary>
                                 )
                             })}
                         </PartGroup>
@@ -109,7 +115,13 @@ export const MapNavigator: React.FC<NavigationProps> = ({ testType, testPart }) 
                         <PartGroup aria-label="outlined button group">
                             {range(5, 8).map(numb => {
                                 return (
-                                    <ButtonPrimary key={numb}>Part {numb}</ButtonPrimary>
+                                    <ButtonPrimary
+                                        onClick={goToPart(numb-1)}
+                                        variant={partInfo.partNumb === numb - 1 ? 'contained' : 'outlined'}
+                                        key={numb}
+                                    >
+                                        Part {numb}
+                                    </ButtonPrimary>
                                 )
                             })}
                         </PartGroup>
@@ -129,19 +141,19 @@ export const MapNavigator: React.FC<NavigationProps> = ({ testType, testPart }) 
     return (
         <Wrapper>
             {renderPartNav()}
-            <GridQuestions container spacing={0}>
+            <QuestionContainer name="containerElement" id="containerElement" container spacing={0}>
                 {range(startQuestion, endQuestion).map(item => (
-                    <QuestionWrapper key={item} item xs={2}>
+                    <QuestionItemLink name={item.toString()} key={item} item xs={2}>
                         <Question
                             onClick={handleClickQuestion(item)}
-                            variant={item === currentQuestion ? "contained" : "outlined"}
+                            variant={item === currentQuestionNumb ? "contained" : "outlined"}
                         >
                             {item}
                         </Question>
-                    </QuestionWrapper>
+                    </QuestionItemLink>
                 ))}
-
-            </GridQuestions>
+            </QuestionContainer>
+            
         </Wrapper>
     )
 }

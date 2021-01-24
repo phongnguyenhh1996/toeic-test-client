@@ -1,4 +1,7 @@
 import {
+  CHANGE_ANSWER_DATA,
+  CHANGE_CORRECTION_DATA,
+  CHANGE_QUESTION_DATA,
   CHANGE_TEST_INFO,
   GO_TO_QUESTION, INIT_TEST
 } from "../constants";
@@ -24,6 +27,39 @@ export const changeTestInfo = (data: any, key: 'name' | 'description' | 'avatarS
     data: {
       data,
       key
+    }
+  }
+}
+
+export const changeQuestionData = (data: any, key: string, questionNumb: number) => {
+  return {
+    type: CHANGE_QUESTION_DATA,
+    data: {
+      data,
+      key,
+      questionNumb
+    }
+  }
+}
+
+export const changeAnswerData = (data: any, answerNumb: number, questionNumb: number) => {
+  return {
+    type: CHANGE_ANSWER_DATA,
+    data: {
+      data,
+      answerNumb, 
+      questionNumb
+    }
+  }
+}
+
+export const changeCorrectAnswerData = (data: any, key: string, questionNumb: number) => {
+  return {
+    type: CHANGE_CORRECTION_DATA,
+    data: {
+      data,
+      key,
+      questionNumb
     }
   }
 }

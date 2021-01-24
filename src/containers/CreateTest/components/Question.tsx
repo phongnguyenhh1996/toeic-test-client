@@ -1,8 +1,10 @@
 import Checkbox from '@material-ui/core/Checkbox'
-import { range } from 'lodash'
 import React from 'react'
 import { FaCheckCircle, FaEllipsisV } from 'react-icons/fa'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { changeAnswerData, changeCorrectAnswerData, changeQuestionData } from '../../../actions/tests'
+import { Question as IQuestion, Answer as IAnswer, CorrectAnswer as ICorrectAnswer} from '../../../utils/function'
 import { theme } from '../../../utils/theme'
 import { Input, Wrapper } from './TestInfo'
 
@@ -81,16 +83,43 @@ export const ExplanationHeading = styled.div<ExplanationHeadingProps>`
         color: ${theme.textDark2};
     }
 `
+interface QuestionProps {
+    question: IQuestion
+    answers: IAnswer[]
+    correctAnswer: ICorrectAnswer
+}
 
-export const Question : React.FC= () => {
+export const Question : React.FC<QuestionProps> = ({question, answers, correctAnswer}) => {
+
+    const dispatch = useDispatch()
+
+    const onChange = (type: string) => (e: any) => {
+        switch (type) {
+            case 'question': 
+                dispatch(changeQuestionData(e.target.value, e.target.name, question.questionNumb))
+                break
+            case 'answer':
+                dispatch(changeAnswerData(e.target.value, parseInt(e.target.name), question.questionNumb))
+                break
+            case 'correctAnswer':
+                dispatch(changeCorrectAnswerData(e.target.value, e.target.name, question.questionNumb))
+                break
+            default:
+                return
+        }
+    }
+
     return (
         <WrapperQuestion>
             <Header>
-                <HeaderTitle>Question 1</HeaderTitle>
+                <HeaderTitle>Question {question.questionNumb}</HeaderTitle>
                 <HeaderMenuIcon/>
             </Header>
             <Content>
                 <Input
+                    onChange={onChange("question")}
+                    value={question.question}
+                    name="question"
                     size="small"
                     id="outlined-basic"
                     multiline
@@ -101,20 +130,23 @@ export const Question : React.FC= () => {
                     placeholder="Write your question here"
                 />
 
-                {range(1, 5).map(numb => (
-                    <AnswerWrapper key={numb}>
+                {Object.values(answers).map(answer => (
+                    <AnswerWrapper key={answer.answerNumb}>
                         <CheckboxPrimary
                             color="default"
                             icon={<FaCheckCircle />}
                             checkedIcon={<FaCheckCircle />}
                         />
                         <Input
+                            onChange={onChange('answer')}
+                            name={(answer.answerNumb - 1).toString()}
+                            value={answer.answer}
                             size="small"
                             id="outlined-basic"
                             multiline
                             fullWidth
                             rowsMax={3}
-                            label={"Answer " + numb}
+                            label={"Answer " + answer.answerNumb}
                             variant="outlined"
                             placeholder="Write your answer here"
                         />
@@ -122,6 +154,9 @@ export const Question : React.FC= () => {
                 ))}
                 <ExplanationHeading text="Answer explanation (optional)"/>
                 <Input
+                    name="explanation"
+                    onChange={onChange('correctAnswer')}
+                    value={correctAnswer.explanation}
                     bg="#E4E4E4"
                     size="small"
                     id="outlined-basic"
