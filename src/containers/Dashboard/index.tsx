@@ -11,10 +11,11 @@ import { SectionStatics } from "./components/SectionStatics";
 import clsx from "clsx";
 import CustomButton from "../../components/CustomButton";
 import { TestSection } from "./components/TestSection";
+import { useSelector } from "react-redux";
 
 const Dashboard: React.FC = () => {
   const percent = 75;
-
+  const dataUser = useSelector((state:any) => state.user.detail);
   return (
     <Container fixed>
       <Grid container spacing={2}>
@@ -102,7 +103,7 @@ const Dashboard: React.FC = () => {
                 }}
               ></div>
               <div className="info-wrapper">
-                <p className="name">Phong Nguyen</p>
+                <p className="name">{dataUser.username}</p>
                 <p className="role">Student</p>
                 <CustomButton theme="green" className="edit-btn">
                   Edit profile
