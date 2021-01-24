@@ -11,10 +11,12 @@ import store from "./store";
 import RouterCustom from './routes'
 import { Reset } from 'styled-reset'
 import { Normalize } from 'styled-normalize'
+import { SnackbarProvider } from 'notistack';
 
 export default function App() {
   return (
-    <Provider store={store}>
+    <SnackbarProvider maxSnack={3}>
+      <Provider store={store}>
       <Reset />
       <Normalize />
       <StylesProvider injectFirst>
@@ -23,6 +25,7 @@ export default function App() {
         </Router>
       </StylesProvider>
     </Provider>
+    </SnackbarProvider>
   );
 }
 
