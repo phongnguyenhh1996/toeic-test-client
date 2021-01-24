@@ -1,9 +1,13 @@
 import {
+  ADD_NEW_QUESTION_TO_GROUP,
   CHANGE_ANSWER_DATA,
   CHANGE_CORRECTION_DATA,
   CHANGE_QUESTION_DATA,
   CHANGE_TEST_INFO,
-  GO_TO_QUESTION, INIT_TEST
+  CREATE_TEST_FAILED,
+  CREATE_TEST_REQUEST,
+  CREATE_TEST_SUCCESS,
+  GO_TO_QUESTION, INIT_TEST, REMOVE_QUESTION_FROM_GROUP
 } from "../constants";
 import { Test } from "../utils/function";
 
@@ -61,5 +65,42 @@ export const changeCorrectAnswerData = (data: any, key: string, questionNumb: nu
       key,
       questionNumb
     }
+  }
+}
+
+export const addNewQuestionToGroup = (questionNumb: number, groupQuestionId?: number) => {
+  return {
+    type: ADD_NEW_QUESTION_TO_GROUP,
+    data: {
+      questionNumb: questionNumb,
+      groupQuestionId
+    }
+  }
+}
+
+export const removeQuestionFromGroup = (groupQuestionId: number) => {
+  return {
+    type: REMOVE_QUESTION_FROM_GROUP,
+    data: {
+      groupQuestionId
+    }
+  }
+}
+
+export const createTestRequest = () => {
+  return {
+    type: CREATE_TEST_REQUEST
+  }
+}
+
+export const createTestSuccess = () => {
+  return {
+    type: CREATE_TEST_SUCCESS
+  }
+}
+
+export const createTestFailed = () => {
+  return {
+    type: CREATE_TEST_FAILED
   }
 }

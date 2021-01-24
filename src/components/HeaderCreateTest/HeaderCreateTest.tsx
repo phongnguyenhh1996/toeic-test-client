@@ -7,10 +7,24 @@ import {
 import CustomButton from "../CustomButton";
 import { Logo } from "../Logo";
 import { LogoWrapper } from "../HeaderDashboard/Header.styled";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createTestRequest } from "../../actions/tests";
 
 interface Props { }
 
 export default function HeaderCreateTest(props: Props) {
+
+  const history = useHistory()
+  const dispatch = useDispatch()
+
+  const handleExit = () => {
+    history.goBack()
+  }
+
+  const handleSubmitTest = () => {
+    dispatch(createTestRequest())
+  }
 
   return (
     <React.Fragment>
@@ -20,10 +34,10 @@ export default function HeaderCreateTest(props: Props) {
           <Logo width="145px"/>
         </LogoWrapper>
         <ButtonWrapper>
-          <CustomButton theme="green-solid-no-shadow">
+          <CustomButton onClick={handleExit} theme="green-solid-no-shadow">
             EXIT
           </CustomButton>
-          <CustomButton theme="white">
+          <CustomButton onClick={handleSubmitTest} theme="white">
             DONE
           </CustomButton>
         </ButtonWrapper>

@@ -6,14 +6,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { scroller } from 'react-scroll'
 
-import { goToQuestion } from '../../../actions/tests'
-import { TEST_TYPE, TEST_TYPE_INFO } from '../../../constants'
-import { getFirstQuestion, getPartInfoFromQuestion } from '../../../utils/function'
-import { theme } from '../../../utils/theme'
-import { Wrapper } from './TestInfo'
-import { usePrevious } from '../../../utils/hooks'
+import { goToQuestion } from '../../../../actions/tests'
+import { TEST_TYPE, TEST_TYPE_INFO } from '../../../../constants'
+import { getFirstQuestion, getPartInfoFromQuestion, Question as IQuestion } from '../../../../utils/function'
+import { theme } from '../../../../utils/theme'
+import { Wrapper } from '../TestInfo'
+import { usePrevious } from '../../../../utils/hooks'
 import QuestionContainer from './QuestionContainer'
 import QuestionItemLink from './QuestionItemLink'
+import { IGroupQuestion } from '../../../../reducers/tests'
 
 const ButtonPrimary = styled(Button)`
     font-size: 11px;
@@ -27,8 +28,11 @@ const ButtonPrimary = styled(Button)`
 const PartGroup = styled(ButtonGroup)`
     margin-bottom: 15px;
 `
+interface IQuestionStyled {
+  $isGroupQuestion: boolean
+}
 
-const Question = styled(Button)`
+const Question = styled(Button)<IQuestionStyled>`
     color: ${theme.textDarkPrimary};
     min-width: 30px;
     width: 35px;
@@ -38,6 +42,7 @@ const Question = styled(Button)`
     align-items: center;
     justify-content: center;
     padding: 3px;
+    background-color: ${props => props.$isGroupQuestion ? theme.backgroundPaginationBtn : 'initial'};
     .MuiTouchRipple-root {
         width: 35px;
         height: 35px;
@@ -54,13 +59,16 @@ const Question = styled(Button)`
 interface NavigationProps {
     testType: number
     testPart: number
+    groupQuestion: IGroupQuestion
 }
 
-export const MapNavigator: React.FC<NavigationProps> = ({ testType, testPart }) => {
+const MapNavigator: React.FC<NavigationProps> = ({ testType, testPart, groupQuestion }) => {
 
     const dispatcher = useDispatch()
-    const currentQuestionNumb = useSelector(state => get(state, 'tests.currentQuestion'))
+    const currentQuestionNumb = useSelector(state => get(state, `tests.currentQuestion`))
+    const currentQuestion = useSelector(state => get(state, `tests.test.questions.${currentQuestionNumb}`, {})) as IQuestion
     const prevCurrentQuestion = usePrevious(currentQuestionNumb)
+    const currentGroupQuestion = groupQuestion[currentQuestion.questionGroupId as number]
 
     useEffect(() => {
         if (currentQuestionNumb !== prevCurrentQuestion) {
@@ -83,7 +91,7 @@ export const MapNavigator: React.FC<NavigationProps> = ({ testType, testPart }) 
     }
 
     const renderPartNav = () => {
-        const partInfo = getPartInfoFromQuestion(currentQuestionNumb)
+        const partInfo = getPartInfoFromQuestion(currentQuestionNumb) || {}
 
         if (testType === TEST_TYPE.PART) {
             const title = `Part ${testPart + 1}`
@@ -145,6 +153,7 @@ export const MapNavigator: React.FC<NavigationProps> = ({ testType, testPart }) 
                 {range(startQuestion, endQuestion).map(item => (
                     <QuestionItemLink name={item.toString()} key={item} item xs={2}>
                         <Question
+                            $isGroupQuestion={currentGroupQuestion && currentGroupQuestion.includes(item)}
                             onClick={handleClickQuestion(item)}
                             variant={item === currentQuestionNumb ? "contained" : "outlined"}
                         >
@@ -153,7 +162,9 @@ export const MapNavigator: React.FC<NavigationProps> = ({ testType, testPart }) 
                     </QuestionItemLink>
                 ))}
             </QuestionContainer>
-            
+
         </Wrapper>
     )
 }
+
+export default MapNavigator
