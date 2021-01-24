@@ -1,39 +1,21 @@
 import { takeLatest, put, call } from "redux-saga/effects";
-import {get } from "lodash";
 import * as userService from "../services/user";
 import { USER_REGISTER_REQUEST } from "../constants/index";
-import { userRegisterSuccess, userRegisterFailed, userLoginSuccess } from "../actions/user";
+import { userRegisterFailed } from "../actions/user";
+import { userLogin } from "../actions/user";
 
 function* userRegister(action) {
-
-    const onSuccess = get(action, 'callbacks.onSuccess', () => {});
-    const onFailure = get(action, 'callbacks.onFailure', () => {});
-
     try {
         const res = yield call(userService.userRegister, action.data)
-
+        console.log(res);
         const userRegistered = {
             username: action.data.username,
             password: action.data.password
         }
-        const reslogin = yield call(userService.userLogin, userRegistered)
-            // const token = get(res, 'data.accessToken')
-        const token = get(reslogin, 'data.accessToken')
-        if (token) {
-            localStorage.setItem('token', token)
-            yield put(userLoginSuccess(get(res, 'data')))
-            onSuccess()
-        }
-        console.log(action.data);
+        yield put(userLogin(userRegistered, action.callbacks));
 
-        // const token = get(res, 'data.accessToken')
-        // if (token) {
-        //     localStorage.setItem('token', token)
-        //     yield put(userRegisterSuccess(get(res, 'data')))
-        //     onSuccess()
-        // }
     } catch (err) {
-        onFailure(err)
+        console.log(err);
         yield put(userRegisterFailed())
     }
 

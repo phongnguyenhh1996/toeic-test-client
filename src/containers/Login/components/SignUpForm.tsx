@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import CustomButton from '../../../components/CustomButton';
-import { TextFieldLogin } from './LoginForm';
-import { useDispatch } from 'react-redux';
+import { TextFieldLogin,Rotate } from './LoginForm';
+import { useDispatch,useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { UserInfoRegister } from '../../../components/Header/Header';
 import { userRegister } from '../../../actions/user';
+import { useSnackbar } from 'notistack';
 
 export const SignUpForm : React.FC = () => {
     const dispatch = useDispatch()
     const history = useHistory()
-
+    const { enqueueSnackbar} = useSnackbar();
+    const isloading = useSelector((state : any) => state.user.isLoading);
     const [userInfo, setUserInfo] = useState<UserInfoRegister>({
       username: '',
       password: '',
@@ -42,6 +44,12 @@ export const SignUpForm : React.FC = () => {
       if (!error.password && !error.username && !error.email) {
         dispatch(userRegister(userInfo, {
           onSuccess: () => {
+            enqueueSnackbar('login success ',{
+              anchorOrigin:{
+                vertical:'top',
+                horizontal:'right'
+              },variant:'success'
+            });
             history.push('/')
           },
           onFailure: () => {
@@ -64,8 +72,8 @@ export const SignUpForm : React.FC = () => {
             <TextFieldLogin autoFocus label="USERNAME" name="username" error={!!inputError.username} helperText={inputError.username} />
             <TextFieldLogin label="EMAIL" name="email"  error={!!inputError.email} helperText={inputError.email}/>
             <TextFieldLogin label="PASSWORD" name="password" type="password" error={!!inputError.password} helperText={inputError.password}/>
-            <CustomButton type="submit" theme="green" borderCircle className="btnLogin">
-                SIGN UP
+            <CustomButton type="submit" theme="green" borderCircle className="btnLogin"  disabled={isloading?true:false}>
+            {isloading && <Rotate/>} SIGN UP
             </CustomButton>
         </form>
     )

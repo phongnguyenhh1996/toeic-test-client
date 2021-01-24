@@ -4,7 +4,7 @@ import {get } from "lodash";
 import * as userService from "../services/user";
 import { userLoginSuccess, userLoginFailed } from "../actions/user";
 
-function* userLogin(action) {
+export function* userLogin(action) {
 
     const onSuccess = get(action, 'callbacks.onSuccess', () => {});
     const onFailure = get(action, 'callbacks.onFailure', () => {});

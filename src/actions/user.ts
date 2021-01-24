@@ -33,7 +33,7 @@ export const userRegisterFailed = () => {
     type: USER_REGISTER_FAILED,
   };
 };
-export const userLogin = (userInfo: UserInfo, callbacks: Callback) => {
+export const userLogin = (userInfo: UserInfo, callbacks?: Callback) => {
   return {
     type: USER_LOGIN_REQUEST,
     data: userInfo,
