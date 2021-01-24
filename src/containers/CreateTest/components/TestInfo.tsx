@@ -2,7 +2,7 @@ import Grid from '@material-ui/core/Grid'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
 import { get, range } from 'lodash'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaPlus, FaTimes } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -11,6 +11,8 @@ import { changeTestInfo } from '../../../actions/tests'
 
 import UploadImg from '../../../assets/images/image_upload.svg'
 import { TEST_TYPE, TEST_TYPE_INFO } from '../../../constants'
+import { readFile } from '../../../utils/function'
+import { usePrevious } from '../../../utils/hooks'
 import { theme } from '../../../utils/theme'
 import { MediaWrapper, RemoveMedia } from '../style'
 
@@ -91,9 +93,22 @@ export const TestInfo : React.FC<TestInfoProps> = ({ testType, testPart}) => {
     const history = useHistory()
     const dispatch = useDispatch()
 
+    const [avatar, setMedia] = useState(undefined)
+
     const testName = useSelector(state => get(state, 'tests.test.name', ''))
     const testDescription = useSelector(state => get(state, 'tests.test.description', ''))
     const avatarSrc = useSelector(state => get(state, 'tests.test.avatarSrc'))
+    const prevAvatarSrc = usePrevious(avatarSrc)
+
+    useEffect(() => {
+        if (prevAvatarSrc && !avatarSrc) {
+          setMedia(undefined)
+        }
+        if (!prevAvatarSrc && avatarSrc) {
+          readFile(avatarSrc, (result: any) => setMedia(result))
+        }
+      }, [avatarSrc, prevAvatarSrc])
+
 
     const handleChangeType = (testType: number, testPart?: number) => () => {
         history.replace('/create-test', {testType, testPart})
@@ -105,12 +120,7 @@ export const TestInfo : React.FC<TestInfoProps> = ({ testType, testPart}) => {
 
     const onUploadImage = (e: any) => {
         const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-
-        reader.onloadend = function () {
-            dispatch(changeTestInfo([reader.result], 'avatarSrc'))
-        }
+        dispatch(changeTestInfo(file, 'avatarSrc'))
     }
 
     const removeImage = () => {
@@ -121,7 +131,7 @@ export const TestInfo : React.FC<TestInfoProps> = ({ testType, testPart}) => {
         <Wrapper>
             {avatarSrc &&
                 <MediaWrapper width="auto">
-                    <AvatarImg src={avatarSrc} alt="Uploaded img" />
+                    <AvatarImg src={avatar} alt="Uploaded img" />
                     <RemoveMedia onClick={removeImage}>
                         <FaTimes />
                     </RemoveMedia>
@@ -167,7 +177,7 @@ export const TestInfo : React.FC<TestInfoProps> = ({ testType, testPart}) => {
                 </Grid>
                 {testPart >= 0 && (
                     <Grid item xs={6}>
-                        <Input size="small" id="outlined-basic" value={testPart} select rows={4} label="Test type" variant="outlined">
+                        <Input size="small" id="outlined-basic" value={testPart} select rows={4} label="Test part" variant="outlined">
                             {range(0, 7).map((numb: number) => (
                                 <MenuItem onClick={handleChangeType(testType, numb)} key={numb} value={numb}>
                                     Part {numb + 1}

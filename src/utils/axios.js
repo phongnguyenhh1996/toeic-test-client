@@ -12,6 +12,7 @@ instance.interceptors.request.use(config => {
    // spread the request's params
     ...config.params,
   };
+  config.headers.Authorization = 'Bearer ' + localStorage.getItem('token')
   return config;
 });
 

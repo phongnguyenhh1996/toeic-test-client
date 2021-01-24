@@ -22,9 +22,9 @@ const GridQuestions = styled(Grid)`
     }
 `
 
-const QuestionContainer = ({ children, ...rest }: any) => {
+const QuestionContainer = ({ children, parentBindings, ...rest }: any) => {
     return (
-        <GridQuestions {...rest}  ref={(el) => { rest.parentBindings.domNode = el; }}>
+        <GridQuestions {...rest}  ref={(el) => { parentBindings.domNode = el; }}>
             {children}
         </GridQuestions>
     );

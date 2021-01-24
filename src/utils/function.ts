@@ -2,6 +2,7 @@ import { get, range } from "lodash"
 import { TEST_PART, TEST_TYPE, TEST_TYPE_INFO } from "../constants"
 
 export interface Answer {
+    questionNumb: number
     answerNumb: number
     answer: string
 }
@@ -37,9 +38,10 @@ export interface Test {
     }
 }
 
-const createAnswers = (totalAnswer: number) => {
+const createAnswers = (totalAnswer: number, questionNumb: number) => {
     const answers = range(1, totalAnswer + 1).map(numb => {
         const answer: Answer = {
+            questionNumb,
             answerNumb: numb,
             answer: ''
         }
@@ -59,7 +61,7 @@ const createQuestions = (partInfo: any) => {
             imageSrc: null,
             audioSrc: null,
         }
-        answers[numb] = createAnswers(partInfo.isThreeAnswer ? 3 : 4)
+        answers[numb] = createAnswers(partInfo.isThreeAnswer ? 3 : 4, numb)
         questions[numb] = question
     })
 
@@ -110,6 +112,16 @@ export const getFirstQuestion = (testType: number, testPart: number) => {
     }
 }
 
+export const getLastQuestion = (testType: number, testPart: number) => {
+    if (testType === TEST_TYPE.PART) {
+        const partInfo = get(TEST_TYPE_INFO, `${TEST_TYPE.PART}.${testPart}`)
+        return partInfo.fromNumb + partInfo.totalQuestion - 1
+    } else {
+        const testTypeInfo = get(TEST_TYPE_INFO, `${testType}`, [])
+        return testTypeInfo.fromNumb + testTypeInfo.totalQuestion - 1
+    }
+}
+
 export const getPartInfoFromQuestion = (questionNumb: number) => {
     const testPartId = Object.values(TEST_PART).find(testPart => {
         const partInfo = get(TEST_TYPE_INFO, `${TEST_TYPE.PART}.${testPart}`)
@@ -119,3 +131,13 @@ export const getPartInfoFromQuestion = (questionNumb: number) => {
 
     return get(TEST_TYPE_INFO, `${TEST_TYPE.PART}.${testPartId}`)
 }
+
+
+export const readFile = (file: any, callback: any) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onloadend = function () {
+      callback([reader.result])
+    }
+  }

@@ -10,9 +10,9 @@ const QuestionWrapper = styled(Grid)`
     margin-top: 10px;
 `
 
-const QuestionItemLink = ({ children, ...rest }: any) => {
+const QuestionItemLink = ({ children, parentBindings, ...rest }: any) => {
     return (
-        <QuestionWrapper {...rest}  ref={(el) => { rest.parentBindings.domNode = el; }}>
+        <QuestionWrapper {...rest}  ref={(el) => { parentBindings.domNode = el; }}>
             {children}
         </QuestionWrapper>
     );

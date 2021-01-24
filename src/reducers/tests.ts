@@ -1,5 +1,5 @@
 import * as CONSTANT from "../constants";
-import {getFirstQuestion, Test as ITest} from '../utils/function';
+import {getFirstQuestion, Question, Test as ITest} from '../utils/function';
 import produce from "immer"
 import { set } from "lodash"
 
@@ -44,23 +44,37 @@ const testsReducer = (state = initialState, action: any) =>
       case CONSTANT.ADD_NEW_QUESTION_TO_GROUP:
         if (!action.data.groupQuestionId) {
           draft.groupQuestion[action.data.questionNumb] = [action.data.questionNumb, action.data.questionNumb + 1]
+
+          const nextQuestionData = draft.test.questions[action.data.questionNumb + 1] as Question
           draft.test.questions[action.data.questionNumb].questionGroupId = action.data.questionNumb
-          draft.test.questions[action.data.questionNumb + 1].questionGroupId = action.data.questionNumb
+          nextQuestionData.questionGroupId = action.data.questionNumb
+          nextQuestionData.audioSrc = null
+          nextQuestionData.imageSrc = null
+          draft.currentQuestion = action.data.questionNumb + 1
         } else {
           const groupQuestion = draft.groupQuestion[action.data.groupQuestionId]
           const newQuestionNumb = action.data.groupQuestionId + groupQuestion.length
+          const newQuestion = draft.test.questions[newQuestionNumb] as Question
+
           draft.groupQuestion[action.data.groupQuestionId].push(newQuestionNumb)
-          draft.test.questions[newQuestionNumb].questionGroupId = action.data.groupQuestionId
+          newQuestion.questionGroupId = action.data.groupQuestionId
+          newQuestion.audioSrc = null
+          newQuestion.imageSrc = null
+          draft.currentQuestion = newQuestionNumb
         }
         break
       case CONSTANT.REMOVE_QUESTION_FROM_GROUP:
         const groupQuestion = draft.groupQuestion[action.data.groupQuestionId]
         if (groupQuestion.length === 2) {
+          draft.currentQuestion = action.data.groupQuestionId
+
           delete draft.test.questions[action.data.groupQuestionId].questionGroupId
           delete draft.test.questions[action.data.groupQuestionId + 1].questionGroupId
           delete draft.groupQuestion[action.data.groupQuestionId]
         } else {
           delete draft.test.questions[action.data.groupQuestionId + groupQuestion.length - 1].questionGroupId
+          
+          draft.currentQuestion = action.data.groupQuestionId + groupQuestion.length - 2
           draft.groupQuestion[action.data.groupQuestionId] = groupQuestion.filter(questionNumb => questionNumb !== (action.data.groupQuestionId + groupQuestion.length - 1))
         }
         break

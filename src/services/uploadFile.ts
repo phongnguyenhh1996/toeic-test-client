@@ -7,12 +7,20 @@ const uploadFile = async (file: any) => {
     formData.append('api_key', '429544576547882')
     formData.append('upload_preset', 'l5dm0p6z')
 
-    const res = await axios.post(UPLOAD_URL, formData, {
-        headers: {
-        'Content-Type': 'multipart/form-data'
+    try {
+        const res = await axios.post(UPLOAD_URL, formData, {
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            }
+        });
+
+        if (res.status === 200) {
+            return res.data.url
         }
-    });
-    console.log(res);
+    } catch (e) {
+        console.log(e);
+    }
+    
 }
 
 export default uploadFile

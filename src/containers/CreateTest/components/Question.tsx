@@ -1,13 +1,15 @@
 import Checkbox from '@material-ui/core/Checkbox'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaCheckCircle, FaEllipsisV } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { changeAnswerData, changeCorrectAnswerData, changeQuestionData } from '../../../actions/tests'
 import { Question as IQuestion, Answer as IAnswer, CorrectAnswer as ICorrectAnswer} from '../../../utils/function'
 import { theme } from '../../../utils/theme'
-import { Input, Wrapper } from './TestInfo'
+import { Input } from './TestInfo'
 import { ALPHABEL_ANSWER } from '../../../constants'
+import QuestionSectionLink from './QuestionSectionLink'
+import { scroller } from 'react-scroll'
 
 const Header = styled.div`
     height: 50px;
@@ -26,10 +28,6 @@ const HeaderTitle = styled.div`
     font-size: 18px;
     line-height: 28px;
 
-`
-
-const WrapperQuestion = styled(Wrapper)`
-    padding: 0;
 `
 
 const HeaderMenuIcon = styled(FaEllipsisV)`
@@ -89,11 +87,24 @@ interface QuestionProps {
     answers: IAnswer[]
     correctAnswer: ICorrectAnswer
     onClick?: () => void
+    currentQuestionNumb?: number
 }
 
-export const Question : React.FC<QuestionProps> = ({question, answers, correctAnswer, onClick}) => {
+export const Question : React.FC<QuestionProps> = ({question, answers, correctAnswer, onClick, currentQuestionNumb}) => {
 
     const dispatch = useDispatch()
+
+    
+    useEffect(() => {
+        if (currentQuestionNumb && currentQuestionNumb === question.questionNumb) {
+            scroller.scrollTo(`question-${currentQuestionNumb}`, {
+                duration: 700,
+                delay: 0,
+                smooth: true,
+                offset: -60
+            })
+        }   
+    }, [currentQuestionNumb, question.questionNumb, question.questionGroupId])
 
     const onChange = (type: string, answerNumb?: number) => (e: any) => {
         switch (type) {
@@ -116,7 +127,7 @@ export const Question : React.FC<QuestionProps> = ({question, answers, correctAn
     }
 
     return (
-        <WrapperQuestion onClick={onClick}>
+        <QuestionSectionLink name={`question-${question.questionNumb}`} onClick={onClick}>
             <Header>
                 <HeaderTitle>Question {question.questionNumb}</HeaderTitle>
                 <HeaderMenuIcon/>
@@ -167,7 +178,7 @@ export const Question : React.FC<QuestionProps> = ({question, answers, correctAn
                 <Input
                     name="explanation"
                     onChange={onChange('correctAnswer')}
-                    value={correctAnswer.explanation}
+                    value={correctAnswer.explanation || ''}
                     bg="#E4E4E4"
                     size="small"
                     id="outlined-basic"
@@ -178,6 +189,6 @@ export const Question : React.FC<QuestionProps> = ({question, answers, correctAn
                     placeholder="Add explanation for the correct answer."
                 />
             </Content>
-        </WrapperQuestion>
+        </QuestionSectionLink>
     )
 }

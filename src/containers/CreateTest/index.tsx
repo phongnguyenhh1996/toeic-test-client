@@ -11,7 +11,10 @@ import { createTestData,
   getPartInfoFromQuestion,
   Question as IQuestion,
   Answer as IAnswer,
-  CorrectAnswer as ICorrectAnswer
+  CorrectAnswer as ICorrectAnswer,
+  readFile,
+  getFirstQuestion,
+  getLastQuestion
 } from '../../utils/function'
 import { usePrevious } from '../../utils/hooks'
 import MapNavigator from './components/Navigator'
@@ -60,15 +63,6 @@ const CreateTest: React.FC = () => {
   const imageFile = questionData[0]?.question?.imageSrc
   const prevAudioFile = usePrevious(audioFile)
   const prevImageFile = usePrevious(imageFile)
-
-  const readFile = (file: any, callback: any) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onloadend = function () {
-      callback([reader.result])
-    }
-  }
 
   useEffect(() => {
     if (prevAudioFile && !audioFile) {
@@ -122,18 +116,25 @@ const CreateTest: React.FC = () => {
         return null
       }
       const partInfo = getPartInfoFromQuestion(questionData[0].question.questionNumb)
+      const lastQuestionPartNumb = partInfo.totalQuestion + partInfo.fromNumb - 1
 
-      const lastQuestionNumb = partInfo.totalQuestion + partInfo.fromNumb - 1
-      if (questionData[0].question.questionNumb === lastQuestionNumb) {
+      const isNextQuestionHaveGroup = !!(groupQuestion[questionData[0].question.questionNumb + 1])
+      const isEndOfPart = questionData[0].question.questionNumb === lastQuestionPartNumb
+      
+      if (isEndOfPart || isNextQuestionHaveGroup) {
         return null
       }
     }
     if (questionData.length >= 2) {
-      const numbCheck = questionData[0].question.questionGroupId as number + questionData.length - 1
+      const lastGroupNumb = questionData[0].question.questionGroupId as number + questionData.length - 1
 
-      const partInfo = getPartInfoFromQuestion(numbCheck)
-      const lastQuestionNumb = partInfo.totalQuestion + partInfo.fromNumb - 1
-      if (numbCheck === lastQuestionNumb) {
+      const partInfo = getPartInfoFromQuestion(lastGroupNumb)
+      const lastQuestionPartNumb = partInfo.totalQuestion + partInfo.fromNumb - 1
+
+      const isEndOfPart = lastGroupNumb === lastQuestionPartNumb
+      const isNextQuestionHaveGroup = !!(groupQuestion[lastGroupNumb+1])
+
+      if (isEndOfPart || isNextQuestionHaveGroup) {
         return null
       }
     }
@@ -142,9 +143,53 @@ const CreateTest: React.FC = () => {
         <FaPlus /> Add more question
       </CustomButton>
     )
-  }, [dispatch, questionData])
+  }, [dispatch, questionData, groupQuestion])
 
   const partInfo = getPartInfoFromQuestion(currentQuestionNumb)
+
+  const isDisableBack = useMemo(() => {
+    const firstNumb = getFirstQuestion(testType, testPart)
+    if (questionData[0].question.questionNumb === firstNumb) {
+      return true
+    }
+  }, [questionData, testType, testPart])
+
+  const isDisableNext = useMemo(() => {
+    const lastNumb = getLastQuestion(testType, testPart)
+    const isQuestionHaveGroup = !!questionData[0].question.questionGroupId
+    
+    const lastQuestinInGroup = isQuestionHaveGroup && (
+      groupQuestion[questionData[0].question.questionGroupId as number].length + questionData[0].question.questionNumb - 1
+    )
+
+    if (!isQuestionHaveGroup && questionData[0].question.questionNumb === lastNumb) {
+      return true
+    }
+
+    if (isQuestionHaveGroup && lastQuestinInGroup === lastNumb) {
+      return true
+    }
+
+    return false
+  }, [questionData, testType, testPart, groupQuestion])
+
+  const handleNavigation = (type: 'next' | 'prev') => () => {
+    let questionNumbToGo
+    const questionGroupId = questionData[0].question.questionGroupId
+    const groupLength = (questionGroupId && groupQuestion[questionGroupId as number].length) || 0
+    if (type === 'next') {
+      if (!questionGroupId) {
+        questionNumbToGo = questionData[0].question.questionNumb + 1
+      } else {
+        questionNumbToGo = questionData[0].question.questionNumb + groupLength
+      }
+    }
+    if (type === 'prev') {
+      questionNumbToGo = questionData[0].question.questionNumb - 1
+    }
+    
+    questionNumbToGo && dispatch(goToQuestion(questionNumbToGo))
+  }
 
   return (
     <Wrapper>
@@ -191,6 +236,7 @@ const CreateTest: React.FC = () => {
             return (
               <MediaWrapper key={question.question.questionNumb} width="auto">
                 <Question
+                  currentQuestionNumb={currentQuestionNumb}
                   onClick={handleClickQuestion(question.question.questionNumb)}
                   question={question.question}
                   answers={question.answers}
@@ -204,6 +250,7 @@ const CreateTest: React.FC = () => {
           }
           return (
             <Question
+              currentQuestionNumb={currentQuestionNumb}
               onClick={handleClickQuestion(question.question.questionNumb)}
               key={question.question.questionNumb}
               question={question.question}
@@ -214,10 +261,10 @@ const CreateTest: React.FC = () => {
         })}
         {handleShowBtnAddMoreQuestion()}
         <NavigationBtnGroup>
-          <CustomButton theme="nav-button">
+          <CustomButton onClick={handleNavigation('prev')} disabled={isDisableBack} theme="nav-button">
             BACK
           </CustomButton>
-          <CustomButton theme="nav-button">
+          <CustomButton onClick={handleNavigation('next')} disabled={isDisableNext} theme="nav-button">
             NEXT
           </CustomButton>
         </NavigationBtnGroup>

@@ -4,6 +4,9 @@ import {
   CHANGE_CORRECTION_DATA,
   CHANGE_QUESTION_DATA,
   CHANGE_TEST_INFO,
+  CREATE_TEST_FAILED,
+  CREATE_TEST_REQUEST,
+  CREATE_TEST_SUCCESS,
   GO_TO_QUESTION, INIT_TEST, REMOVE_QUESTION_FROM_GROUP
 } from "../constants";
 import { Test } from "../utils/function";
@@ -81,5 +84,23 @@ export const removeQuestionFromGroup = (groupQuestionId: number) => {
     data: {
       groupQuestionId
     }
+  }
+}
+
+export const createTestRequest = () => {
+  return {
+    type: CREATE_TEST_REQUEST
+  }
+}
+
+export const createTestSuccess = () => {
+  return {
+    type: CREATE_TEST_SUCCESS
+  }
+}
+
+export const createTestFailed = () => {
+  return {
+    type: CREATE_TEST_FAILED
   }
 }
