@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { theme } from "../../utils/theme";
 
-const loginSideImg = 'https://res.cloudinary.com/easy-toeic/image/upload/v1611289373/login-side-img_z3l2yj.jpg'
+const loginSideImg = 'https://res.cloudinary.com/easy-toeic/image/upload/v1611289373/static/login-side-img_z3l2yj.jpg'
 
 
 export const Wrapper = styled.div`
