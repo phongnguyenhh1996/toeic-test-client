@@ -5,14 +5,14 @@ import { Link, useLocation } from 'react-router-dom'
 import { Background } from './components/Background';
 import CustomButton from "../../components/CustomButton";
 import {FaFacebookF,FaTwitter,FaGooglePlusG} from "react-icons/fa";
-import { 
+import {
   Heading,
   Inner,
   LeftContent,
-  LeftInner, 
+  LeftInner,
   RegisterSuggest,
   RightContent,
-  SubHeading, 
+  SubHeading,
   Wrapper,
   ContainerForm ,
   SocialsBtnGround,
@@ -22,7 +22,7 @@ import { SignUpForm } from './components/SignUpForm';
 import LOGO from "../../assets/images/logo.svg";
 
 interface LoginProps {
- 
+
 }
 
 const Login: React.FC<LoginProps> = () => {
