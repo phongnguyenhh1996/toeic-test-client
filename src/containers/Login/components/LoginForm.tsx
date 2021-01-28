@@ -58,7 +58,6 @@ export const LoginForm : React.FC = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const isloading = useSelector((state : any) => state.user.isLoading);
-    console.log(isloading);
     const [userInfo, setUserInfo] = useState<UserInfo>({
       username: '',
       password: ''
@@ -113,7 +112,7 @@ export const LoginForm : React.FC = () => {
         <form onSubmit={handleSubmit} onChange={handleInput}>
             <TextFieldLogin error={!!inputError.username} autoFocus name="username" label='USERNAME' helperText={inputError.username} />
             <TextFieldLogin error={!!inputError.password} name="password" label='PASSWORD' type="password" helperText={inputError.password} />
-            <CustomButton type="submit" theme="green" borderCircle className="btnLogin" disabled={isloading?true:false}>
+            <CustomButton type="submit" theme="green" borderCircle className="btnLogin" disabled={isloading}>
               {isloading && <Rotate/>} LOGIN 
             </CustomButton>
         </form>

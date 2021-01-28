@@ -36,10 +36,13 @@ export const TabListTest = styled(Tab)`
 // css style for pagination start ***********
 
 export const ContainerPagin = styled.div`
-   margin: 50px 0;
    display: flex;
    justify-content: center;
    align-items: center;
+   position:fixed;
+   bottom:50px;
+   left:50%;
+   transform:translateX(-50%);
 `;
 export const PaginationTest = styled(Pagination)`
     .MuiPagination-ul li .MuiPaginationItem-page.Mui-selected{

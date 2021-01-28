@@ -6,8 +6,7 @@ import { userLogin } from "../actions/user";
 
 function* userRegister(action) {
     try {
-        const res = yield call(userService.userRegister, action.data)
-        console.log(res);
+        yield call(userService.userRegister, action.data)
         const userRegistered = {
             username: action.data.username,
             password: action.data.password

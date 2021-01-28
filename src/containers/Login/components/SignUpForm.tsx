@@ -65,14 +65,13 @@ export const SignUpForm : React.FC = () => {
 
     const handleInput = (e: any) => {
       setUserInfo({...userInfo, [e.target.name]: e.target.value})
-      console.log(e.target.name, e.target.value);
     }
     return (
         <form onSubmit={handleSubmit} onChange={handleInput}>
             <TextFieldLogin autoFocus label="USERNAME" name="username" error={!!inputError.username} helperText={inputError.username} />
             <TextFieldLogin label="EMAIL" name="email"  error={!!inputError.email} helperText={inputError.email}/>
             <TextFieldLogin label="PASSWORD" name="password" type="password" error={!!inputError.password} helperText={inputError.password}/>
-            <CustomButton type="submit" theme="green" borderCircle className="btnLogin"  disabled={isloading?true:false}>
+            <CustomButton type="submit" theme="green" borderCircle className="btnLogin"  disabled={isloading}>
             {isloading && <Rotate/>} SIGN UP
             </CustomButton>
         </form>
