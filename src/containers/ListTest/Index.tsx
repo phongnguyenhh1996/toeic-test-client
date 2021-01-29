@@ -1,16 +1,29 @@
-import React from 'react';
+import React,{useState , useEffect} from 'react';
 import { Grid, Container } from "@material-ui/core";
 import { PaperListTest, TabsListTest, TabListTest, ContainerPagin, PaginationTest, GridListTest } from './style';
 import { TestItem } from '../Dashboard/components/TestItem';
-import { range } from 'lodash';
+import API from "../../utils/axios";
 
 const ListTest: React.FC = () => {
-    const [value, setValue] = React.useState(2);
-
+    const [value, setValue] = useState(0);
+    const [listTest,setListTest] = useState([]);
     const handleChange = (event: any, newValue: number) => {
         setValue(newValue);
     };
     // const classes = useStyles();
+    const fetchAllListTest = async () =>{
+        try{
+            const respone =  await API.get('/public/tests/all');
+            const allListTest =  respone.data.tests;
+            setListTest(allListTest);
+            console.log(listTest)
+        }catch(e){
+            console.log(e);
+        }
+    }
+    useEffect(()=>{
+        fetchAllListTest();
+    },[])
     return (
         <Container fixed>
             <Grid container>
@@ -21,11 +34,11 @@ const ListTest: React.FC = () => {
                             indicatorColor="primary"
                             textColor="primary"
                             onChange={handleChange}
-                            aria-label="disabled tabs example"
                         >
-                            <TabListTest label="All Test" />
-                            <TabListTest label="Created Test" />
-                            <TabListTest label="Completed Test" />
+                            <TabListTest label="All Test" onClick={fetchAllListTest}   />
+                            <TabListTest label="Created Test"/>
+                            <TabListTest label="Completed Test"   />
+                           
                         </TabsListTest>
                     </PaperListTest>
                 </Grid>
@@ -33,8 +46,8 @@ const ListTest: React.FC = () => {
                 <GridListTest item xs={12}>
                     <Grid container spacing={2}>
                         {
-                            range(0, 8).map((item, index) => <Grid item xs={3} key={index}>
-                                <TestItem />
+                            listTest.map((test:any, index) => <Grid item xs={3} key={index}>
+                                <TestItem title={test.name} author={test.author} />
                             </Grid>)
                         }
                     </Grid>

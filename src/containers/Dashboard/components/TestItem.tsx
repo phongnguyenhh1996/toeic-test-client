@@ -2,13 +2,20 @@ import React from "react";
 import { FaEye, FaHeart } from "react-icons/fa";
 import { TestItem as TestItemStyle } from '../style'
 
-export const TestItem: React.FC = () => {
+
+interface TestItemProps {
+  title?:string,
+  author?:string,
+}
+
+export const TestItem: React.FC<TestItemProps> = (props:TestItemProps) => {
+  const {title,author} = props;
   return (
     <TestItemStyle>
       <div className="bg-img"></div>
       <div className="content-wrapper">
-        <p className="title">ETS TOEIC 2020 Test 1</p>
-        <p className="author">By Admin</p>
+        <p className="title">{title}</p>
+        <p className="author">{`By Admin ${author}`} </p>
         <div className="info-wrapper">
           <div className="status-wrapper">
             <div className="status-label">Official</div>
