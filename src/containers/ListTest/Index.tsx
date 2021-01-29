@@ -1,4 +1,4 @@
-import React,{useEffect, useState } from 'react';
+import React,{ useState } from 'react';
 import { Grid, Container } from "@material-ui/core";
 import { PaperListTest, TabsListTest, TabListTest, ContainerPagin, PaginationTest, GridListTest } from './style';
 import { TestItem } from '../Dashboard/components/TestItem';
@@ -18,9 +18,9 @@ const ListTest: React.FC = () => {
     const fetchListAllTest = () =>{
         dispatch(listAllTestRequest());
     }
-    useEffect(()=>{
-        dispatch(listAllTestRequest());
-    },[])
+    // useEffect(()=>{
+    //     dispatch(listAllTestRequest());
+    // },[])
     return (
         <Container fixed>
             <Grid container>
