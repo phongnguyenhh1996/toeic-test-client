@@ -1,28 +1,25 @@
-import React,{useState , useEffect} from 'react';
+import React,{useEffect, useState } from 'react';
 import { Grid, Container } from "@material-ui/core";
 import { PaperListTest, TabsListTest, TabListTest, ContainerPagin, PaginationTest, GridListTest } from './style';
 import { TestItem } from '../Dashboard/components/TestItem';
-import API from "../../utils/axios";
+import { useDispatch, useSelector } from 'react-redux';
+import { listAllTestRequest } from '../../actions/list_Test';
 
+
+
+  
 const ListTest: React.FC = () => {
     const [value, setValue] = useState(0);
-    const [listTest,setListTest] = useState([]);
+    const listTest = useSelector((state:any)=> state.listAllTestReducer.listTest)
+    const dispatch = useDispatch();
     const handleChange = (event: any, newValue: number) => {
         setValue(newValue);
-    };
-    // const classes = useStyles();
-    const fetchAllListTest = async () =>{
-        try{
-            const respone =  await API.get('/public/tests/all');
-            const allListTest =  respone.data.tests;
-            setListTest(allListTest);
-            console.log(listTest)
-        }catch(e){
-            console.log(e);
-        }
+    }
+    const fetchListAllTest = () =>{
+        dispatch(listAllTestRequest());
     }
     useEffect(()=>{
-        fetchAllListTest();
+        dispatch(listAllTestRequest());
     },[])
     return (
         <Container fixed>
@@ -35,7 +32,7 @@ const ListTest: React.FC = () => {
                             textColor="primary"
                             onChange={handleChange}
                         >
-                            <TabListTest label="All Test" onClick={fetchAllListTest}   />
+                            <TabListTest label="All Test" onClick={fetchListAllTest}  />
                             <TabListTest label="Created Test"/>
                             <TabListTest label="Completed Test"   />
                            
@@ -46,7 +43,7 @@ const ListTest: React.FC = () => {
                 <GridListTest item xs={12}>
                     <Grid container spacing={2}>
                         {
-                            listTest.map((test:any, index) => <Grid item xs={3} key={index}>
+                            listTest.map((test:any, index:number) => <Grid item xs={3} key={index}>
                                 <TestItem title={test.name} author={test.author} />
                             </Grid>)
                         }
