@@ -5,7 +5,7 @@ import { LIST_ALL_TEST_REQUEST } from "../constants";
 
 const GET_LIST_TEST_SERVICE = {
     'all': listTest.fetchListAllTest,
-    'created': listTest.fetchListAllTest,
+    'created': listTest.fetchListCreatedTest,
     'completed': listTest.fetchListAllTest
 }
 
