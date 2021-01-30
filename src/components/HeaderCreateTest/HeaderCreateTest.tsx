@@ -10,6 +10,7 @@ import { LogoWrapper } from "../HeaderDashboard/Header.styled";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createTestRequest } from "../../actions/tests";
+import { useSnackbar } from "notistack";
 
 interface Props { }
 
@@ -17,13 +18,24 @@ export default function HeaderCreateTest(props: Props) {
 
   const history = useHistory()
   const dispatch = useDispatch()
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleExit = () => {
     history.goBack()
   }
 
   const handleSubmitTest = () => {
-    dispatch(createTestRequest())
+    dispatch(createTestRequest({
+      onSuccess: () => {
+        enqueueSnackbar('Test created successfully!',{
+          anchorOrigin:{
+            vertical:'top',
+            horizontal:'right'
+          },variant:'success'
+        });
+        history.push('/list-test')
+      }
+    }))
   }
 
   return (

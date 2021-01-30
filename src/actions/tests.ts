@@ -87,9 +87,10 @@ export const removeQuestionFromGroup = (groupQuestionId: number) => {
   }
 }
 
-export const createTestRequest = () => {
+export const createTestRequest = (callbacks: any) => {
   return {
-    type: CREATE_TEST_REQUEST
+    type: CREATE_TEST_REQUEST,
+    callbacks
   }
 }
 

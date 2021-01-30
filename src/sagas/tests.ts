@@ -39,6 +39,7 @@ function* createTest(action: any) {
   console.log(newTest);
   try {
     const res = yield call(postTest, newTest)
+    action.callbacks.onSuccess();
     console.log(res);
   } catch (error) {
     
