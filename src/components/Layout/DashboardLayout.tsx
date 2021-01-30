@@ -5,7 +5,7 @@ import MainContainer from '../MainContainer';
 const DashboardLayout: React.FC = (props) => {
   return (
     <div className="main-wrapper">
-      <HeaderDashboard><p>Header</p></HeaderDashboard>
+      <HeaderDashboard />
       <MainContainer>
         {props.children}
       </MainContainer>

@@ -19,7 +19,7 @@ export const PaperListTest = styled(Paper)`
 `;
 export const TabsListTest = styled(Tabs)`
    color: ${theme.textDarkPrimary};
-   .PrivateTabIndicator-colorPrimary-2{
+   .MuiTabs-indicator {
     background-color: ${theme.backgroundSecondary};
    }
 

@@ -10,7 +10,7 @@ const RouterCustom = () => (
       const {layout: Layout = Fragment, component: Component, path, isAuthRoute, exact, ...rest} = routeItem
       const RouteCustom = isAuthRoute ? PrivateRoute : Route
       return (
-        <RouteCustom key={index} path={path} exact={exact}>
+        <RouteCustom key={Layout.toString()} path={path} exact={exact}>
           <Layout>
             <Component {...rest} />
           </Layout>

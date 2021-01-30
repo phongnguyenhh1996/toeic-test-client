@@ -3,11 +3,11 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import {
   Header,
   Search,
-  Navigation,
   CreateButton,
   HambergerButton,
-  ButtonNavigation,
   LogoWrapper,
+  LinkNav,
+  NavTabs,
 } from "./Header.styled";
 import {
   FaSearch,
@@ -28,13 +28,16 @@ import {
 import { Logo } from "../Logo";
 import { TEST_TYPE, TEST_TYPE_INFO } from "../../constants";
 import { useHistory } from "react-router-dom";
+import Tab from "@material-ui/core/Tab";
 
-interface Props { }
+interface Props {
+ }
 
 export default function ElevateAppBar(props: Props) {
 
   const history = useHistory()
-
+  const pathname = history?.location?.pathname
+  
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [openCreateTest, setOpenCreateTest] = useState(false);
 
@@ -78,26 +81,26 @@ export default function ElevateAppBar(props: Props) {
           />
           <FaSearch className="icon-search" />
         </Search>
-        <Navigation>
-          <li className="nav-item active">
-            <ButtonNavigation>
+        <NavTabs
+          value={pathname}
+          aria-label="disabled tabs example"
+        >
+          <Tab
+            label={<LinkNav to="/">
               <FaHome className="nav-icon" />
               Home
-            </ButtonNavigation>
-          </li>
-          <li className="nav-item">
-            <ButtonNavigation>
-              <FaChartPie className="nav-icon" />
-              Statitics
-            </ButtonNavigation>
-          </li>
-          <li className="nav-item">
-            <ButtonNavigation>
+            </LinkNav>} value="/"/>
+          <Tab label={<LinkNav to="/">
+                <FaChartPie className="nav-icon" />
+                Statitics
+              </LinkNav>} value="/statitic" />
+          <Tab label={
+            <LinkNav to="/list-test">
               <FaFileAlt className="nav-icon" />
               List Tests
-            </ButtonNavigation>
-          </li>
-        </Navigation>
+            </LinkNav>
+          } value="/list-test"/>
+        </NavTabs>
         <CreateButton onClick={handleClick}>
           <FaPlus className="create-icon" />
           Create a test
