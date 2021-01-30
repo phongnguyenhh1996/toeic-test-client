@@ -2,6 +2,8 @@ import styled from "styled-components";
 import AppBar from "@material-ui/core/AppBar";
 import { theme } from "../../utils/theme";
 import Button from '@material-ui/core/Button';
+import { Link } from "react-router-dom";
+import Tabs from "@material-ui/core/Tabs";
 
 export const Header = styled(AppBar)`
   --primary: ${theme.backgroundPrimary};
@@ -46,40 +48,6 @@ export const Search = styled.div`
   }
 `
 
-export const Navigation = styled.ul`
-  margin-left: 4px;
-  display: flex;
-  .nav-item {
-    position: relative;
-    font-size: 15px;
-    font-weight: bold;
-    display: flex;
-    align-items: flex-end;
-    &.active::after {
-      position: absolute;
-      content: '';
-      width: 100%;
-      height: 2px;
-      bottom: 1px;
-      left: 0;
-      background: ${theme.textLight};
-    }
-  }
-  .nav-icon {
-    margin-right: 4px;
-    font-size: 18px;
-  }
-`
-
-export const ButtonNavigation = styled(Button)`
-  border-radius: 0;
-  padding: 12px;
-  font-size: 15px;
-  font-weight: bold;
-  color: ${theme.textLight};
-  text-transform: none;
-`
-
 export const CreateButton = styled(Button)`
   display: flex;
   align-items: center;
@@ -111,4 +79,38 @@ export const HambergerButton = styled(Button)`
   border: none;
   color: ${theme.textLight};
   margin-right: 20px;
+`
+
+export const LinkNav = styled(Link)`
+  text-decoration: none;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  text-transform: none;
+  padding: 12px;
+  svg {
+    margin-right: 4px;
+    font-size: 18px;
+  }
+`
+export const NavTabs = styled(Tabs)`
+  margin-left: 10px;
+  .MuiButtonBase-root {
+    min-width: 0;
+    padding: 0;
+    .MuiTab-wrapper {
+      display: flex;
+      align-items: stretch;
+    }
+  }
+  .MuiTabs-indicator {
+    background-color: #fff;
+  }
+  .MuiTab-textColorInherit{
+    opacity: 1;
+  }
 `
