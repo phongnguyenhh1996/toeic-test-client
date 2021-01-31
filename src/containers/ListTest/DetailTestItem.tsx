@@ -57,17 +57,13 @@ const DialogActions = withStyles((theme: Theme) => ({
 }))(MuiDialogActions);
 interface openDetail {
     isOpen:boolean
+    handleClose: () => void
 }
- const  DetailTestItem:React.FC<openDetail> = (props) => {
-    const [open, setOpen] = React.useState(props.isOpen);
-
-    const handleClose = () => {
-        setOpen(!props.isOpen);
-    };
+ const  DetailTestItem:React.FC<openDetail> = ({isOpen, handleClose}) => {
 
     return (
         <div>
-        <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+        <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={isOpen}>
             <DialogTitle id="customized-dialog-title" onClose={handleClose}>
             Modal title
             </DialogTitle>

@@ -28,8 +28,8 @@ export const TestItem: React.FC<TestItemProps> = ({test={},isSkeletion,changeIsO
   }
   
   return (
-    <TestItemStyle>
-      <div onClick={changeIsOpenDialog} className="bg-img" style={{backgroundImage:`url(${test.avatarSrc})`}}></div>
+    <TestItemStyle onClick={changeIsOpenDialog}>
+      <div className="bg-img" style={{backgroundImage:`url(${test.avatarSrc})`}}></div>
       <div className="content-wrapper">
         <p className="title">{test.name}</p>
         <p className="author">{`By ${test.author}`} </p>

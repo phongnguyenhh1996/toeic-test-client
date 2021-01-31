@@ -27,9 +27,13 @@ const ListTest: React.FC = () => {
     
     
     const changeIsOpenDialog = () =>{
-        setIsOpenDialog(!isOpenDialog);
-        console.log(isOpenDialog);
+        setIsOpenDialog(true);
     }
+
+    const closeDialog = () => {
+        setIsOpenDialog(false);
+    }
+
     const handleChange = (event: any, newValue: number) => {
         setTabIndex(newValue);
     }
@@ -89,7 +93,7 @@ const ListTest: React.FC = () => {
                         ))}
                     </Grid>
                    {
-                        isOpenDialog &&  <DetailTestItem isOpen={isOpenDialog} />
+                        isOpenDialog &&  <DetailTestItem handleClose={closeDialog} isOpen={isOpenDialog} />
                    }
                 </GridListTest>
                 <Grid item xs={12} >
