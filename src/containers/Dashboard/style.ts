@@ -182,6 +182,9 @@ export const TestItem = styled.div`
     margin-bottom: 10px;
     padding-top: 56.25%;
     background-color: ${theme.backgroundDarkSecondary};
+    cursor:pointer;
+    background-size:cover;
+    background-position:center;
   }
   .content-wrapper {
     display: flex;

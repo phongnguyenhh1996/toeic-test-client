@@ -11,10 +11,10 @@ const GET_LIST_TEST_SERVICE = {
 
 function* fetchListAllTest(action) {
     try {
-        const dataListAllTest = yield call(GET_LIST_TEST_SERVICE[action.typeList]);
+        const dataListAllTest = yield call(GET_LIST_TEST_SERVICE[action.typeList], action.page);
         console.log(dataListAllTest);
         if (dataListAllTest.status === 200) {
-            yield put(listAllTestSuccess(dataListAllTest.data.tests, action.typeList));
+            yield put(listAllTestSuccess(dataListAllTest.data, action.typeList));
         }
     } catch (e) {
         console.log(e);

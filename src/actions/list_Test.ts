@@ -4,25 +4,27 @@ import {
   LIST_ALL_TEST_FAILED,
 } from "../constants";
 
-interface listTestObject {
-  answers: null;
-  author: string;
-  correctAnswer: null;
-  createdAt: string;
-  description: string;
-  id: string;
-  likes: number;
-  name: string;
-  official: boolean;
-  questions: null;
-  testPart: number;
-  testType: number;
-  viewCount: number;
+ export interface listTestObject {
+  answers ?: null;
+  author?: string;
+  correctAnswer?: null;
+  createdAt?: string;
+  description?: string;
+  id?: string;
+  likes?: number;
+  name?: string;
+  official?: boolean;
+  questions?: null;
+  testPart?: number;
+  testType?: number;
+  viewCount?: number;
+  avatarSrc?: null
 }
-export const listTestRequest = (typeList: string) => {
+export const listTestRequest = (typeList: string, page: number) => {
   return {
     type: LIST_ALL_TEST_REQUEST,
     typeList,
+    page
   };
 };
 

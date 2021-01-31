@@ -14,4 +14,5 @@ export const theme = {
     textDarkSecondary: '#B1B1B1',
     textDarkPrimary: '#575757',
     textDark2: '#858585',
+    backgroundDetailTest: '#c00000',
 }

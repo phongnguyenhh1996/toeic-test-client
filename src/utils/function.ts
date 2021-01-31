@@ -27,6 +27,9 @@ export interface Test {
     testType: number
     testPart: number
     avatarSrc: any
+    author?: string
+    viewCount?: number
+    likes?: number
     questions: {
         [key: string]: Question
     }
