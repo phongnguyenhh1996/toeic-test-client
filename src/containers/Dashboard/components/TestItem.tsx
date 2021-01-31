@@ -1,17 +1,17 @@
 import Skeleton from "@material-ui/lab/Skeleton";
 import React from "react";
 import { FaEye, FaHeart } from "react-icons/fa";
+import { Test } from "../../../utils/function";
 import { TestItem as TestItemStyle } from '../style'
 
 
 interface TestItemProps {
-  title?: string,
-  author?: string,
+  test?: Test
   isSkeletion?: boolean
+  changeIsOpenDialog?: () => void;
 }
 
-export const TestItem: React.FC<TestItemProps> = (props:TestItemProps) => {
-  const { title, author, isSkeletion } = props;
+export const TestItem: React.FC<TestItemProps> = ({test={},isSkeletion,changeIsOpenDialog}) => {
   if (isSkeletion) {
     return (
       <TestItemStyle>
@@ -28,11 +28,11 @@ export const TestItem: React.FC<TestItemProps> = (props:TestItemProps) => {
   }
   
   return (
-    <TestItemStyle>
-      <div className="bg-img"></div>
+    <TestItemStyle onClick={changeIsOpenDialog}>
+      <div className="bg-img" style={{backgroundImage:`url(${test.avatarSrc})`}}></div>
       <div className="content-wrapper">
-        <p className="title">{title}</p>
-        <p className="author">{`By ${author}`} </p>
+        <p className="title">{test.name}</p>
+        <p className="author">{`By ${test.author}`} </p>
         <div className="info-wrapper">
           <div className="status-wrapper">
             <div className="status-label">Official</div>
@@ -41,11 +41,11 @@ export const TestItem: React.FC<TestItemProps> = (props:TestItemProps) => {
           <div className="viewer-wrapper">
             <div className="viewer-item">
               <FaEye className="viewer-icon" />
-              <div className="viewer-count">50</div>
+              <div className="viewer-count">{test.viewCount}</div>
             </div>
             <div className="viewer-item">
               <FaHeart className="viewer-icon heart" />
-              <div className="viewer-count">50</div>
+              <div className="viewer-count">{test.likes}</div>
             </div>
           </div>
         </div>

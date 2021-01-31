@@ -3,30 +3,17 @@ import {
   LIST_ALL_TEST_REQUEST,
   LIST_ALL_TEST_FAILED,
 } from "../constants";
+import { Test } from "../utils/function";
 
-interface listTestObject {
-  answers: null;
-  author: string;
-  correctAnswer: null;
-  createdAt: string;
-  description: string;
-  id: string;
-  likes: number;
-  name: string;
-  official: boolean;
-  questions: null;
-  testPart: number;
-  testType: number;
-  viewCount: number;
-}
-export const listTestRequest = (typeList: string) => {
+export const listTestRequest = (typeList: string, page: number) => {
   return {
     type: LIST_ALL_TEST_REQUEST,
     typeList,
+    page
   };
 };
 
-export const listAllTestSuccess = (arrayList: Array<listTestObject>, typeList: string) => {
+export const listAllTestSuccess = (arrayList: Test[], typeList: string) => {
   return {
     type: LIST_ALL_TEST_SUCCESS,
     payload: arrayList,

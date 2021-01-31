@@ -175,13 +175,21 @@ export const TitleSection = styled.div`
 `
 export const TestItem = styled.div`
   ${ContentWrapperCss()}
+  transition: all .2s ease;
+  &:hover {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px) scale(1.01);
+  }
   padding: 10px;
   overflow: hidden;
+  cursor:pointer;
   .bg-img {
     margin: -10px;
     margin-bottom: 10px;
     padding-top: 56.25%;
     background-color: ${theme.backgroundDarkSecondary};
+    background-size:cover;
+    background-position:center;
   }
   .content-wrapper {
     display: flex;
