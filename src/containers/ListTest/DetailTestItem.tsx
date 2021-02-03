@@ -2,12 +2,12 @@ import React from 'react';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
+import { DialogTop,DialogContentTop,DialogContentBody,Dialogbottom } from "./style";
+import {FaPlay,FaUsers} from "react-icons/fa";
+import { Test } from '../../utils/function';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -29,17 +29,19 @@ export interface DialogTitleProps extends WithStyles<typeof styles> {
   onClose: () => void;
 }
 
-const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
+export const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
   const { children, classes, onClose, ...other } = props;
   return (
-    <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant="h6">{children}</Typography>
-      {onClose ? (
+    <DialogTop disableTypography className={classes.root} {...other}>
+      <div>
+        {children}
+        {onClose ? (
         <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
           <CloseIcon />
         </IconButton>
       ) : null}
-    </MuiDialogTitle>
+      </div>
+    </DialogTop>
   );
 });
 
@@ -49,45 +51,44 @@ const DialogContent = withStyles((theme: Theme) => ({
   },
 }))(MuiDialogContent);
 
-const DialogActions = withStyles((theme: Theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1),
-  },
-}))(MuiDialogActions);
 interface openDetail {
-    isOpen:boolean
-    handleClose: () => void
+    isOpen:boolean,
+    handleClose: () => void,
+    test ?: Test
 }
- const  DetailTestItem:React.FC<openDetail> = ({isOpen, handleClose}) => {
+ const  DetailTestItem:React.FC<openDetail> = ({isOpen, handleClose,test= {}}) => {
 
     return (
         <div>
-        <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={isOpen}>
-            <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-            Modal title
-            </DialogTitle>
-            <DialogContent dividers>
-            <Typography gutterBottom>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-                in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-            </Typography>
-            <Typography gutterBottom>
-                Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-                lacus vel augue laoreet rutrum faucibus dolor auctor.
-            </Typography>
-            <Typography gutterBottom>
-                Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-                auctor fringilla.
-            </Typography>
-            </DialogContent>
-            <DialogActions>
-            <Button autoFocus onClick={handleClose} color="primary">
-                Save changes
-            </Button>
-            </DialogActions>
-        </Dialog>
+          <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={isOpen}>
+              <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                  <h3>{test.name}</h3>
+                  <span className="dialog-top-span dialog-top-span-1">{test.questions } questions</span>
+                  <span className="dialog-top-span dialog-top-span-2">{test.viewCount } likes</span>
+             
+              </DialogTitle>
+              <DialogContent >
+                  <DialogContentTop>
+                    <h3>past simple form</h3>
+                    <div>
+                      <p><span>{test.author}</span></p>
+                      <p><span>Grades: </span><span>5th to 14th</span></p>
+                    </div>
+                  </DialogContentTop>
+                  <DialogContentBody>
+                    <p>Decriptons : <span>{test.description}</span></p>
+                  </DialogContentBody>
+
+              </DialogContent>
+              <Dialogbottom>
+                  <Button onClick={handleClose} endIcon={<FaPlay/>} className="btn-dialog btn-dialog-1">
+                        Practice
+                  </Button>
+                  <Button onClick={handleClose} endIcon={<FaUsers/>} className="btn-dialog btn-dialog-2">
+                      Challenge Friends
+                  </Button>
+              </Dialogbottom>
+          </Dialog>
         </div>
     );
 }

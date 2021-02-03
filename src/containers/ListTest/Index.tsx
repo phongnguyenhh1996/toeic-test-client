@@ -9,6 +9,7 @@ import { range } from 'lodash';
 import PaginationLink from './TestPagtion';
 import { useLocation } from 'react-router-dom';
 import DetailTestItem from './DetailTestItem';
+import { Test } from '../../utils/function';
 
 
 const TAB_TYPE: any = {
@@ -16,17 +17,33 @@ const TAB_TYPE: any = {
     1: 'created',
     2: 'completed'
 }
-  
+const initiTestItemDetail:Test = {
+    name: "",
+    description: "",
+    testPart: 0,
+    testType: 0,
+    answers: {},
+    avatarSrc:"",
+    author:"",
+    viewCount:0,
+    likes:0,
+    correctAnswer:{},
+    questions:{},
+}
 const ListTest: React.FC = () => {
     const [tabIndex, setTabIndex] = useState(0);
     const [isOpenDialog,setIsOpenDialog] = useState(false);
-    const listTest = useSelector((state:any)=> state.listTest) 
-    const isLoading = useSelector((state:any)=> state.listTest.loading) 
+    const [testItemDetail,settestItemDetail] = useState<Test>(initiTestItemDetail);
+    const listTest = useSelector((state:any)=> state.listTest) ;
+    const isLoading = useSelector((state:any)=> state.listTest.loading) ;
     const dispatch = useDispatch();
     const location = useLocation()
     
     
-    const changeIsOpenDialog = () =>{
+    const changeIsOpenDialog = (test: any) =>{
+        settestItemDetail(test);
+        console.log(testItemDetail);
+        console.log(test);
         setIsOpenDialog(true);
     }
 
@@ -91,10 +108,8 @@ const ListTest: React.FC = () => {
                                 <TestItem isSkeletion />
                             </Grid>
                         ))}
+                        { isOpenDialog &&   <DetailTestItem test={testItemDetail}   handleClose={closeDialog} isOpen={isOpenDialog} />}
                     </Grid>
-                   {
-                        isOpenDialog &&  <DetailTestItem handleClose={closeDialog} isOpen={isOpenDialog} />
-                   }
                 </GridListTest>
                 <Grid item xs={12} >
                     <ContainerPagin>

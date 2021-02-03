@@ -8,10 +8,10 @@ import { TestItem as TestItemStyle } from '../style'
 interface TestItemProps {
   test?: Test
   isSkeletion?: boolean
-  changeIsOpenDialog?: () => void;
+  changeIsOpenDialog?: (test: any) => void;
 }
 
-export const TestItem: React.FC<TestItemProps> = ({test={},isSkeletion,changeIsOpenDialog}) => {
+export const TestItem: React.FC<TestItemProps> = ({test={},isSkeletion,changeIsOpenDialog = ()=> {}}) => {
   if (isSkeletion) {
     return (
       <TestItemStyle>
@@ -28,7 +28,7 @@ export const TestItem: React.FC<TestItemProps> = ({test={},isSkeletion,changeIsO
   }
   
   return (
-    <TestItemStyle onClick={changeIsOpenDialog}>
+    <TestItemStyle onClick={() => changeIsOpenDialog(test)}>
       <div className="bg-img" style={{backgroundImage:`url(${test.avatarSrc})`}}></div>
       <div className="content-wrapper">
         <p className="title">{test.name}</p>
