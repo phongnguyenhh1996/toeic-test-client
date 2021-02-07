@@ -112,7 +112,7 @@ export const LoginForm : React.FC = () => {
         <form onSubmit={handleSubmit} onChange={handleInput}>
             <TextFieldLogin error={!!inputError.username} autoFocus name="username" label='USERNAME' helperText={inputError.username} />
             <TextFieldLogin error={!!inputError.password} name="password" label='PASSWORD' type="password" helperText={inputError.password} />
-            <CustomButton type="submit" theme="green" borderCircle className="btnLogin" disabled={isloading}>
+            <CustomButton type="submit" theme="green" $borderCircle className="btnLogin" disabled={isloading}>
               {isloading && <Rotate/>} LOGIN 
             </CustomButton>
         </form>

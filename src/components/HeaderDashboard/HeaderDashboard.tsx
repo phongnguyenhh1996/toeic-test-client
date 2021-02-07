@@ -111,12 +111,12 @@ export default function ElevateAppBar(props: Props) {
           anchorEl={anchorEl}
           onClose={handleClose}
           anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
+            vertical: 'bottom',
+            horizontal: 'left',
           }}
           transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
+            vertical: 'top',
+            horizontal: 'left',
           }}
         >
           <List component="nav" aria-labelledby="nested-list-subheader">

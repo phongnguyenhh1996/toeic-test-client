@@ -29,6 +29,10 @@ const userReducer = (state = initialState, action) => {
                 isLoading: false,
                 isFailed: true
             }
+        case TYPES.API_UNAUTHORIZED:
+            return {
+                ...initialState
+            }
         default:
             return state
     }

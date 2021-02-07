@@ -71,7 +71,7 @@ export const SignUpForm : React.FC = () => {
             <TextFieldLogin autoFocus label="USERNAME" name="username" error={!!inputError.username} helperText={inputError.username} />
             <TextFieldLogin label="EMAIL" name="email"  error={!!inputError.email} helperText={inputError.email}/>
             <TextFieldLogin label="PASSWORD" name="password" type="password" error={!!inputError.password} helperText={inputError.password}/>
-            <CustomButton type="submit" theme="green" borderCircle className="btnLogin"  disabled={isloading}>
+            <CustomButton type="submit" theme="green" $borderCircle className="btnLogin"  disabled={isloading}>
             {isloading && <Rotate/>} SIGN UP
             </CustomButton>
         </form>

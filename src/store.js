@@ -1,9 +1,18 @@
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from 'redux-devtools-extension'
-import reducers from "./reducers";
+import createRootReducer from './reducers'
 import middleware from "./middleware";
+import { createBrowserHistory } from 'history'
+import { routerMiddleware } from 'connected-react-router'
+
+export const history = createBrowserHistory()
 
 export default createStore(
-  reducers,
-  composeWithDevTools(applyMiddleware(...middleware))
+  createRootReducer(history),
+  composeWithDevTools(
+    applyMiddleware(
+      routerMiddleware(history),
+      ...middleware
+    )
+  )
 )

@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { Paper, Tabs, Tab } from "@material-ui/core";
+import { Paper, Tabs, Tab, Dialog } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { theme } from "../../utils/theme";
 import Pagination from '@material-ui/lab/Pagination';
-
-
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogActions from '@material-ui/core/DialogActions';
 
 // css style for grid *****************
 export const GridListTest = styled(Grid)`
@@ -35,6 +35,101 @@ export const TabListTest = styled(Tab)`
 // css style for tabs ending ****************
 
 
+export const TopImg = styled.div`
+    padding-top: 56.25%;
+    background-color: ${theme.backgroundGray2};
+    background-size: cover;
+    background-position: center;
+`
+export const DialogTest = styled(Dialog)`
+    .MuiPaper-root {
+        min-width: 450px;
+    }
+`
+
+export const DialogTop = styled(MuiDialogTitle)`
+    position: relative;
+    padding: 0;
+    div{
+        h3{
+            color: ${theme.textLight};
+            font-size: 40px;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .dialog-top-span{
+            position: absolute;
+            background-color: ${theme.backgroundGray};
+            border-radius: 4px;
+            padding: 4px 6px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .dialog-top-span-1{
+            bottom: -10px;
+            left: 16px;
+            color: ${theme.textDark2};
+        }
+        .dialog-top-span-2{
+            bottom: -10px;
+            right: 16px;
+            color: ${theme.textViolet}
+        }
+    }
+`;
+export const DialogContentTop = styled.div`
+    margin: 15px 0;
+    border-bottom: 2px solid ${theme.backgroundGray};
+    padding-bottom:30px;
+    h3{
+        font-size: 22px;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-family: Arial, Helvetica, sans-serif;
+        margin-bottom: 15px;
+    }
+    div{
+        display: flex;
+        justify-content: space-between;
+        p span{
+            color: ${theme.textDark2}
+        }
+        p span:nth-child(1){
+            margin-left: 30px;
+        }
+        p span:nth-child(2){
+            background-color: ${theme.backgroundGray};
+            border-radius: 4px;
+            padding: 4px 6px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    }       
+`;
+export const DialogContentBody = styled.div`
+    padding: 15px 6px;
+    border-radius: 6px;
+    background-color: ${theme.backgroundGray2};
+    color: ${theme.textDark2};
+`;
+export const Dialogbottom = styled(MuiDialogActions)`
+   justify-content: space-between;
+   padding: 16px;
+   .btn-dialog{
+       color: ${theme.textLight};
+       text-transform: capitalize;
+       padding: 18px 14px;
+       height: 62px;
+   }
+   .btn-dialog-1{
+        background-color: ${theme.backgroundGreen};
+        flex-basis: 48%;
+   }
+   .btn-dialog-2{
+        background-color: ${theme.textViolet};
+        flex-basis: 48%;
+    }
+`;
+
 // css style for pagination start ***********
 export const PaginationTest = styled(Pagination)`
     .MuiPagination-ul li .MuiPaginationItem-page.Mui-selected{
@@ -55,14 +150,7 @@ export const ContainerPagin = styled.div`
    margin-top:50px
 `;
 
-export const ContainerDetailTest = styled.section`
-    padding:10px;
-    border-radius:10px;
-    overflow:hidden;
-`;
-export const DetailTestTop = styled.div`
-    background-color:${theme.backgroundDetailTest};
-    padding:100px 0;
-`;
+
+
 
 

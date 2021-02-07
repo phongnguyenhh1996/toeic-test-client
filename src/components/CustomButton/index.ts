@@ -68,11 +68,11 @@ const themeBtn: any = {
 }
 
 interface BtnProps {
-  borderCircle?: boolean
+  $borderCircle?: boolean
 }
 
 const CustomButton = styled(Button)<BtnProps>`
-  border-radius: ${props => props.borderCircle ? "40px" : "5px"};
+  border-radius: ${props => props.$borderCircle ? "40px" : "5px"};
   text-transform: none;
   font-size: 13px;
   padding-left: 30px;
