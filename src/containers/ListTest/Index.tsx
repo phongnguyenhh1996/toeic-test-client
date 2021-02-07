@@ -60,7 +60,7 @@ const ListTest: React.FC = () => {
     
     
     useEffect(()=>{
-        if ((tabType !== prevTabType && !testsData) || (page !== prevPage)) {
+        if ((tabType !== prevTabType) || (page !== prevPage)) {
             dispatch(listTestRequest(TAB_TYPE[tabType], page));
         }
     },[prevTabType, tabType, testsData, dispatch, page, prevPage])
@@ -72,12 +72,12 @@ const ListTest: React.FC = () => {
 
     useEffect(() => {
         if (!tabType) {
-            history.replace('/list-test?type=0')
+            history.replace('/list-test?type=0&page=1')
         }
     }, [tabType, history])
 
     const handleChangeTab = useCallback((e, index) =>{
-        history.push(`/list-test?type=${index}`)
+        history.push(`/list-test?type=${index}&page=1`)
     }, [history])
 
     return (

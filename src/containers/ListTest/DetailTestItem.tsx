@@ -1,11 +1,10 @@
 import React from 'react';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import { DialogTop,DialogContentTop,DialogContentBody,Dialogbottom } from "./style";
+import { DialogTop, DialogContentTop, DialogContentBody, Dialogbottom, TopImg, DialogTest } from "./style";
 import {FaPlay,FaUsers} from "react-icons/fa";
 import { Test } from '../../utils/function';
 
@@ -52,30 +51,32 @@ const DialogContent = withStyles((theme: Theme) => ({
 }))(MuiDialogContent);
 
 interface openDetail {
-    isOpen:boolean,
+    isOpen: boolean,
     handleClose: () => void,
     test?: Test
 }
- const  DetailTestItem:React.FC<openDetail> = ({isOpen, handleClose,test= {}}) => {
+ const  DetailTestItem:React.FC<openDetail> = ({isOpen, handleClose, test}) => {
 
     return (
-        <div>
-          <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={isOpen}>
+          <DialogTest onClose={handleClose} aria-labelledby="customized-dialog-title" open={isOpen}>
               <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                  <h3>{test.name}</h3>
-                  <span className="dialog-top-span dialog-top-span-1">{test.questions } questions</span>
-                  <span className="dialog-top-span dialog-top-span-2">{test.viewCount } likes</span>
+                  <TopImg style={{backgroundImage:`url(${test?.avatarSrc})`}}/>
+                  <span className="dialog-top-span dialog-top-span-1">{test?.questions } questions</span>
+                  <span className="dialog-top-span dialog-top-span-2">{test?.viewCount } likes</span>
               </DialogTitle>
               <DialogContent >
                   <DialogContentTop>
-                    <h3>past simple form</h3>
+                    <h3>{test?.name}</h3>
                     <div>
-                      <p><span>{test.author}</span></p>
+                      <p><span>{test?.author}</span></p>
                       <p><span>Grades: </span><span>5th to 14th</span></p>
                     </div>
                   </DialogContentTop>
                   <DialogContentBody>
-                    <p>Decriptons : <span>{test.description}</span></p>
+                    {test?.description
+                      ? <p>Description : <span>{test.description}</span></p>
+                      : "No description."
+                    }
                   </DialogContentBody>
 
               </DialogContent>
@@ -87,8 +88,7 @@ interface openDetail {
                       Challenge Friends
                   </Button>
               </Dialogbottom>
-          </Dialog>
-        </div>
+          </DialogTest>
     );
 }
 

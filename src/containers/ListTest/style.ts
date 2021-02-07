@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Paper, Tabs, Tab } from "@material-ui/core";
+import { Paper, Tabs, Tab, Dialog } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { theme } from "../../utils/theme";
 import Pagination from '@material-ui/lab/Pagination';
@@ -35,12 +35,22 @@ export const TabListTest = styled(Tab)`
 // css style for tabs ending ****************
 
 
+export const TopImg = styled.div`
+    padding-top: 56.25%;
+    background-color: ${theme.backgroundGray2};
+    background-size: cover;
+    background-position: center;
+`
+export const DialogTest = styled(Dialog)`
+    .MuiPaper-root {
+        min-width: 450px;
+    }
+`
+
 export const DialogTop = styled(MuiDialogTitle)`
     position: relative;
+    padding: 0;
     div{
-        background-color: ${theme.backgroundDetailTest};
-        margin: -16px;
-        padding: 80px 50px;
         h3{
             color: ${theme.textLight};
             font-size: 40px;
