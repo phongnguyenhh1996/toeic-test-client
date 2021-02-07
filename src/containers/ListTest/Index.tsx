@@ -42,8 +42,6 @@ const ListTest: React.FC = () => {
     
     const changeIsOpenDialog = (test: any) =>{
         settestItemDetail(test);
-        console.log(testItemDetail);
-        console.log(test);
         setIsOpenDialog(true);
     }
 
@@ -99,7 +97,7 @@ const ListTest: React.FC = () => {
                                 <TestItem
                                     test={test}
                                     changeIsOpenDialog={changeIsOpenDialog}
-                                   />
+                                />
                             </Grid>)
                         }
                         
@@ -108,14 +106,18 @@ const ListTest: React.FC = () => {
                                 <TestItem isSkeletion />
                             </Grid>
                         ))}
-                        { isOpenDialog &&   <DetailTestItem test={testItemDetail}   handleClose={closeDialog} isOpen={isOpenDialog} />}
+                        { isOpenDialog &&
+                            <DetailTestItem
+                                test={testItemDetail}
+                                handleClose={closeDialog}
+                                isOpen={isOpenDialog}
+                            />}
                     </Grid>
                 </GridListTest>
                 <Grid item xs={12} >
                     <ContainerPagin>
                         <PaginationLink totalPage={totalPage}/>
                     </ContainerPagin>
-                   
                 </Grid>
             </Grid>
         </Container>

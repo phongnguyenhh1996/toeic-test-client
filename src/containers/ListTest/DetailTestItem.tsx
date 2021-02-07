@@ -54,7 +54,7 @@ const DialogContent = withStyles((theme: Theme) => ({
 interface openDetail {
     isOpen:boolean,
     handleClose: () => void,
-    test ?: Test
+    test?: Test
 }
  const  DetailTestItem:React.FC<openDetail> = ({isOpen, handleClose,test= {}}) => {
 
@@ -65,7 +65,6 @@ interface openDetail {
                   <h3>{test.name}</h3>
                   <span className="dialog-top-span dialog-top-span-1">{test.questions } questions</span>
                   <span className="dialog-top-span dialog-top-span-2">{test.viewCount } likes</span>
-             
               </DialogTitle>
               <DialogContent >
                   <DialogContentTop>

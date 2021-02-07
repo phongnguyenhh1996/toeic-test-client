@@ -68,13 +68,13 @@ const Login: React.FC<LoginProps> = () => {
                     Login with social media
                   </RegisterSuggest>
                   <SocialsBtnGround >
-                    <CustomButton borderCircle={true} startIcon={<FaFacebookF/>} theme="facebook"  className="btnLoginIcon">
+                    <CustomButton $borderCircle={true} startIcon={<FaFacebookF/>} theme="facebook"  className="btnLoginIcon">
                       Facebook
                     </CustomButton>
-                    <CustomButton borderCircle={true} startIcon={<FaTwitter/>} theme="twitter" className="btnLoginIcon">
+                    <CustomButton $borderCircle={true} startIcon={<FaTwitter/>} theme="twitter" className="btnLoginIcon">
                       Twitter
                     </CustomButton>
-                    <CustomButton borderCircle={true} startIcon={<FaGooglePlusG/>} theme="google" className="btnLoginIcon">
+                    <CustomButton $borderCircle={true} startIcon={<FaGooglePlusG/>} theme="google" className="btnLoginIcon">
                       Google +
                     </CustomButton>
                   </SocialsBtnGround>
