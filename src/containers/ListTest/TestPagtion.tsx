@@ -12,7 +12,7 @@ const PaginationLink: React.FC<PaginationProps> = ({totalPage}) => {
     const location = useLocation()
     const query = new URLSearchParams(location.search);
     const page = parseInt(query.get('page') || '1', 10);
-    const typeTest = query.get('type');
+    const typeTest = query.get('type') || '0';
 
     return (
         <PaginationTest
