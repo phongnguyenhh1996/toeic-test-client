@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaMicrophone, FaRegImage } from 'react-icons/fa'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { theme } from '../../../utils/theme'
 
 const Wrapper = styled.label`

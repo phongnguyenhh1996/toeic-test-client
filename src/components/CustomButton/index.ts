@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import Button from "@material-ui/core/Button";
 import { theme } from "../../utils/theme";
 
@@ -69,9 +69,17 @@ const themeBtn: any = {
 
 interface BtnProps {
   $borderCircle?: boolean
+  $isLoading?: boolean
 }
 
+const loadAnimation = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
 const CustomButton = styled(Button)<BtnProps>`
+  position: relative;
   border-radius: ${props => props.$borderCircle ? "40px" : "5px"};
   text-transform: none;
   font-size: 13px;
@@ -84,6 +92,22 @@ const CustomButton = styled(Button)<BtnProps>`
   `}
   svg {
     margin-right: 5px;
+  }
+  &:before {
+    ${props => props.$isLoading && css`
+      content: '';
+      flex-shrink: 0;
+      height: 15px;
+      width: 15px;
+      display: inline-block;
+      border-radius: 50%;
+      ${props => css`
+        border: 3px solid ${themeBtn[props.theme].shadow};
+        border-top-color: ${themeBtn[props.theme].text || theme.textLight};
+      `}
+      margin-right: 5px;
+      animation: ${loadAnimation} 1s infinite ease-in-out;
+    `}
   }
 `
 

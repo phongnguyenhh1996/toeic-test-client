@@ -1,7 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 import React from 'react'
 import { ScrollElement } from 'react-scroll';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const QuestionWrapper = styled(Grid)`
     display: flex;

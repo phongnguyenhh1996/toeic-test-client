@@ -233,9 +233,6 @@ export const TestItem = styled.div`
       font-weight: 600;
       &:not(:last-child) {
         margin-right: 5px;
-        @media (max-width: 1279px) {
-          margin-bottom: 5px;
-        }
       }
     }
   }

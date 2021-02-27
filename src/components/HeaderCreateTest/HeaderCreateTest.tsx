@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {
   Header,
@@ -18,13 +18,15 @@ export default function HeaderCreateTest(props: Props) {
 
   const history = useHistory()
   const dispatch = useDispatch()
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar()
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleExit = () => {
     history.goBack()
   }
 
   const handleSubmitTest = () => {
+    setIsLoading(true)
     dispatch(createTestRequest({
       onSuccess: () => {
         enqueueSnackbar('Test created successfully!',{
@@ -33,7 +35,8 @@ export default function HeaderCreateTest(props: Props) {
             horizontal:'right'
           },variant:'success'
         });
-        history.push('/list-test')
+        setIsLoading(false)
+        history.push('/list-test?type=1&page=1')
       }
     }))
   }
@@ -46,10 +49,10 @@ export default function HeaderCreateTest(props: Props) {
           <Logo width="145px"/>
         </LogoWrapper>
         <ButtonWrapper>
-          <CustomButton onClick={handleExit} theme="green-solid-no-shadow">
+          <CustomButton disabled={isLoading} onClick={handleExit} theme="green-solid-no-shadow">
             EXIT
           </CustomButton>
-          <CustomButton onClick={handleSubmitTest} theme="white">
+          <CustomButton $isLoading={isLoading} disabled={isLoading} onClick={handleSubmitTest} theme="white">
             DONE
           </CustomButton>
         </ButtonWrapper>

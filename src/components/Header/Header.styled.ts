@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { Link } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField/TextField';
 import { theme } from '../../utils/theme';

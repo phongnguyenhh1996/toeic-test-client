@@ -3,7 +3,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup'
 import { get, range } from 'lodash'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { scroller } from 'react-scroll'
 
 import { goToQuestion } from '../../../../actions/tests'

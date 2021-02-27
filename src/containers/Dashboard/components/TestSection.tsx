@@ -46,9 +46,6 @@ export const TestSection: React.FC<TestSectionProps> = ({ type }) => {
         <Grid item xs>
           <TestItem />
         </Grid>
-        <Grid item xs>
-          <TestItem />
-        </Grid>
       </Grid>
       <Grid item xs={12}>
         <Grid container>

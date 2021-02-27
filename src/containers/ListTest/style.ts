@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Paper, Tabs, Tab, Dialog } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { theme } from "../../utils/theme";
@@ -149,8 +149,6 @@ export const ContainerPagin = styled.div`
    align-items: center;
    margin-top:50px
 `;
-
-
 
 
 

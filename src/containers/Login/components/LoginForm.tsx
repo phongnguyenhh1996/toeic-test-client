@@ -1,29 +1,13 @@
 import TextField from '@material-ui/core/TextField';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import styled ,{keyframes}  from 'styled-components';
+import styled from 'styled-components/macro';
 import { userLogin } from '../../../actions/user';
 import CustomButton from '../../../components/CustomButton';
 import { UserInfo } from '../../../components/Header/Header';
 import { theme } from '../../../utils/theme';
 import { useHistory } from 'react-router';
 import { useSnackbar } from 'notistack';
-const loadAnimation = keyframes`
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-export  const Rotate = styled.div`
-    height:15px;
-    width:15px;
-    display:inline-block;
-    border:3px solid rgba(255,255,255,0.3);
-    border-radius:50%;
-    border-top-color:#fff;
-    margin-right:5px;
-    animation:${loadAnimation} 1s infinite ease-in-out;
-`;
 
 export const TextFieldLogin = styled(TextField)`
   margin-bottom: 30px;
@@ -84,11 +68,12 @@ export const LoginForm : React.FC = () => {
       if (!error.password && !error.username) {
         dispatch(userLogin(userInfo, {
           onSuccess: () => {
-            enqueueSnackbar('login success ',{
-              anchorOrigin:{
+            enqueueSnackbar('Login success!',{
+              anchorOrigin: {
                 vertical:'top',
                 horizontal:'right'
-              },variant:'success'
+              },
+              variant:'success'
             });
             history.push('/')
 
@@ -112,8 +97,8 @@ export const LoginForm : React.FC = () => {
         <form onSubmit={handleSubmit} onChange={handleInput}>
             <TextFieldLogin error={!!inputError.username} autoFocus name="username" label='USERNAME' helperText={inputError.username} />
             <TextFieldLogin error={!!inputError.password} name="password" label='PASSWORD' type="password" helperText={inputError.password} />
-            <CustomButton type="submit" theme="green" $borderCircle className="btnLogin" disabled={isloading}>
-              {isloading && <Rotate/>} LOGIN 
+            <CustomButton $isLoading={isloading} type="submit" theme="green" $borderCircle className="btnLogin" disabled={isloading}>
+              LOGIN 
             </CustomButton>
         </form>
     )
