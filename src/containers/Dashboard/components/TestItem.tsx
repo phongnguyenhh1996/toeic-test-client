@@ -4,7 +4,7 @@ import { FaEye, FaHeart } from "react-icons/fa";
 import { Test } from "../../../utils/function";
 import { TestItem as TestItemStyle } from '../style'
 
-
+export const DEFAULT_AVATAR_IMG = 'https://res.cloudinary.com/easy-toeic/image/upload/v1614499684/static/default-test-image_g9x9ly.png'
 interface TestItemProps {
   test?: Test
   isSkeletion?: boolean
@@ -29,7 +29,7 @@ export const TestItem: React.FC<TestItemProps> = ({test={},isSkeletion,changeIsO
   
   return (
     <TestItemStyle onClick={() => changeIsOpenDialog(test)}>
-      <div className="bg-img" style={{backgroundImage:`url(${test.avatarSrc})`}}></div>
+      <div className="bg-img" style={{backgroundImage:`url(${test.avatarSrc || DEFAULT_AVATAR_IMG})`}}></div>
       <div className="content-wrapper">
         <p className="title">{test.name}</p>
         <p className="author">{`By ${test.author}`} </p>

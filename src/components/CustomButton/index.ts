@@ -23,6 +23,11 @@ const themeBtn: any = {
     bg2: "#1D976C",
     shadow: "rgba(108, 197, 124, 0.0)"
   },
+  'purple': {
+    bg1: "#8854C0",
+    bg2: "#8854C0",
+    shadow: "rgba(108, 197, 124, 0.0)"
+  },
   "white": {
     bg1: "#fff",
     bg2: "#fff",

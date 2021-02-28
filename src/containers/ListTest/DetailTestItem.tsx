@@ -1,12 +1,18 @@
 import React from 'react';
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { DialogTop, DialogContentTop, DialogContentBody, Dialogbottom, TopImg, DialogTest } from "./style";
 import {FaPlay,FaUsers} from "react-icons/fa";
 import { Test } from '../../utils/function';
+import { DEFAULT_AVATAR_IMG } from '../Dashboard/components/TestItem';
+import CustomButton from '../../components/CustomButton';
+import { postAttemptTest } from '../../services/tests';
+import { useDispatch } from 'react-redux';
+import { getDetailTestRequest } from '../../actions/tests';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -57,10 +63,33 @@ interface openDetail {
 }
  const  DetailTestItem:React.FC<openDetail> = ({isOpen, handleClose, test}) => {
 
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const [isLoading, setIsLoading] = useState(false)
+
+    const handleAttempTest = () => {
+      if (test?.id) {
+        setIsLoading(true)
+        postAttemptTest(test.id).then(res => {
+          if (res.status === 200 && test.id) {
+            dispatch(getDetailTestRequest(test.id, {
+              onSuccess: () => {
+                setIsLoading(false)
+                history.push('/exam')
+              },
+              onFailure: () => {
+                setIsLoading(false)
+              }
+            }))
+          }
+        })
+      }
+    }
+
     return (
           <DialogTest onClose={handleClose} aria-labelledby="customized-dialog-title" open={isOpen}>
               <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                  <TopImg style={{backgroundImage:`url(${test?.avatarSrc})`}}/>
+                  <TopImg style={{backgroundImage:`url(${test?.avatarSrc || DEFAULT_AVATAR_IMG})`}}/>
                   <span className="dialog-top-span dialog-top-span-1">{test?.questions } questions</span>
                   <span className="dialog-top-span dialog-top-span-2">{test?.viewCount } likes</span>
               </DialogTitle>
@@ -81,12 +110,25 @@ interface openDetail {
 
               </DialogContent>
               <Dialogbottom>
-                  <Button onClick={handleClose} endIcon={<FaPlay/>} className="btn-dialog btn-dialog-1">
-                        Practice
-                  </Button>
-                  <Button onClick={handleClose} endIcon={<FaUsers/>} className="btn-dialog btn-dialog-2">
-                      Challenge Friends
-                  </Button>
+                  <CustomButton
+                    $isLoading={isLoading}
+                    theme="green-solid-no-shadow"
+                    onClick={handleAttempTest}
+                    endIcon={<FaPlay/>}
+                    className="btn-dialog"
+                    disabled={isLoading}
+                  >
+                    Practice
+                  </CustomButton>
+                  <CustomButton
+                    disabled={isLoading}
+                    theme="purple"
+                    onClick={handleClose}
+                    endIcon={<FaUsers/>}
+                    className="btn-dialog"
+                  >
+                    See detail
+                  </CustomButton>
               </Dialogbottom>
           </DialogTest>
     );

@@ -7,6 +7,9 @@ import {
   CREATE_TEST_FAILED,
   CREATE_TEST_REQUEST,
   CREATE_TEST_SUCCESS,
+  GET_TEST_DETAIL_FAILED,
+  GET_TEST_DETAIL_REQUEST,
+  GET_TEST_DETAIL_SUCCESS,
   GO_TO_QUESTION, INIT_TEST, REMOVE_QUESTION_FROM_GROUP
 } from "../constants";
 import { Test } from "../utils/function";
@@ -103,5 +106,30 @@ export const createTestSuccess = () => {
 export const createTestFailed = () => {
   return {
     type: CREATE_TEST_FAILED
+  }
+}
+
+export const getDetailTestRequest = (testId: string, callbacks: any) => {
+  return {
+    type: GET_TEST_DETAIL_REQUEST,
+    data: {
+      testId,
+      callbacks
+    }
+  }
+}
+
+export const getDetailTestSuccess = (test: Test) => {
+  return {
+    type: GET_TEST_DETAIL_SUCCESS,
+    data: {
+      test
+    }
+  }
+}
+
+export const getDetailTestFailed = () => {
+  return {
+    type: GET_TEST_DETAIL_FAILED
   }
 }

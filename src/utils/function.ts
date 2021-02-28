@@ -21,6 +21,7 @@ export interface CorrectAnswer {
     explanation: string
 }
 export interface Test {
+    id?: string,
     [key: string]: any
     name: string
     description: string
