@@ -23,16 +23,18 @@ function* createTest(action: any) {
     let imageUrl = ''
     let audioUrl = ''
 
-    if (questions[key].imageSrc) {
-      imageUrl = yield call(uploadFile, questions[key].imageSrc)
+    if (questions[key]) {
+      if (questions[key].imageSrc) {
+        imageUrl = yield call(uploadFile, questions[key]?.imageSrc)
+      }
+  
+      if (questions[key].audioSrc) {
+        audioUrl = yield call(uploadFile, questions[key]?.audioSrc)
+      }
+  
+      questions[key].imageSrc = imageUrl
+      questions[key].audioSrc = audioUrl
     }
-
-    if (questions[key].audioSrc) {
-      audioUrl = yield call(uploadFile, questions[key].audioSrc)
-    }
-
-    questions[key].imageSrc = imageUrl
-    questions[key].audioSrc = audioUrl
   }
 
   const newTest = finishDraft(testDraft)

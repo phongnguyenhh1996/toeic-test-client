@@ -119,15 +119,8 @@ export const Dialogbottom = styled(MuiDialogActions)`
        text-transform: capitalize;
        padding: 18px 14px;
        height: 62px;
+       flex-basis: 48%;
    }
-   .btn-dialog-1{
-        background-color: ${theme.backgroundGreen};
-        flex-basis: 48%;
-   }
-   .btn-dialog-2{
-        background-color: ${theme.textViolet};
-        flex-basis: 48%;
-    }
 `;
 
 // css style for pagination start ***********

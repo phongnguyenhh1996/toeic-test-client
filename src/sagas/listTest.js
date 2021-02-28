@@ -1,12 +1,15 @@
 import { takeLatest, put, call } from "redux-saga/effects";
-import * as listTest from "../services/listTest";
+import * as listTestAPI from "../services/listTest";
+import * as testAPI from "../services/tests";
 import { listAllTestFailed, listAllTestSuccess } from "../actions/list_Test";
-import { LIST_ALL_TEST_REQUEST } from "../constants";
+import * as testAction from "../actions/tests";
+import { LIST_ALL_TEST_REQUEST, GET_TEST_DETAIL_REQUEST } from "../constants";
+import { get } from "lodash";
 
 const GET_LIST_TEST_SERVICE = {
-    'all': listTest.fetchListAllTest,
-    'created': listTest.fetchListCreatedTest,
-    'completed': listTest.fetchListAllTest
+    'all': listTestAPI.fetchListAllTest,
+    'created': listTestAPI.fetchListCreatedTest,
+    'completed': listTestAPI.fetchListAllTest
 }
 
 function* fetchListAllTest(action) {
@@ -22,6 +25,24 @@ function* fetchListAllTest(action) {
     }
 }
 
+function* fetchTestDetail(action) {
+    const onSuccess = get(action, 'callbacks.onSuccess', () => {});
+    const onFailure = get(action, 'callbacks.onFailure', () => {});
+    try {
+        const testDetail = yield call(testAPI.getDetailTest, action.data.testId);
+        console.log(testDetail);
+        if (testDetail.status === 200) {
+            yield put(testAction.getDetailTestSuccess(testDetail.data));
+            onSuccess()
+        }
+    } catch (e) {
+        console.log(e);
+        yield put(listAllTestFailed())
+        onFailure()
+    }
+}
+
 export default function* listAllTest() {
     yield takeLatest(LIST_ALL_TEST_REQUEST, fetchListAllTest)
+    yield takeLatest(GET_TEST_DETAIL_REQUEST, fetchTestDetail)
 }
