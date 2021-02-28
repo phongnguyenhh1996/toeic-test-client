@@ -19,7 +19,7 @@ function* createTest(action: any) {
   const questions = testDraft.questions as {[key: string]: Question}
   const questionsKey = Object.keys(questions)
 
-  for (let key = parseInt(questionsKey[0]); key <= questionsKey.length; key++) {
+  for (let key = parseInt(questionsKey[0]); key <= parseInt(questionsKey[questionsKey.length]); key++) {
     let imageUrl = ''
     let audioUrl = ''
 
