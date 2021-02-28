@@ -3,7 +3,7 @@ import { takeLatest, select, call } from "redux-saga/effects";
 import { CREATE_TEST_REQUEST } from "../constants/index";
 import { postTest } from "../services/tests";
 import uploadFile from "../services/uploadFile";
-import { Test } from "../utils/function";
+import { Question, Test } from "../utils/function";
 
 function* createTest(action: any) {
   const test = yield select(state => state.tests.test)
@@ -16,10 +16,10 @@ function* createTest(action: any) {
   }
   testDraft.avatarSrc = avatarUrl
 
-  const questions = testDraft.questions
+  const questions = testDraft.questions as {[key: string]: Question}
   const questionsKey = Object.keys(questions)
 
-  for (let key = 1; key <= questionsKey.length; key++) {
+  for (let key = parseInt(questionsKey[0]); key <= questionsKey.length; key++) {
     let imageUrl = ''
     let audioUrl = ''
 
