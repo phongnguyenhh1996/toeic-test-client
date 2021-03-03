@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { theme } from "../../../utils/theme"
 import { SectionStaticsProps } from "./SectionStatics";
+import { ContentWrapperCss } from "../style";
+
+export const NodataWrapper = styled.div`
+  ${ContentWrapperCss()}
+`
 
 export const SectionStaticsStyled = styled.div<SectionStaticsProps>`
   display: flex;

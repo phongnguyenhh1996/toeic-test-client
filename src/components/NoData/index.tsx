@@ -18,10 +18,14 @@ const Text = styled.div`
     font-weight: 500;
 `
 
-export const NoData : React.FC = () => {
+interface NodataProps {
+  width?: number;
+}
+
+export const NoData : React.FC<NodataProps> = ({width = 250}) => {
     return (
         <NoDataWrapper>
-          <img width={250} src={NO_DATA_URL} alt="Logo" />
+          <img width={width} src={NO_DATA_URL} alt="Logo" />
           <Text>No data found!</Text>
         </NoDataWrapper>
     )

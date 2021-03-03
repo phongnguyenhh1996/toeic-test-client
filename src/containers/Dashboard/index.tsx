@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Container, Button } from "@material-ui/core";
 import {
   WeeklyOverview,
@@ -11,11 +11,29 @@ import { SectionStatics } from "./components/SectionStatics";
 import clsx from "clsx";
 import CustomButton from "../../components/CustomButton";
 import { TestSection } from "./components/TestSection";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { listTestHomepageRequest } from "../../actions/list_Test";
 
 const Dashboard: React.FC = () => {
   const percent = 75;
   const dataUser = useSelector((state:any) => state.user.detail);
+  const listTest = useSelector((state:any) => state.listTest.homepage);
+  const dispatch = useDispatch()
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true)
+    dispatch(listTestHomepageRequest({
+      onSuccess: () => {
+        setLoading(false)
+      },
+      onFailure: () => {
+        setLoading(false)
+      }
+    }))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <Container fixed>
       <Grid container spacing={2}>
@@ -113,9 +131,9 @@ const Dashboard: React.FC = () => {
           </WeeklyOverview>
         </Grid>
       </Grid>
-      <TestSection type="full"/>
-      <TestSection type="listening"/>
-      <TestSection type="reading"/>
+      <TestSection isLoading={isLoading} type="full" data={listTest?.full || []} />
+      <TestSection isLoading={isLoading} type="listening" data={listTest?.listening || []} />
+      <TestSection isLoading={isLoading} type="reading" data={listTest?.reading || []} />
     </Container>
   );
 };
