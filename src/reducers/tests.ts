@@ -23,63 +23,114 @@ const testsReducer = (state = initialState, action: any) =>
   produce(state, (draft: IInitialState) => {
     switch (action.type) {
       case CONSTANT.GO_TO_QUESTION:
-        draft.currentQuestion = action.toQuestion
-        break
+        draft.currentQuestion = action.toQuestion;
+        break;
       case CONSTANT.INIT_TEST:
-        draft.test = action.test
-        draft.currentQuestion = getFirstQuestion(action.test.testType, action.test.testPart)
-        break
+        draft.test = action.test;
+        draft.currentQuestion = getFirstQuestion(
+          action.test.testType,
+          action.test.testPart
+        );
+        break;
+      case CONSTANT.GET_TEST_DETAIL_SUCCESS:
+        const test = action.data.test.data
+        const newGroupQuestion: any = {}
+        Object.values(test.questions).forEach((question: any) => {
+          if (question.questionGroupId) {
+            if (newGroupQuestion[question.questionGroupId]) {
+              newGroupQuestion[question.questionGroupId].push(
+                question.questionNumb
+              )
+            } else {
+              newGroupQuestion[question.questionGroupId] = [
+                question.questionNumb,
+              ]
+            }
+          }
+        });
+        draft.test = test
+        draft.currentQuestion = getFirstQuestion(test.testType, test.testPart)
+        draft.groupQuestion = newGroupQuestion
+        break;
       case CONSTANT.CHANGE_TEST_INFO:
-        draft.test[action.data.key] = action.data.data
-        break
+        draft.test[action.data.key] = action.data.data;
+        break;
       case CONSTANT.CHANGE_QUESTION_DATA:
-        draft.test.questions[action.data.questionNumb][action.data.key] = action.data.data
-        break
+        draft.test.questions[action.data.questionNumb][action.data.key] =
+          action.data.data;
+        break;
       case CONSTANT.CHANGE_ANSWER_DATA:
-        draft.test.answers[action.data.questionNumb][action.data.answerNumb].answer = action.data.data
-        break
+        draft.test.answers[action.data.questionNumb][
+          action.data.answerNumb
+        ].answer = action.data.data;
+        break;
       case CONSTANT.CHANGE_CORRECTION_DATA:
-         set(draft.test.correctAnswer, `${action.data.questionNumb}.${action.data.key}`, action.data.data)
-         break
+        set(
+          draft.test.correctAnswer,
+          `${action.data.questionNumb}.${action.data.key}`,
+          action.data.data
+        );
+        break;
       case CONSTANT.ADD_NEW_QUESTION_TO_GROUP:
         if (!action.data.groupQuestionId) {
-          draft.groupQuestion[action.data.questionNumb] = [action.data.questionNumb, action.data.questionNumb + 1]
+          draft.groupQuestion[action.data.questionNumb] = [
+            action.data.questionNumb,
+            action.data.questionNumb + 1,
+          ];
 
-          const nextQuestionData = draft.test.questions[action.data.questionNumb + 1] as Question
-          draft.test.questions[action.data.questionNumb].questionGroupId = action.data.questionNumb
-          nextQuestionData.questionGroupId = action.data.questionNumb
-          nextQuestionData.audioSrc = null
-          nextQuestionData.imageSrc = null
-          draft.currentQuestion = action.data.questionNumb + 1
+          const nextQuestionData = draft.test.questions[
+            action.data.questionNumb + 1
+          ] as Question;
+          draft.test.questions[action.data.questionNumb].questionGroupId =
+            action.data.questionNumb;
+          nextQuestionData.questionGroupId = action.data.questionNumb;
+          nextQuestionData.audioSrc = null;
+          nextQuestionData.imageSrc = null;
+          draft.currentQuestion = action.data.questionNumb + 1;
         } else {
-          const groupQuestion = draft.groupQuestion[action.data.groupQuestionId]
-          const newQuestionNumb = action.data.groupQuestionId + groupQuestion.length
-          const newQuestion = draft.test.questions[newQuestionNumb] as Question
+          const groupQuestion =
+            draft.groupQuestion[action.data.groupQuestionId];
+          const newQuestionNumb =
+            action.data.groupQuestionId + groupQuestion.length;
+          const newQuestion = draft.test.questions[newQuestionNumb] as Question;
 
-          draft.groupQuestion[action.data.groupQuestionId].push(newQuestionNumb)
-          newQuestion.questionGroupId = action.data.groupQuestionId
-          newQuestion.audioSrc = null
-          newQuestion.imageSrc = null
-          draft.currentQuestion = newQuestionNumb
+          draft.groupQuestion[action.data.groupQuestionId].push(
+            newQuestionNumb
+          );
+          newQuestion.questionGroupId = action.data.groupQuestionId;
+          newQuestion.audioSrc = null;
+          newQuestion.imageSrc = null;
+          draft.currentQuestion = newQuestionNumb;
         }
-        break
+        break;
       case CONSTANT.REMOVE_QUESTION_FROM_GROUP:
-        const groupQuestion = draft.groupQuestion[action.data.groupQuestionId]
+        const groupQuestion = draft.groupQuestion[action.data.groupQuestionId];
         if (groupQuestion.length === 2) {
-          draft.currentQuestion = action.data.groupQuestionId
+          draft.currentQuestion = action.data.groupQuestionId;
 
-          delete draft.test.questions[action.data.groupQuestionId].questionGroupId
-          delete draft.test.questions[action.data.groupQuestionId + 1].questionGroupId
-          delete draft.groupQuestion[action.data.groupQuestionId]
+          delete draft.test.questions[action.data.groupQuestionId]
+            .questionGroupId;
+          delete draft.test.questions[action.data.groupQuestionId + 1]
+            .questionGroupId;
+          delete draft.groupQuestion[action.data.groupQuestionId];
         } else {
-          delete draft.test.questions[action.data.groupQuestionId + groupQuestion.length - 1].questionGroupId
-          
-          draft.currentQuestion = action.data.groupQuestionId + groupQuestion.length - 2
-          draft.groupQuestion[action.data.groupQuestionId] = groupQuestion.filter(questionNumb => questionNumb !== (action.data.groupQuestionId + groupQuestion.length - 1))
+          delete draft.test.questions[
+            action.data.groupQuestionId + groupQuestion.length - 1
+          ].questionGroupId;
+
+          draft.currentQuestion =
+            action.data.groupQuestionId + groupQuestion.length - 2;
+          draft.groupQuestion[
+            action.data.groupQuestionId
+          ] = groupQuestion.filter(
+            (questionNumb) =>
+              questionNumb !==
+              action.data.groupQuestionId + groupQuestion.length - 1
+          );
         }
-        break
+        break;
       default:
-        break
+        break;
     }
   })
 

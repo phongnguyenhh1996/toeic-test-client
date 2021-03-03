@@ -40,6 +40,13 @@ const routes: RouteItem[] = [
     component: CreateTest,
     isAuthRoute: true,
     exact: true
+  },
+  {
+    path: '/exam',
+    layout: CreateTestLayout,
+    component: CreateTest,
+    isAuthRoute: true,
+    exact: true
   }
 ]
 

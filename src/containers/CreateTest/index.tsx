@@ -28,10 +28,12 @@ const CreateTest: React.FC = () => {
   const location = useLocation()
   const dispatch = useDispatch()
 
-  const testType = get(location, 'state.testType')
-  const testPart = get(location, 'state.testPart')
+  const isExam = location.pathname === '/exam'
 
-  const [media, setMedia] = useState({ audio: undefined, image: undefined })
+  let testType = get(location, 'state.testType')
+  let testPart = get(location, 'state.testPart')
+
+  const [media, setMedia]: any = useState({ audio: undefined, image: undefined })
 
 
   const currentQuestionNumb = useSelector(state => get(state, `tests.currentQuestion`))
@@ -40,7 +42,12 @@ const CreateTest: React.FC = () => {
   const questionList = useSelector(state => get(state, `tests.test.questions`, {})) as {[key: string]: IQuestion}
   const answerList = useSelector(state => get(state, `tests.test.answers`, {})) as {[key: string]: IAnswer[]}
   const correctAnswerList = useSelector(state => get(state, `tests.test.correctAnswer`, {})) as {[key: string]: ICorrectAnswer}
-
+  const testTypeByTest = useSelector(state => get(state, `tests.test.testType`))
+  const testPartByTest = useSelector(state => get(state, `tests.test.testPart`))
+  if (isExam) {
+    testType = testTypeByTest
+    testPart = testPartByTest
+  }
   const listQuestionGroup = useMemo(() => {
     if (currentQuestion.questionGroupId) {
       const currentGroupQuestion = groupQuestion[currentQuestion.questionGroupId]
@@ -63,27 +70,34 @@ const CreateTest: React.FC = () => {
   const imageFile = questionData[0]?.question?.imageSrc
   const prevAudioFile = usePrevious(audioFile)
   const prevImageFile = usePrevious(imageFile)
-
+  
   useEffect(() => {
+    if (isExam) {
+      setMedia((media: any) => ({audio: audioFile, image: imageFile}))
+      return
+    }
     if (prevAudioFile && !audioFile) {
-      setMedia(media => ({...media, audio: undefined}))
+      setMedia((media: any) => ({...media, audio: undefined}))
     }
     if (prevImageFile && !imageFile) {
-      setMedia(media => ({...media, image: undefined}))
+      setMedia((media: any) => ({...media, image: undefined}))
     }
     if (!prevAudioFile && audioFile) {
-      readFile(audioFile, (result: any) => setMedia(media => ({...media, audio: result})))
+      readFile(audioFile, (result: any) => setMedia((media: any) => ({...media, audio: result})))
     }
     if (!prevImageFile && imageFile) {
-      readFile(imageFile, (result: any) => setMedia(media => ({...media, image: result})))
+      readFile(imageFile, (result: any) => setMedia((media: any) => ({...media, image: result})))
     }
-  }, [audioFile, imageFile, prevAudioFile, prevImageFile])
+  }, [audioFile, imageFile, prevAudioFile, prevImageFile, isExam])
 
   useEffect(() => {
+    if (isExam) {
+      return
+    }
     const test = createTestData(testType, testPart)
     dispatch(initTest(test))
 
-  }, [testType, testPart, dispatch])
+  }, [testType, testPart, dispatch, isExam])
 
   const onUploadImage = (questionNumb: number) => (result: any) => {
     dispatch(changeQuestionData(result, 'imageSrc', questionNumb))
@@ -196,7 +210,7 @@ const CreateTest: React.FC = () => {
       <SideContainer>
         <SideInner>
           <SideContent>
-            <TestInfo testType={testType} testPart={testPart}/>
+            {!isExam && <TestInfo testType={testType} testPart={testPart}/>}
             <MapNavigator groupQuestion={groupQuestion} testType={testType} testPart={testPart}/>
           </SideContent>
         </SideInner>
@@ -208,21 +222,27 @@ const CreateTest: React.FC = () => {
         <UploadWrapper isRowDirection={!media.audio && !media.image}>
           {media.audio ?
             <MediaWrapper width="100%">
-              <Player src={media.audio}/>
-              <RemoveMedia onClick={handleRemoveMedia('audioSrc', questionData[0].question.questionNumb)}>
-                <FaTimes />
-              </RemoveMedia >
+              <Player src={media.audio} />
+              {!isExam &&
+                <RemoveMedia onClick={handleRemoveMedia('audioSrc', questionData[0].question.questionNumb)}>
+                  <FaTimes />
+                </RemoveMedia>
+              }
             </MediaWrapper>
-            : <UploadFile onLoadedFile={onUploadAudio(questionData[0].question.questionNumb)} type="audio" />
+            : isExam ? null :
+              <UploadFile onLoadedFile={onUploadAudio(questionData[0].question.questionNumb)} type="audio" />
           }
           {media.image ?
             <MediaWrapper width="auto">
               <img width="355px" src={media.image} alt="Uploaded img" />
-              <RemoveMedia onClick={handleRemoveMedia('imageSrc', questionData[0].question.questionNumb)}>
-                <FaTimes />
-              </RemoveMedia>
+              {!isExam &&
+                <RemoveMedia onClick={handleRemoveMedia('imageSrc', questionData[0].question.questionNumb)}>
+                  <FaTimes />
+                </RemoveMedia>
+              }
             </MediaWrapper>
-            : <UploadFile onLoadedFile={onUploadImage(questionData[0].question.questionNumb)} type="image" />}
+            : isExam ? null :
+              <UploadFile onLoadedFile={onUploadImage(questionData[0].question.questionNumb)} type="image" />}
         </UploadWrapper>
         {questionData.length === 1 &&
           <Question
@@ -232,7 +252,7 @@ const CreateTest: React.FC = () => {
           />
         }
         {questionData.length > 1 && questionData.map((question, index: number) => {
-          if (index === questionData.length - 1) {
+          if (index === questionData.length - 1 && !isExam) {
             return (
               <MediaWrapper key={question.question.questionNumb} width="auto">
                 <Question
@@ -250,6 +270,7 @@ const CreateTest: React.FC = () => {
           }
           return (
             <Question
+              isExam={isExam}
               currentQuestionNumb={currentQuestionNumb}
               onClick={handleClickQuestion(question.question.questionNumb)}
               key={question.question.questionNumb}

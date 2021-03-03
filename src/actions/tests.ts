@@ -113,9 +113,9 @@ export const getDetailTestRequest = (testId: string, callbacks: any) => {
   return {
     type: GET_TEST_DETAIL_REQUEST,
     data: {
-      testId,
-      callbacks
-    }
+      testId
+    },
+    callbacks
   }
 }
 
