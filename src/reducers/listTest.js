@@ -23,6 +23,11 @@ const listTest = (state = initialState, action) => {
                 ...state,
                 loading: false
             };
+        case TYPES.GET_LIST_TEST_HOMEPAGE_SUCCESS:
+           return {
+             ...state,
+             homepage: action.data.data
+           }
         default:
             return state;
     }

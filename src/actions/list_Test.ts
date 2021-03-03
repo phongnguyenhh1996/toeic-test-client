@@ -2,6 +2,9 @@ import {
   LIST_ALL_TEST_SUCCESS,
   LIST_ALL_TEST_REQUEST,
   LIST_ALL_TEST_FAILED,
+  GET_LIST_TEST_HOMEPAGE_REQUEST,
+  GET_LIST_TEST_HOMEPAGE_SUCCESS,
+  GET_LIST_TEST_HOMEPAGE_FAILED,
 } from "../constants";
 import { Test } from "../utils/function";
 
@@ -26,3 +29,24 @@ export const listAllTestFailed = () => {
     type: LIST_ALL_TEST_FAILED,
   };
 };
+
+export const listTestHomepageRequest = (callbacks: any) => {
+  return {
+    type: GET_LIST_TEST_HOMEPAGE_REQUEST,
+    callbacks
+  }
+}
+
+export const listTestHomepageSuccess = (data: any) => {
+  return {
+    type: GET_LIST_TEST_HOMEPAGE_SUCCESS,
+    data
+  }
+}
+
+export const listTestHomepageFailed = (errors: any) => {
+  return {
+    type: GET_LIST_TEST_HOMEPAGE_FAILED,
+    errors
+  }
+}
