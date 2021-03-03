@@ -8,6 +8,7 @@ import { range } from "lodash";
 import { usePrevious } from "../../../utils/hooks";
 import { NoData } from "../../../components/NoData";
 import DetailTestItem from "../../ListTest/DetailTestItem";
+import { NodataWrapper } from "./style";
 
 interface TestSectionProps {
   isLoading: boolean;
@@ -76,7 +77,12 @@ export const TestSection: React.FC<TestSectionProps> = ({
         <div className="title">{currentSectionType?.title}</div>
       </TitleSection>
       <Grid container spacing={2}>
-        {isNoData && <NoData width={100} />}
+        {isNoData && <Grid item xs>
+          <NodataWrapper>
+            <NoData width={100} />
+          </NodataWrapper>
+        </Grid>
+        }
         {isLoading &&
           range(4).map((numb) => (
             <Grid item xs={3} key={numb}>
