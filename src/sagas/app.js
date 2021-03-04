@@ -3,7 +3,6 @@ import { API_UNAUTHORIZED } from "../constants/index";
 import { push } from "connected-react-router"
 
 export function* handleApiUnauthorized(action) {
-    console.log('saga: handleApiUnauthorized');
     yield put(push("/login"))
 }
 

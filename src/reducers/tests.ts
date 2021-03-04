@@ -26,7 +26,6 @@ const testsReducer = (state = initialState, action: any) =>
         draft.currentQuestion = action.toQuestion;
         break;
       case CONSTANT.INIT_TEST:
-        console.log(action.test);
         if (isEmpty(action.test)) {
           draft.test = {} as ITest
           draft.currentQuestion = 1

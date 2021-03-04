@@ -21,7 +21,6 @@ const uploadFile = async (file: any) => {
 
     try {
         const res = await axios.post(UPLOAD_URL, formData, config);
-
         if (res.status === 200) {
             return res.data.url
         }

@@ -14,7 +14,6 @@ function* userRegister(action) {
         yield put(userLogin(userRegistered, action.callbacks));
 
     } catch (err) {
-        console.log(err);
         yield put(userRegisterFailed())
     }
 

@@ -55,8 +55,9 @@ function* createTest(action: any) {
   const newTest = finishDraft(testDraft)
   try {
     const res = yield call(postTest, newTest)
-    action.callbacks.onSuccess();
-    console.log(res);
+    if (res.state === 200) {
+      action.callbacks.onSuccess();
+    }
   } catch (error) {
 
   }
