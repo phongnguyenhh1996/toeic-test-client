@@ -1,3 +1,7 @@
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
 import { get } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { FaPlus, FaTimes } from 'react-icons/fa'
@@ -7,7 +11,8 @@ import { addNewQuestionToGroup, changeQuestionData, goToQuestion, initTest, remo
 import CustomButton from '../../components/CustomButton'
 import { Player } from '../../components/Player'
 import { IGroupQuestion } from '../../reducers/tests'
-import { createTestData,
+import {
+  createTestData,
   getPartInfoFromQuestion,
   Question as IQuestion,
   Answer as IAnswer,
@@ -35,14 +40,15 @@ const CreateTest: React.FC = () => {
   let testPart = get(location, 'state.testPart')
 
   const [media, setMedia]: any = useState({ audio: undefined, image: undefined })
+  const [open, setOpen] = React.useState(false);
 
 
   const currentQuestionNumb = useSelector(state => get(state, `tests.currentQuestion`))
   const currentQuestion = useSelector(state => get(state, `tests.test.questions.${currentQuestionNumb}`, {})) as IQuestion
   const groupQuestion = useSelector(state => get(state, `tests.groupQuestion`)) as IGroupQuestion
-  const questionList = useSelector(state => get(state, `tests.test.questions`, {})) as {[key: string]: IQuestion}
-  const answerList = useSelector(state => get(state, `tests.test.answers`, {})) as {[key: string]: IAnswer[]}
-  const correctAnswerList = useSelector(state => get(state, `tests.test.correctAnswer`, {})) as {[key: string]: ICorrectAnswer}
+  const questionList = useSelector(state => get(state, `tests.test.questions`, {})) as { [key: string]: IQuestion }
+  const answerList = useSelector(state => get(state, `tests.test.answers`, {})) as { [key: string]: IAnswer[] }
+  const correctAnswerList = useSelector(state => get(state, `tests.test.correctAnswer`, {})) as { [key: string]: ICorrectAnswer }
   const testTypeByTest = useSelector(state => get(state, `tests.test.testType`))
   const testPartByTest = useSelector(state => get(state, `tests.test.testPart`))
   if (isExam) {
@@ -67,6 +73,14 @@ const CreateTest: React.FC = () => {
     }
   })
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const audioFile = questionData[0]?.question?.audioSrc
   const imageFile = questionData[0]?.question?.imageSrc
   const prevAudioFile = usePrevious(audioFile)
@@ -74,20 +88,20 @@ const CreateTest: React.FC = () => {
 
   useEffect(() => {
     if (isExam) {
-      setMedia((media: any) => ({audio: audioFile, image: imageFile}))
+      setMedia((media: any) => ({ audio: audioFile, image: imageFile }))
       return
     }
     if (prevAudioFile && !audioFile) {
-      setMedia((media: any) => ({...media, audio: undefined}))
+      setMedia((media: any) => ({ ...media, audio: undefined }))
     }
     if (prevImageFile && !imageFile) {
-      setMedia((media: any) => ({...media, image: undefined}))
+      setMedia((media: any) => ({ ...media, image: undefined }))
     }
     if (!prevAudioFile && audioFile) {
-      readFile(audioFile, (result: any) => setMedia((media: any) => ({...media, audio: result})))
+      readFile(audioFile, (result: any) => setMedia((media: any) => ({ ...media, audio: result })))
     }
     if (!prevImageFile && imageFile) {
-      readFile(imageFile, (result: any) => setMedia((media: any) => ({...media, image: result})))
+      readFile(imageFile, (result: any) => setMedia((media: any) => ({ ...media, image: result })))
     }
   }, [audioFile, imageFile, prevAudioFile, prevImageFile, isExam])
 
@@ -133,7 +147,7 @@ const CreateTest: React.FC = () => {
     }
 
     if (questionData.length === 1) {
-      if (!questionData[0].question.questionNumb){
+      if (!questionData[0].question.questionNumb) {
         return null
       }
       const partInfo = getPartInfoFromQuestion(questionData[0].question.questionNumb)
@@ -153,7 +167,7 @@ const CreateTest: React.FC = () => {
       const lastQuestionPartNumb = partInfo.totalQuestion + partInfo.fromNumb - 1
 
       const isEndOfPart = lastGroupNumb === lastQuestionPartNumb
-      const isNextQuestionHaveGroup = !!(groupQuestion[lastGroupNumb+1])
+      const isNextQuestionHaveGroup = !!(groupQuestion[lastGroupNumb + 1])
 
       if (isEndOfPart || isNextQuestionHaveGroup) {
         return null
@@ -217,8 +231,8 @@ const CreateTest: React.FC = () => {
       <SideContainer>
         <SideInner>
           <SideContent>
-            {!isExam && <TestInfo testType={testType} testPart={testPart}/>}
-            <MapNavigator groupQuestion={groupQuestion} testType={testType} testPart={testPart}/>
+            {!isExam && <TestInfo testType={testType} testPart={testPart} />}
+            <MapNavigator groupQuestion={groupQuestion} testType={testType} testPart={testPart} />
           </SideContent>
         </SideInner>
       </SideContainer>
@@ -241,7 +255,23 @@ const CreateTest: React.FC = () => {
           }
           {media.image ?
             <MediaWrapper width="auto">
-              <img width="355px" src={media.image} alt="Uploaded img" />
+              <img style={{ cursor: 'pointer' }} onClick={handleClickOpen} width="100%" src={media.image} alt="Uploaded img" />
+              <Dialog
+                fullWidth
+                maxWidth="lg"
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="max-width-dialog-title"
+              >
+                <DialogContent>
+                  <img width="100%" src={media.image} alt="Uploaded img" />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose} color="primary">
+                    Close
+                  </Button>
+                </DialogActions>
+              </Dialog>
               {!isExam &&
                 <RemoveMedia onClick={handleRemoveMedia('imageSrc', questionData[0].question.questionNumb)}>
                   <FaTimes />
