@@ -103,7 +103,7 @@ export default function HeaderCreateTest(props: Props) {
                 <SectionStatics
                   colorArr={["#F67A7C", "#F8A880", "247, 134, 75, 0.5"]}
                   title={`${uploadProgress.done}/${uploadProgress.total} files`}
-                  percent={uploadProgress.done/uploadProgress.total * 100}
+                  percent={Math.floor(uploadProgress.done/uploadProgress.total * 100)}
                 />
                 <SectionStatics
                   colorArr={["#2770C7", "#3499DA", "50, 145, 217, 0.5"]}
