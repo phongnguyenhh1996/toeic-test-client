@@ -8,13 +8,7 @@ import {
 } from "../constants";
 import { UserInfo } from "../components/Header/Header";
 
-
-interface Callback {
-  onSuccess: () => void
-  onFailure: () => void
-  onFinish: () => void
-}
-export const userRegister = (userInfo: UserInfo, callbacks: Callback) => {
+export const userRegister = (userInfo: UserInfo, callbacks: any) => {
   return {
     type: USER_REGISTER_REQUEST,
     data: userInfo,
@@ -33,7 +27,7 @@ export const userRegisterFailed = () => {
     type: USER_REGISTER_FAILED,
   };
 };
-export const userLogin = (userInfo: UserInfo, callbacks?: Callback) => {
+export const userLogin = (userInfo: UserInfo, callbacks?: any) => {
   return {
     type: USER_LOGIN_REQUEST,
     data: userInfo,

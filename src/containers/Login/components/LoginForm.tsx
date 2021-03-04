@@ -51,7 +51,7 @@ export const LoginForm : React.FC = () => {
       username: '',
       password: ''
     })
-    
+
     const handleSubmit = (e: any) => {
       e.preventDefault();
       const error : UserInfo = {
@@ -78,11 +78,16 @@ export const LoginForm : React.FC = () => {
             history.push('/')
 
           },
-          onFailure: () => {
-            // hiện thông báo lỗi
-          },
-          onFinish: () => {
-            // hiện thông báo lỗi
+          onFailure: (err: any) => {
+            if (err?.response?.status === 401) {
+              enqueueSnackbar('The Username or Password is incorrect!',{
+                anchorOrigin: {
+                  vertical:'top',
+                  horizontal:'right'
+                },
+                variant:'error'
+              });
+            }
           }
         }))
       }
@@ -91,14 +96,14 @@ export const LoginForm : React.FC = () => {
     const handleInput = (e: any) => {
       setUserInfo({...userInfo, [e.target.name]: e.target.value})
     }
-   
-   
+
+
     return (
         <form onSubmit={handleSubmit} onChange={handleInput}>
             <TextFieldLogin error={!!inputError.username} autoFocus name="username" label='USERNAME' helperText={inputError.username} />
             <TextFieldLogin error={!!inputError.password} name="password" label='PASSWORD' type="password" helperText={inputError.password} />
             <CustomButton $isLoading={isloading} type="submit" theme="green" $borderCircle className="btnLogin" disabled={isloading}>
-              LOGIN 
+              LOGIN
             </CustomButton>
         </form>
     )

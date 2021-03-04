@@ -23,7 +23,7 @@ export const SignUpForm : React.FC = () => {
       password: '',
       email:''
     })
-    
+
     const handleSubmit = (e: any) => {
       e.preventDefault();
       const error : UserInfoRegister = {
@@ -55,15 +55,24 @@ export const SignUpForm : React.FC = () => {
             });
             history.push('/')
           },
-          onFailure: () => {
+          onFailure: (error: any) => {
             // hiện thông báo lỗi
+            if (error?.response?.data?.message) {
+              enqueueSnackbar(error?.response?.data?.message ,{
+                anchorOrigin: {
+                  vertical:'top',
+                  horizontal:'right'
+                },
+                variant:'error'
+              });
+            }
             setIsLoading(false)
           },
           onFinish: () => {
             // hiện thông báo lỗi
           }
         }))
-       
+
       }
     }
 

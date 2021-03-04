@@ -8,7 +8,6 @@ export function* userLogin(action) {
 
     const onSuccess = get(action, 'callbacks.onSuccess', () => {});
     const onFailure = get(action, 'callbacks.onFailure', () => {});
-
     try {
         const res = yield call(userService.userLogin, action.data)
         const token = get(res, 'data.accessToken')
@@ -21,7 +20,6 @@ export function* userLogin(action) {
         onFailure(err)
         yield put(userLoginFailed())
     }
-
 }
 
 export default function* login() {
