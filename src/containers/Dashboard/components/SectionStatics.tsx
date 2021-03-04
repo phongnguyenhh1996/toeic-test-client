@@ -11,9 +11,11 @@ export interface SectionStaticsProps {
 export const SectionStatics: React.FC<SectionStaticsProps> = ({icon, colorArr, percent, title}) => {
   return (
     <SectionStaticsStyled colorArr={colorArr} percent={percent}>
-      <div className="icon-wrapper">
-        {icon && icon()}
-      </div>
+      {icon &&
+        <div className="icon-wrapper">
+          {icon()}
+        </div>
+      }
       <div className="content-wrapper">
         <div className="info">
           <div className="name">{title}</div>

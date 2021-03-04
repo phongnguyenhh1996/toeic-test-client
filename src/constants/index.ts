@@ -35,7 +35,8 @@ export const LOCATION_CHANGE = '@@router/LOCATION_CHANGE';
 
 // APP actions
 export const API_UNAUTHORIZED = 'API_UNAUTHORIZED';
-
+export const UPLOAD_PROGRESS = 'UPLOAD_PROGRESS';
+export const ITEM_UPLOAD_DONE = 'ITEM_UPLOAD_DONE';
 //
 
 export const TEST_TYPE = {

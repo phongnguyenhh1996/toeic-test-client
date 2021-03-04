@@ -107,12 +107,12 @@ const ListTest: React.FC = () => {
 
                 <GridListTest item xs={12}>
                     <Grid container spacing={2}>
-                        {isNoData && 
+                        {isNoData &&
                             <NoData />
                         }
 
                         {
-                            !isLoading && testsData?.length > 0 && testsData?.map((test: any, index: number) => 
+                            !isLoading && testsData?.length > 0 && testsData?.map((test: any, index: number) =>
                                 (<Grid item xs={3} key={index}>
                                     <TestItem
                                         test={test}
@@ -127,12 +127,11 @@ const ListTest: React.FC = () => {
                                 <TestItem isSkeletion />
                             </Grid>
                         ))}
-                        {isOpenDialog &&
-                            <DetailTestItem
+                        <DetailTestItem
                                 test={testItemDetail}
                                 handleClose={closeDialog}
                                 isOpen={isOpenDialog}
-                            />}
+                            />
                     </Grid>
                 </GridListTest>
                 <Grid item xs={12} >

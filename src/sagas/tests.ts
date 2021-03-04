@@ -1,15 +1,16 @@
 import { createDraft, finishDraft } from "immer";
-import { takeLatest, select, call } from "redux-saga/effects";
+import { takeLatest, select, call, put } from "redux-saga/effects";
 import { CREATE_TEST_REQUEST } from "../constants/index";
 import { postTest } from "../services/tests";
 import uploadFile from "../services/uploadFile";
 import { Question, Test } from "../utils/function";
+import { uploadProgress, itemUploadDone } from "../actions/app";
 
 function* createTest(action: any) {
   const test = yield select(state => state.tests.test)
 
   const testDraft = createDraft(test) as Test
-  
+
   let avatarUrl = ''
   if (testDraft.avatarSrc) {
     avatarUrl = yield call(uploadFile, testDraft.avatarSrc)
@@ -18,7 +19,19 @@ function* createTest(action: any) {
 
   const questions = testDraft.questions as {[key: string]: Question}
   const questionsKey = Object.keys(questions)
-  
+
+  let totalFile = 0;
+  Object.values(questions).forEach(question => {
+    if (question.imageSrc) {
+      totalFile += 1;
+    }
+    if (question.audioSrc) {
+      totalFile += 1;
+    }
+  })
+
+  yield put(uploadProgress({total: totalFile}))
+
   for (let key = parseInt(questionsKey[0]); key <= parseInt(questionsKey[questionsKey.length - 1]); key++) {
     let imageUrl = ''
     let audioUrl = ''
@@ -26,25 +39,26 @@ function* createTest(action: any) {
     if (questions[key]) {
       if (questions[key].imageSrc) {
         imageUrl = yield call(uploadFile, questions[key]?.imageSrc)
+        yield put(itemUploadDone())
       }
-  
+
       if (questions[key].audioSrc) {
         audioUrl = yield call(uploadFile, questions[key]?.audioSrc)
+        yield put(itemUploadDone())
       }
-  
+
       questions[key].imageSrc = imageUrl
       questions[key].audioSrc = audioUrl
     }
   }
 
   const newTest = finishDraft(testDraft)
-  console.log(newTest);
   try {
     const res = yield call(postTest, newTest)
     action.callbacks.onSuccess();
     console.log(res);
   } catch (error) {
-    
+
   }
 }
 

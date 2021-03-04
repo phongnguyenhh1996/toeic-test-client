@@ -1,61 +1,118 @@
 import React, { useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import {
-  Header,
-  ButtonWrapper
-} from "./Header.styled";
+import { Header, ButtonWrapper } from "./Header.styled";
 import CustomButton from "../CustomButton";
 import { Logo } from "../Logo";
 import { LogoWrapper } from "../HeaderDashboard/Header.styled";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createTestRequest } from "../../actions/tests";
 import { useSnackbar } from "notistack";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import { SectionStatics } from "../../containers/Dashboard/components/SectionStatics";
+import styled from "styled-components";
 
-interface Props { }
+const UploadingWrapper = styled.div`
+  min-width: 350px;
+  padding: 20px 0;
+  font-family: 'roboto' !important;
+`
+
+interface Props {}
 
 export default function HeaderCreateTest(props: Props) {
+  const history = useHistory();
+  const isExam = history.location.pathname === "/exam";
+  const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const uploadProgress = useSelector((state: any) => state.app.uploadProgress);
 
-  const history = useHistory()
-  const dispatch = useDispatch()
-  const { enqueueSnackbar } = useSnackbar()
-  const [isLoading, setIsLoading] = useState(false)
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleExit = () => {
-    history.goBack()
-  }
+    history.goBack();
+  };
 
   const handleSubmitTest = () => {
-    setIsLoading(true)
-    dispatch(createTestRequest({
-      onSuccess: () => {
-        enqueueSnackbar('Test created successfully!',{
-          anchorOrigin:{
-            vertical:'top',
-            horizontal:'right'
-          },variant:'success'
-        });
-        setIsLoading(false)
-        history.push('/list-test?type=1&page=1')
-      }
-    }))
-  }
+    setIsLoading(true);
+    if (!isExam) {
+      dispatch(
+        createTestRequest({
+          onSuccess: () => {
+            enqueueSnackbar("Test created successfully!", {
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "right",
+              },
+              variant: "success",
+            });
+            setIsLoading(false);
+            handleClose();
+            history.push("/list-test?type=1&page=1");
+          },
+        })
+      );
+      handleClickOpen();
+    }
+  };
 
   return (
     <React.Fragment>
       <CssBaseline />
       <Header>
         <LogoWrapper>
-          <Logo width="145px"/>
+          <Logo width="145px" />
         </LogoWrapper>
         <ButtonWrapper>
-          <CustomButton disabled={isLoading} onClick={handleExit} theme="green-solid-no-shadow">
+          <CustomButton
+            disabled={isLoading}
+            onClick={handleExit}
+            theme="green-solid-no-shadow"
+          >
             EXIT
           </CustomButton>
-          <CustomButton $isLoading={isLoading} disabled={isLoading} onClick={handleSubmitTest} theme="white">
+          <CustomButton
+            $isLoading={isLoading}
+            disabled={isLoading}
+            onClick={handleSubmitTest}
+            theme="white"
+          >
             DONE
           </CustomButton>
         </ButtonWrapper>
+        <Dialog
+          open={open}
+          disableBackdropClick
+          disableEscapeKeyDown
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Uploading..."}</DialogTitle>
+          <DialogContent>
+              <UploadingWrapper>
+                <SectionStatics
+                  colorArr={["#F67A7C", "#F8A880", "247, 134, 75, 0.5"]}
+                  title={`${uploadProgress.done}/${uploadProgress.total} files`}
+                  percent={uploadProgress.done/uploadProgress.total * 100}
+                />
+                <SectionStatics
+                  colorArr={["#2770C7", "#3499DA", "50, 145, 217, 0.5"]}
+                  title={uploadProgress.fileName}
+                  percent={uploadProgress.progress}
+                />
+              </UploadingWrapper>
+          </DialogContent>
+        </Dialog>
       </Header>
     </React.Fragment>
   );
