@@ -91,7 +91,7 @@ export const TestSection: React.FC<TestSectionProps> = ({
           ))}
         {!isLoading &&
           data.map((test) => (
-            <Grid key={test.id} item xs>
+            <Grid key={test.id} item xs={3}>
               <TestItem test={test} changeIsOpenDialog={changeIsOpenDialog} />
             </Grid>
           ))}

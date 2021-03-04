@@ -1,7 +1,7 @@
 import * as CONSTANT from "../constants";
 import {getFirstQuestion, Question, Test as ITest} from '../utils/function';
 import produce from "immer"
-import { set } from "lodash"
+import { set, isEmpty } from "lodash"
 
 export interface IGroupQuestion {
   [key: string]: number[]
@@ -26,11 +26,18 @@ const testsReducer = (state = initialState, action: any) =>
         draft.currentQuestion = action.toQuestion;
         break;
       case CONSTANT.INIT_TEST:
-        draft.test = action.test;
-        draft.currentQuestion = getFirstQuestion(
-          action.test.testType,
-          action.test.testPart
-        );
+        console.log(action.test);
+        if (isEmpty(action.test)) {
+          draft.test = {} as ITest
+          draft.currentQuestion = 1
+          draft.groupQuestion = {}
+        } else {
+          draft.test = action.test;
+          draft.currentQuestion = getFirstQuestion(
+            action.test.testType,
+            action.test.testPart
+          );
+        }
         break;
       case CONSTANT.GET_TEST_DETAIL_SUCCESS:
         const test = action.data.test.data

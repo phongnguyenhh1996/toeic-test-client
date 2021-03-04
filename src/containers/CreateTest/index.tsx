@@ -12,6 +12,7 @@ import { createTestData,
   Question as IQuestion,
   Answer as IAnswer,
   CorrectAnswer as ICorrectAnswer,
+  Test as ITest,
   readFile,
   getFirstQuestion,
   getLastQuestion
@@ -70,7 +71,7 @@ const CreateTest: React.FC = () => {
   const imageFile = questionData[0]?.question?.imageSrc
   const prevAudioFile = usePrevious(audioFile)
   const prevImageFile = usePrevious(imageFile)
-  
+
   useEffect(() => {
     if (isExam) {
       setMedia((media: any) => ({audio: audioFile, image: imageFile}))
@@ -91,11 +92,13 @@ const CreateTest: React.FC = () => {
   }, [audioFile, imageFile, prevAudioFile, prevImageFile, isExam])
 
   useEffect(() => {
-    if (isExam) {
-      return
+    if (!isExam) {
+      const test = createTestData(testType, testPart)
+      dispatch(initTest(test))
     }
-    const test = createTestData(testType, testPart)
-    dispatch(initTest(test))
+    return () => {
+      dispatch(initTest({} as ITest))
+    }
 
   }, [testType, testPart, dispatch, isExam])
 
@@ -121,6 +124,10 @@ const CreateTest: React.FC = () => {
 
   const handleShowBtnAddMoreQuestion = useCallback(() => {
 
+    if (isExam) {
+      return null
+    }
+
     const handleAddQuestionToGroup = () => {
       dispatch(addNewQuestionToGroup(questionData[0].question.questionNumb, questionData[0].question.questionGroupId))
     }
@@ -134,7 +141,7 @@ const CreateTest: React.FC = () => {
 
       const isNextQuestionHaveGroup = !!(groupQuestion[questionData[0].question.questionNumb + 1])
       const isEndOfPart = questionData[0].question.questionNumb === lastQuestionPartNumb
-      
+
       if (isEndOfPart || isNextQuestionHaveGroup) {
         return null
       }
@@ -157,7 +164,7 @@ const CreateTest: React.FC = () => {
         <FaPlus /> Add more question
       </CustomButton>
     )
-  }, [dispatch, questionData, groupQuestion])
+  }, [dispatch, questionData, groupQuestion, isExam])
 
   const partInfo = getPartInfoFromQuestion(currentQuestionNumb)
 
@@ -171,7 +178,7 @@ const CreateTest: React.FC = () => {
   const isDisableNext = useMemo(() => {
     const lastNumb = getLastQuestion(testType, testPart)
     const isQuestionHaveGroup = !!questionData[0].question.questionGroupId
-    
+
     const lastQuestinInGroup = isQuestionHaveGroup && (
       groupQuestion[questionData[0].question.questionGroupId as number].length + questionData[0].question.questionNumb - 1
     )
@@ -201,7 +208,7 @@ const CreateTest: React.FC = () => {
     if (type === 'prev') {
       questionNumbToGo = questionData[0].question.questionNumb - 1
     }
-    
+
     questionNumbToGo && dispatch(goToQuestion(questionNumbToGo))
   }
 
@@ -249,6 +256,7 @@ const CreateTest: React.FC = () => {
             question={questionData[0].question}
             answers={questionData[0].answers}
             correctAnswer={questionData[0].correctAnswer}
+            isExam={isExam}
           />
         }
         {questionData.length > 1 && questionData.map((question, index: number) => {
