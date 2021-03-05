@@ -10,6 +10,7 @@ import uploadFile from "../services/uploadFile";
 import { Question, Test } from "../utils/function";
 import { uploadProgress, itemUploadDone } from "../actions/app";
 import { importPartSuccess, importPartFailed } from "../actions/tests";
+import { isString } from "lodash";
 
 function* createTest(action: any) {
   const test = yield select((state) => state.tests.test);
@@ -27,10 +28,10 @@ function* createTest(action: any) {
 
   let totalFile = 0;
   Object.values(questions).forEach((question) => {
-    if (question.imageSrc) {
+    if (question.imageSrc instanceof File) {
       totalFile += 1;
     }
-    if (question.audioSrc) {
+    if (question.audioSrc instanceof File) {
       totalFile += 1;
     }
   });
@@ -46,14 +47,18 @@ function* createTest(action: any) {
     let audioUrl = "";
 
     if (questions[key]) {
-      if (questions[key].imageSrc) {
+      if (questions[key].imageSrc instanceof File) {
         imageUrl = yield call(uploadFile, questions[key]?.imageSrc);
         yield put(itemUploadDone());
+      } else if (isString(questions[key].imageSrc)) {
+        imageUrl = questions[key].imageSrc
       }
 
-      if (questions[key].audioSrc) {
+      if (questions[key].audioSrc instanceof File) {
         audioUrl = yield call(uploadFile, questions[key]?.audioSrc);
         yield put(itemUploadDone());
+      } else if (isString(questions[key].audioSrc)) {
+        audioUrl = questions[key].audioSrc
       }
 
       questions[key].imageSrc = imageUrl;
@@ -88,6 +93,8 @@ function* handleImportTest(action: any) {
       yield put(importPartSuccess(testDetail.data));
     }
   } catch (e) {
+    console.log(e);
+    
     yield put(importPartFailed());
   }
 }

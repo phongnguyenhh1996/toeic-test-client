@@ -140,20 +140,23 @@ const testsReducer = (state = initialState, action: any) =>
         const partTestGroupQuestion: any = {}
         Object.values(partTest.questions).forEach((question: any) => {
           if (question.questionGroupId) {
-            if (newGroupQuestion[question.questionGroupId]) {
-              newGroupQuestion[question.questionGroupId].push(
+            if (partTestGroupQuestion[question.questionGroupId]) {
+              partTestGroupQuestion[question.questionGroupId].push(
                 question.questionNumb
               )
             } else {
-              newGroupQuestion[question.questionGroupId] = [
+              partTestGroupQuestion[question.questionGroupId] = [
                 question.questionNumb,
               ]
             }
           }
         });
-        draft.test.questions = { ...draft.test.questions, ...partTest.questions}
-        draft.test.answers = { ...draft.test.answers, ...partTest.answers}
-        draft.test.correctAnswer = { ...draft.test.correctAnswer, ...partTest.correctAnswer}
+        draft.test = {
+          ...draft.test,
+          questions: { ...draft.test.questions, ...partTest.questions},
+          answers: { ...draft.test.answers, ...partTest.answers},
+          correctAnswer: { ...draft.test.correctAnswer, ...partTest.correctAnswer}
+        }
         draft.currentQuestion = getFirstQuestion(partTest.testType, partTest.testPart)
         draft.groupQuestion = {...draft.groupQuestion, ...partTestGroupQuestion}
         break

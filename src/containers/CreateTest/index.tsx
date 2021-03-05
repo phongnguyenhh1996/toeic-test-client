@@ -2,7 +2,7 @@ import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import { get, isString } from 'lodash'
+import { get } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { FaPlus, FaTimes } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
@@ -22,7 +22,6 @@ import {
   getFirstQuestion,
   getLastQuestion
 } from '../../utils/function'
-import { usePrevious } from '../../utils/hooks'
 import MapNavigator from './components/Navigator'
 import { Question } from './components/Question'
 import { TestInfo } from './components/TestInfo'
@@ -83,35 +82,19 @@ const CreateTest: React.FC = () => {
 
   const audioFile = questionData[0]?.question?.audioSrc
   const imageFile = questionData[0]?.question?.imageSrc
-  const prevAudioFile = usePrevious(audioFile)
-  const prevImageFile = usePrevious(imageFile)
 
   useEffect(() => {
-    if (isExam) {
-      setMedia({ audio: audioFile, image: imageFile })
-      return
+    if (audioFile instanceof File) {
+      readFile(audioFile, (result: any) => setMedia((media: any) => ({ ...media, audio: result })))
+    } else {
+      setMedia((media: any) => ({ ...media, audio: audioFile }))
     }
-    if (prevAudioFile && !audioFile) {
-      setMedia((media: any) => ({ ...media, audio: undefined }))
+    if (imageFile instanceof File) {
+      readFile(imageFile, (result: any) => setMedia((media: any) => ({ ...media, image: result })))
+    } else {
+      setMedia((media: any) => ({ ...media, image: imageFile }))
     }
-    if (prevImageFile && !imageFile) {
-      setMedia((media: any) => ({ ...media, image: undefined }))
-    }
-    if (!prevAudioFile && audioFile) {
-      if (isString(audioFile)) {
-        setMedia((media: any) => ({ ...media, audio: audioFile }))
-      } else {
-        readFile(audioFile, (result: any) => setMedia((media: any) => ({ ...media, audio: result })))
-      }
-    }
-    if (!prevImageFile && imageFile) {
-      if (isString(imageFile)) {
-        setMedia((media: any) => ({ ...media, image: imageFile }))
-      } else {
-        readFile(imageFile, (result: any) => setMedia((media: any) => ({ ...media, image: result })))
-      }
-    }
-  }, [audioFile, imageFile, prevAudioFile, prevImageFile, isExam])
+  }, [audioFile, imageFile, isExam])
 
   useEffect(() => {
     if (!isExam) {
