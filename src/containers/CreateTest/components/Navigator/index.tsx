@@ -132,8 +132,12 @@ const MapNavigator: React.FC<NavigationProps> = ({
 
   const handleClose = () => {
     setState(initialState);
-    handleClickOpenDialog();
   };
+
+  const handleClickMenuItem = () => {
+    handleClose()
+    handleClickOpenDialog()
+  }
 
   const handleClickOpenDialog = () => {
     setOpen(true);
@@ -251,7 +255,7 @@ const MapNavigator: React.FC<NavigationProps> = ({
             : undefined
         }
       >
-        <MenuItem onClick={handleClose}>Import</MenuItem>
+        <MenuItem onClick={handleClickMenuItem}>Import</MenuItem>
       </Menu>
       <QuestionContainer
         name="containerElement"
