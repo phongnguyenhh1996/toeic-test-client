@@ -105,7 +105,7 @@ const MapNavigator: React.FC<NavigationProps> = ({
   }>(initialState);
 
   const [open, setOpen] = useState(false);
-  const selectedPart = useRef(0);
+  const [selectedPart, setSelectedPart] = useState(0);
   const [listTest, setListTest]: any = useState({});
 
   const fetchListTest = (part: any) => {
@@ -122,7 +122,7 @@ const MapNavigator: React.FC<NavigationProps> = ({
     event: React.MouseEvent<HTMLDivElement>
   ) => {
     event.preventDefault();
-    selectedPart.current = part;
+    setSelectedPart(part);
     fetchListTest(part);
     setState({
       mouseX: event.clientX - 2,
@@ -274,22 +274,21 @@ const MapNavigator: React.FC<NavigationProps> = ({
         ))}
       </QuestionContainer>
       <Dialog
-        disableBackdropClick
-        disableEscapeKeyDown
         maxWidth="lg"
+        fullWidth
         open={open}
         onClose={handleCloseDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">{`Import part ${
-          (selectedPart.current || 0) + 1
+          selectedPart + 1
         } questions`}</DialogTitle>
         <DialogContent>
           <GridListTest item xs={12}>
             <Grid container spacing={2}>
-              {listTest[selectedPart.current]?.length > 0 &&
-                listTest[selectedPart.current]?.map(
+              {listTest[selectedPart]?.length > 0 &&
+                listTest[selectedPart]?.map(
                   (test: any, index: number) => (
                     <Grid item xs={3} key={index}>
                       <TestItem test={test} changeIsOpenDialog={handleImportTest}/>
@@ -304,7 +303,7 @@ const MapNavigator: React.FC<NavigationProps> = ({
             onClick={handleCloseDialog}
             theme="green-solid-no-shadow"
           >
-            IMPORT
+            CANCEL
           </CustomButton>
         </DialogActions>
       </Dialog>
