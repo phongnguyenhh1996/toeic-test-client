@@ -135,6 +135,28 @@ const testsReducer = (state = initialState, action: any) =>
           );
         }
         break;
+      case CONSTANT.IMPORT_PART_SUCCESS:
+        const partTest = action.data.data as ITest
+        const partTestGroupQuestion: any = {}
+        Object.values(partTest.questions).forEach((question: any) => {
+          if (question.questionGroupId) {
+            if (newGroupQuestion[question.questionGroupId]) {
+              newGroupQuestion[question.questionGroupId].push(
+                question.questionNumb
+              )
+            } else {
+              newGroupQuestion[question.questionGroupId] = [
+                question.questionNumb,
+              ]
+            }
+          }
+        });
+        draft.test.questions = { ...draft.test.questions, ...partTest.questions}
+        draft.test.answers = { ...draft.test.answers, ...partTest.answers}
+        draft.test.correctAnswer = { ...draft.test.correctAnswer, ...partTest.correctAnswer}
+        draft.currentQuestion = getFirstQuestion(partTest.testType, partTest.testPart)
+        draft.groupQuestion = {...draft.groupQuestion, ...partTestGroupQuestion}
+        break
       default:
         break;
     }

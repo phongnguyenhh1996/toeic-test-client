@@ -1,82 +1,99 @@
 import { createDraft, finishDraft } from "immer";
 import { takeLatest, select, call, put } from "redux-saga/effects";
-import { CREATE_TEST_REQUEST, POST_RESULT_REQUEST } from "../constants/index";
-import { postTest, postResult } from "../services/tests";
+import {
+  CREATE_TEST_REQUEST,
+  POST_RESULT_REQUEST,
+  IMPORT_PART_REQUEST,
+} from "../constants/index";
+import { postTest, postResult, getDetailTest } from "../services/tests";
 import uploadFile from "../services/uploadFile";
 import { Question, Test } from "../utils/function";
 import { uploadProgress, itemUploadDone } from "../actions/app";
+import { importPartSuccess, importPartFailed } from "../actions/tests";
 
 function* createTest(action: any) {
-  const test = yield select(state => state.tests.test)
+  const test = yield select((state) => state.tests.test);
 
-  const testDraft = createDraft(test) as Test
+  const testDraft = createDraft(test) as Test;
 
-  let avatarUrl = ''
+  let avatarUrl = "";
   if (testDraft.avatarSrc) {
-    avatarUrl = yield call(uploadFile, testDraft.avatarSrc)
+    avatarUrl = yield call(uploadFile, testDraft.avatarSrc);
   }
-  testDraft.avatarSrc = avatarUrl
+  testDraft.avatarSrc = avatarUrl;
 
-  const questions = testDraft.questions as {[key: string]: Question}
-  const questionsKey = Object.keys(questions)
+  const questions = testDraft.questions as { [key: string]: Question };
+  const questionsKey = Object.keys(questions);
 
   let totalFile = 0;
-  Object.values(questions).forEach(question => {
+  Object.values(questions).forEach((question) => {
     if (question.imageSrc) {
       totalFile += 1;
     }
     if (question.audioSrc) {
       totalFile += 1;
     }
-  })
+  });
 
-  yield put(uploadProgress({total: totalFile}))
+  yield put(uploadProgress({ total: totalFile }));
 
-  for (let key = parseInt(questionsKey[0]); key <= parseInt(questionsKey[questionsKey.length - 1]); key++) {
-    let imageUrl = ''
-    let audioUrl = ''
+  for (
+    let key = parseInt(questionsKey[0]);
+    key <= parseInt(questionsKey[questionsKey.length - 1]);
+    key++
+  ) {
+    let imageUrl = "";
+    let audioUrl = "";
 
     if (questions[key]) {
       if (questions[key].imageSrc) {
-        imageUrl = yield call(uploadFile, questions[key]?.imageSrc)
-        yield put(itemUploadDone())
+        imageUrl = yield call(uploadFile, questions[key]?.imageSrc);
+        yield put(itemUploadDone());
       }
 
       if (questions[key].audioSrc) {
-        audioUrl = yield call(uploadFile, questions[key]?.audioSrc)
-        yield put(itemUploadDone())
+        audioUrl = yield call(uploadFile, questions[key]?.audioSrc);
+        yield put(itemUploadDone());
       }
 
-      questions[key].imageSrc = imageUrl
-      questions[key].audioSrc = audioUrl
+      questions[key].imageSrc = imageUrl;
+      questions[key].audioSrc = audioUrl;
     }
   }
 
-  const newTest = finishDraft(testDraft)
+  const newTest = finishDraft(testDraft);
   try {
-    const res = yield call(postTest, newTest)
+    const res = yield call(postTest, newTest);
     if (res.status === 200) {
       action.callbacks.onSuccess();
     }
-  } catch (error) {
-
-  }
+  } catch (error) {}
 }
 
 function* handlePostResult(action: any) {
-  const testResult = yield select(state => state?.tests?.test?.correctAnswer)
-  const testId = yield select(state => state?.tests?.test?.id)
+  const testResult = yield select((state) => state?.tests?.test?.correctAnswer);
+  const testId = yield select((state) => state?.tests?.test?.id);
   try {
-    const res = yield call(postResult, testId, testResult)
+    const res = yield call(postResult, testId, testResult);
     if (res.status === 200) {
       console.log(res);
     }
-  } catch (err) {
+  } catch (err) {}
+}
 
+function* handleImportTest(action: any) {
+  try {
+    const testDetail = yield call(getDetailTest, action.testId, true);
+    if (testDetail.status === 200) {
+      yield put(importPartSuccess(testDetail.data));
+    }
+  } catch (e) {
+    yield put(importPartFailed());
   }
 }
 
 export default function* tests() {
-  yield takeLatest(CREATE_TEST_REQUEST, createTest)
-  yield takeLatest(POST_RESULT_REQUEST, handlePostResult)
+  yield takeLatest(CREATE_TEST_REQUEST, createTest);
+  yield takeLatest(POST_RESULT_REQUEST, handlePostResult);
+  yield takeLatest(IMPORT_PART_REQUEST, handleImportTest);
 }

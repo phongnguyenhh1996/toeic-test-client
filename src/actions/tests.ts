@@ -10,7 +10,7 @@ import {
   GET_TEST_DETAIL_FAILED,
   GET_TEST_DETAIL_REQUEST,
   GET_TEST_DETAIL_SUCCESS,
-  GO_TO_QUESTION, INIT_TEST, REMOVE_QUESTION_FROM_GROUP, POST_RESULT_REQUEST, POST_RESULT_FAILED, POST_RESULT_SUCCESS
+  GO_TO_QUESTION, INIT_TEST, REMOVE_QUESTION_FROM_GROUP, POST_RESULT_REQUEST, POST_RESULT_FAILED, POST_RESULT_SUCCESS, IMPORT_PART_REQUEST, IMPORT_PART_FAILED, IMPORT_PART_SUCCESS
 } from "../constants";
 import { Test } from "../utils/function";
 
@@ -149,5 +149,25 @@ export const postResultSuccess = () => {
 export const postResultFailed = () => {
   return {
     type: POST_RESULT_FAILED
+  }
+}
+
+export const importPartRequest = (testId: string) => {
+  return {
+    type: IMPORT_PART_REQUEST,
+    testId
+  }
+}
+
+export const importPartSuccess = (data: any) => {
+  return {
+    type: IMPORT_PART_SUCCESS,
+    data
+  }
+}
+
+export const importPartFailed = () => {
+  return {
+    type: IMPORT_PART_FAILED
   }
 }

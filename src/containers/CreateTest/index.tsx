@@ -2,7 +2,7 @@ import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import { get } from 'lodash'
+import { get, isString } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { FaPlus, FaTimes } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
@@ -98,10 +98,18 @@ const CreateTest: React.FC = () => {
       setMedia((media: any) => ({ ...media, image: undefined }))
     }
     if (!prevAudioFile && audioFile) {
-      readFile(audioFile, (result: any) => setMedia((media: any) => ({ ...media, audio: result })))
+      if (isString(audioFile)) {
+        setMedia((media: any) => ({ ...media, audio: audioFile }))
+      } else {
+        readFile(audioFile, (result: any) => setMedia((media: any) => ({ ...media, audio: result })))
+      }
     }
     if (!prevImageFile && imageFile) {
-      readFile(imageFile, (result: any) => setMedia((media: any) => ({ ...media, image: result })))
+      if (isString(imageFile)) {
+        setMedia((media: any) => ({ ...media, image: imageFile }))
+      } else {
+        readFile(imageFile, (result: any) => setMedia((media: any) => ({ ...media, image: result })))
+      }
     }
   }, [audioFile, imageFile, prevAudioFile, prevImageFile, isExam])
 
