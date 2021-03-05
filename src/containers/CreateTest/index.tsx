@@ -88,7 +88,7 @@ const CreateTest: React.FC = () => {
 
   useEffect(() => {
     if (isExam) {
-      setMedia((media: any) => ({ audio: audioFile, image: imageFile }))
+      setMedia({ audio: audioFile, image: imageFile })
       return
     }
     if (prevAudioFile && !audioFile) {

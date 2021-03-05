@@ -6,7 +6,7 @@ import { Logo } from "../Logo";
 import { LogoWrapper } from "../HeaderDashboard/Header.styled";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createTestRequest } from "../../actions/tests";
+import { createTestRequest, postResultRequest } from "../../actions/tests";
 import { useSnackbar } from "notistack";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -63,6 +63,8 @@ export default function HeaderCreateTest(props: Props) {
         })
       );
       handleClickOpen();
+    } else {
+      dispatch(postResultRequest())
     }
   };
 

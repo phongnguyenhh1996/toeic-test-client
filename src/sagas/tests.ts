@@ -1,7 +1,7 @@
 import { createDraft, finishDraft } from "immer";
 import { takeLatest, select, call, put } from "redux-saga/effects";
-import { CREATE_TEST_REQUEST } from "../constants/index";
-import { postTest } from "../services/tests";
+import { CREATE_TEST_REQUEST, POST_RESULT_REQUEST } from "../constants/index";
+import { postTest, postResult } from "../services/tests";
 import uploadFile from "../services/uploadFile";
 import { Question, Test } from "../utils/function";
 import { uploadProgress, itemUploadDone } from "../actions/app";
@@ -55,7 +55,7 @@ function* createTest(action: any) {
   const newTest = finishDraft(testDraft)
   try {
     const res = yield call(postTest, newTest)
-    if (res.state === 200) {
+    if (res.status === 200) {
       action.callbacks.onSuccess();
     }
   } catch (error) {
@@ -63,6 +63,20 @@ function* createTest(action: any) {
   }
 }
 
+function* handlePostResult(action: any) {
+  const testResult = yield select(state => state?.tests?.test?.correctAnswer)
+  const testId = yield select(state => state?.tests?.test?.id)
+  try {
+    const res = yield call(postResult, testId, testResult)
+    if (res.status === 200) {
+      console.log(res);
+    }
+  } catch (err) {
+
+  }
+}
+
 export default function* tests() {
   yield takeLatest(CREATE_TEST_REQUEST, createTest)
+  yield takeLatest(POST_RESULT_REQUEST, handlePostResult)
 }

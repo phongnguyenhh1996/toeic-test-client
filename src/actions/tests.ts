@@ -10,7 +10,7 @@ import {
   GET_TEST_DETAIL_FAILED,
   GET_TEST_DETAIL_REQUEST,
   GET_TEST_DETAIL_SUCCESS,
-  GO_TO_QUESTION, INIT_TEST, REMOVE_QUESTION_FROM_GROUP
+  GO_TO_QUESTION, INIT_TEST, REMOVE_QUESTION_FROM_GROUP, POST_RESULT_REQUEST, POST_RESULT_FAILED, POST_RESULT_SUCCESS
 } from "../constants";
 import { Test } from "../utils/function";
 
@@ -54,7 +54,7 @@ export const changeAnswerData = (data: any, answerNumb: number, questionNumb: nu
     type: CHANGE_ANSWER_DATA,
     data: {
       data,
-      answerNumb, 
+      answerNumb,
       questionNumb
     }
   }
@@ -131,5 +131,23 @@ export const getDetailTestSuccess = (test: Test) => {
 export const getDetailTestFailed = () => {
   return {
     type: GET_TEST_DETAIL_FAILED
+  }
+}
+
+export const postResultRequest = () => {
+  return {
+    type: POST_RESULT_REQUEST
+  }
+}
+
+export const postResultSuccess = () => {
+  return {
+    type: POST_RESULT_SUCCESS
+  }
+}
+
+export const postResultFailed = () => {
+  return {
+    type: POST_RESULT_FAILED
   }
 }
