@@ -81,12 +81,14 @@ interface NavigationProps {
   testType: number;
   testPart: number;
   groupQuestion: IGroupQuestion;
+  isExam: boolean
 }
 
 const MapNavigator: React.FC<NavigationProps> = ({
   testType,
   testPart,
   groupQuestion,
+  isExam
 }) => {
   const dispatcher = useDispatch();
   const currentQuestionNumb = useSelector((state) =>
@@ -122,6 +124,9 @@ const MapNavigator: React.FC<NavigationProps> = ({
     event: React.MouseEvent<HTMLDivElement>
   ) => {
     event.preventDefault();
+    if (isExam) {
+      return;
+    }
     setSelectedPart(part);
     fetchListTest(part);
     setState({

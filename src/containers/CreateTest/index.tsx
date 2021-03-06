@@ -223,7 +223,7 @@ const CreateTest: React.FC = () => {
         <SideInner>
           <SideContent>
             {!isExam && <TestInfo testType={testType} testPart={testPart} />}
-            <MapNavigator groupQuestion={groupQuestion} testType={testType} testPart={testPart} />
+            <MapNavigator isExam={isExam} groupQuestion={groupQuestion} testType={testType} testPart={testPart} />
           </SideContent>
         </SideInner>
       </SideContainer>

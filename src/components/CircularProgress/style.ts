@@ -1,4 +1,4 @@
-import styled, {keyframes} from "styled-components";
+import styled, {keyframes} from "styled-components/macro";
 import { CircularProgressProps } from ".";
 import { theme } from "../../utils/theme";
 

@@ -5,6 +5,7 @@ import ListTest from "../containers/ListTest/Index";
 import DashboardLayout from "../components/Layout/DashboardLayout";
 import CreateTestLayout from "../components/Layout/CreateTestLayout";
 import CreateTest from "../containers/CreateTest";
+import Statistic from "../containers/Statistic";
 
 const routes: RouteItem[] = [
   {
@@ -45,6 +46,12 @@ const routes: RouteItem[] = [
     path: '/exam',
     layout: CreateTestLayout,
     component: CreateTest,
+    isAuthRoute: true,
+    exact: true
+  }, {
+    path: '/statistic',
+    layout: DashboardLayout,
+    component: Statistic,
     isAuthRoute: true,
     exact: true
   }

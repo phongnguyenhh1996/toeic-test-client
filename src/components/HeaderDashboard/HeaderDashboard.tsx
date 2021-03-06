@@ -90,10 +90,10 @@ export default function ElevateAppBar(props: Props) {
               <FaHome className="nav-icon" />
               Home
             </LinkNav>} value="/"/>
-          <Tab label={<LinkNav to="/">
+          <Tab label={<LinkNav to="/statistic">
                 <FaChartPie className="nav-icon" />
                 Statitics
-              </LinkNav>} value="/statitic" />
+              </LinkNav>} value="/statistic" />
           <Tab label={
             <LinkNav to="/list-test">
               <FaFileAlt className="nav-icon" />
