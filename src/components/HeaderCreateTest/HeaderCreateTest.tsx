@@ -100,7 +100,8 @@ export default function HeaderCreateTest(props: Props) {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">{"Uploading..."}</DialogTitle>
-          <DialogContent>
+          {uploadProgress.total > 0 && 
+            <DialogContent>
               <UploadingWrapper>
                 <SectionStatics
                   colorArr={["#F67A7C", "#F8A880", "247, 134, 75, 0.5"]}
@@ -113,7 +114,8 @@ export default function HeaderCreateTest(props: Props) {
                   percent={uploadProgress.progress}
                 />
               </UploadingWrapper>
-          </DialogContent>
+            </DialogContent>
+          }
         </Dialog>
       </Header>
     </React.Fragment>

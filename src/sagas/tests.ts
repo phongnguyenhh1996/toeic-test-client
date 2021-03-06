@@ -10,7 +10,7 @@ import uploadFile from "../services/uploadFile";
 import { Question, Test } from "../utils/function";
 import { uploadProgress, itemUploadDone } from "../actions/app";
 import { importPartSuccess, importPartFailed } from "../actions/tests";
-import { isString } from "lodash";
+import { get, isString } from "lodash";
 
 function* createTest(action: any) {
   const test = yield select((state) => state.tests.test);
@@ -87,14 +87,19 @@ function* handlePostResult(action: any) {
 }
 
 function* handleImportTest(action: any) {
+
+  const onSuccess = get(action, 'callbacks.onSuccess');
+  const onFailure = get(action, 'callbacks.onFailure');
+
   try {
     const testDetail = yield call(getDetailTest, action.testId, true);
     if (testDetail.status === 200) {
       yield put(importPartSuccess(testDetail.data));
+      onSuccess()
     }
   } catch (e) {
     console.log(e);
-    
+    onFailure()
     yield put(importPartFailed());
   }
 }

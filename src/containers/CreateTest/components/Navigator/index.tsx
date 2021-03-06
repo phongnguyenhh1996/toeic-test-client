@@ -109,6 +109,7 @@ const MapNavigator: React.FC<NavigationProps> = ({
   const [open, setOpen] = useState(false);
   const [selectedPart, setSelectedPart] = useState(0);
   const [listTest, setListTest]: any = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchListTest = (part: any) => {
     if (!listTest[part]) {
@@ -173,8 +174,16 @@ const MapNavigator: React.FC<NavigationProps> = ({
   };
 
   const handleImportTest = (test: Test) => {
-    dispatcher(importPartRequest(test.id || ''))
     handleCloseDialog()
+    setIsLoading(true)
+    dispatcher(importPartRequest(test.id || '', {
+      onSuccess: () => {
+        setIsLoading(false)
+      },
+      onFailure: () => {
+        setIsLoading(false)
+      }
+    }))
   }
 
   const renderPartNav = () => {
@@ -315,6 +324,15 @@ const MapNavigator: React.FC<NavigationProps> = ({
             CANCEL
           </CustomButton>
         </DialogActions>
+      </Dialog>
+      <Dialog
+          open={isLoading}
+          disableBackdropClick
+          disableEscapeKeyDown
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Importing..."}</DialogTitle>
       </Dialog>
     </Wrapper>
   );

@@ -152,10 +152,11 @@ export const postResultFailed = () => {
   }
 }
 
-export const importPartRequest = (testId: string) => {
+export const importPartRequest = (testId: string, callbacks: any) => {
   return {
     type: IMPORT_PART_REQUEST,
-    testId
+    testId,
+    callbacks
   }
 }
 
