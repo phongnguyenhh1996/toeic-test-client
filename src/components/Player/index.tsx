@@ -1,7 +1,7 @@
 import React from 'react'
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { theme } from '../../utils/theme';
 
 export const AudioPlayerStyled = styled(AudioPlayer)`

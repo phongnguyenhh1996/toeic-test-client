@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import styled from 'styled-components/macro'
+import styled from 'styled-components'
 import LOGO from "../../assets/images/logo.svg"
 
 const LogoImg = styled.img`

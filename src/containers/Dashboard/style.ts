@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components/macro";
+import styled, { css } from "styled-components";
 import { theme } from "../../utils/theme";
 import Button from "@material-ui/core/Button";
 

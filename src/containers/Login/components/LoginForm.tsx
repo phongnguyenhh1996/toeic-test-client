@@ -1,7 +1,7 @@
 import TextField from '@material-ui/core/TextField';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { userLogin } from '../../../actions/user';
 import CustomButton from '../../../components/CustomButton';
 import { UserInfo } from '../../../components/Header/Header';

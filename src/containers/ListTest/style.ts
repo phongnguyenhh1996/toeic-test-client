@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Paper, Tabs, Tab, Dialog } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { theme } from "../../utils/theme";

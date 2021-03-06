@@ -1,4 +1,4 @@
-import styled from "styled-components/macro";
+import styled from "styled-components";
 import { ContentWrapperCss } from "../Dashboard/style";
 
 export const Wrapper = styled.div`

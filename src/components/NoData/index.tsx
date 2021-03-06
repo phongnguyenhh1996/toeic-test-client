@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components/macro'
+import styled from 'styled-components'
 import { theme } from '../../utils/theme'
 
 const NO_DATA_URL = 'https://res.cloudinary.com/easy-toeic/image/upload/v1613880173/static/error-404-easy-toeic_unheto.svg'

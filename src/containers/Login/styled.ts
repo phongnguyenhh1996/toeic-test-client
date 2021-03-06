@@ -1,4 +1,4 @@
-import styled from "styled-components/macro";
+import styled from "styled-components";
 import { theme } from "../../utils/theme";
 
 const loginSideImg = 'https://res.cloudinary.com/easy-toeic/image/upload/v1611289373/static/login-side-img_z3l2yj.jpg'

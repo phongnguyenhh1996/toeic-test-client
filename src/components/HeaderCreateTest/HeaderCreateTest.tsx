@@ -12,7 +12,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import { SectionStatics } from "../../containers/Dashboard/components/SectionStatics";
-import styled from "styled-components/macro";
+import styled from "styled-components";
 
 const UploadingWrapper = styled.div`
   min-width: 350px;

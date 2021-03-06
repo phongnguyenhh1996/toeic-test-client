@@ -1,4 +1,4 @@
-import styled from "styled-components/macro";
+import styled from "styled-components";
 import AppBar from "@material-ui/core/AppBar";
 import { theme } from "../../utils/theme";
 

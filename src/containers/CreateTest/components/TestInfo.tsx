@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { FaPlus, FaTimes } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import styled from 'styled-components/macro'
+import styled from 'styled-components'
 import { changeTestInfo } from '../../../actions/tests'
 
 import UploadImg from '../../../assets/images/image_upload.svg'

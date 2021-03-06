@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollElement } from 'react-scroll';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Wrapper } from './TestInfo';
 
 const WrapperQuestion = styled(Wrapper)`
