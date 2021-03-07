@@ -18,5 +18,10 @@ export const theme = {
     backgroundGray2: '#edeeef',
     backgroundDetailTest: '#c00000',
     backgroundGreen: '#00c985',
-
+    backgroundIconFigures1: '#F2FAFF',
+    textIconFigures1: '#61B4E9',
+    backgroundIconFigures2: '#FFF2EE',
+    textIconFigures2: '#F88F5C',
+    backgroundIconFigures3: '#FFEFF1',
+    textIconFigures3: '#F05C8C'
 }
