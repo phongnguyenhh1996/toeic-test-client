@@ -6,6 +6,7 @@ import { FaPencilAlt, FaClock, FaCloudUploadAlt } from 'react-icons/fa'
 import { RiNumbersFill } from 'react-icons/ri'
 import VerticalBar from "../../components/BarChart";
 import RoundedChart from "../../components/RoundedChart";
+import LineChart from "../../components/LineChart";
 
 const Statistic: React.FC = () => {
 
@@ -84,14 +85,35 @@ const Statistic: React.FC = () => {
       <Styled.ChartGrid container spacing={2}>
         <Grid item xs={9}>
           <Styled.Wrapper>
-            <h2 className="title">Statistic By Parts</h2>
+            <h2 className="title">Performance by parts</h2>
             <VerticalBar />
           </Styled.Wrapper>
         </Grid>
         <Grid item xs={3}>
           <Styled.Wrapper>
-            <h2 className="title">Statistic By Type</h2>
+            <h2 className="title">Test attempted by type</h2>
             <RoundedChart />
+            <Styled.ChartLegend>
+              <Styled.LegendItem $color="#F67A7C">
+                Listening
+              </Styled.LegendItem>
+              <Styled.LegendItem $color="#2770C7">
+                Reading
+              </Styled.LegendItem>
+            </Styled.ChartLegend>
+          </Styled.Wrapper>
+        </Grid>
+      </Styled.ChartGrid>
+      <Styled.ChartGrid container spacing={2}>
+        <Grid item xs={6}>
+          <Styled.Wrapper>
+            <h2 className="title">Performance by last 10 full tests</h2>
+            <LineChart />
+          </Styled.Wrapper>
+        </Grid>
+        <Grid item xs={3}>
+          <Styled.Wrapper>
+            <h2 className="title">Test attempted by type</h2>
           </Styled.Wrapper>
         </Grid>
       </Styled.ChartGrid>

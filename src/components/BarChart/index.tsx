@@ -20,7 +20,7 @@ const data = (canvas: any) => {
     datasets: [
       {
         label: 'Percent',
-        data: [60, 40, 55, 100, 25, 80, 20],
+        data: [60, 40, 55, 95, 25, 80, 20],
         barThickness: 15,
         backgroundColor: [
           listening_gradient,
@@ -39,7 +39,7 @@ const data = (canvas: any) => {
 
 const options = {
   showDatapoints: true,
-  cornerRadius: 10, 
+  cornerRadius: 10,
   //Default: false; if true, this would round all corners of final box;
   fullCornerRadius: false,
   legend: {
@@ -51,9 +51,16 @@ const options = {
         ticks: {
           beginAtZero: true,
           max: 100,
+          maxTicksLimit: 5,
+          fontStyle: "bold"
         },
       },
     ],
+    xAxes: [{
+      ticks: {
+          fontStyle: "bold"
+      }
+  }]
   },
   layout: {
     padding: {
@@ -66,12 +73,12 @@ const options = {
 }
 
 const ChartWrapper = styled.div`
-  margin-top: 30px;
+  margin-top: 15px;
 `
 
 const VerticalBar = () => (
   <ChartWrapper>
-    <Bar height={100} data={data} options={options} />
+    <Bar height={80} data={data} options={options} />
   </ChartWrapper>
 )
 
@@ -93,7 +100,7 @@ Chart.plugins.register({
           var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
           var scaleMax = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
           var yPos = (scaleMax - model.y) / scaleMax >= 0.93 ? model.y + 20 : model.y - 5;
-          ctx.fillText(dataset.data[i], model.x, yPos);
+          ctx.fillText(dataset.data[i] + '%', model.x, yPos);
         }
       });
     }
@@ -300,7 +307,7 @@ Chart.elements.Rectangle.prototype.draw = function() {
         ctx.quadraticCurveTo(x_bl, y_bl, x_bl + radius, y_bl);
 
       } else {
-      
+
           var lastVisible = 0;
         for (var findLast = 0, findLastTo = this._chart.data.datasets.length; findLast < findLastTo; findLast++) {
           if (!this._chart.getDatasetMeta(findLast).hidden) {
@@ -352,7 +359,7 @@ Chart.elements.Rectangle.prototype.draw = function() {
           ctx.lineTo(x, y);
         }
       }
-    
+
   }
 
   ctx.fill();

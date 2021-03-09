@@ -5,6 +5,7 @@ import { ContentWrapperCss } from "../Dashboard/style";
 
 export const Wrapper = styled.div`
   ${ContentWrapperCss()}
+  height: 100%;
 `
 
 interface IconWrapperProps {
@@ -14,6 +15,7 @@ interface IconWrapperProps {
 export const FiguresWrapper = styled.div`
   display: flex;
   align-items: center;
+  padding: 5px;
 `
 
 export const IconWrapper = styled.div<IconWrapperProps>`
@@ -28,7 +30,7 @@ export const IconWrapper = styled.div<IconWrapperProps>`
 `
 
 export const Figures = styled.div`
-  margin-left: 10px;
+  margin-left: 15px;
   display: flex;
   flex-direction: column;
 `
@@ -40,10 +42,36 @@ export const FiguresNumb = styled.div`
 `
 
 export const FiguresDescription = styled.div`
-  color: ${theme.textDarkSecondary};
+  color: ${theme.textDark2};
   font-size: 14px;
 `
 
 export const ChartGrid = styled(Grid)`
   margin-top: 10px;
+`
+
+export const ChartLegend = styled.div`
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+`
+
+interface LegendItemProps {
+  $color: string
+}
+
+export const LegendItem = styled.div<LegendItemProps>`
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-size: 14px;
+  &:before {
+    display: block;
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: ${props => props.$color};
+    margin-right: 5px;
+  }
 `
