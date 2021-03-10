@@ -20,7 +20,7 @@ const data = (canvas: any) => {
     datasets: [
       {
         label: 'Percent',
-        data: [35, 65],
+        data: [100, 350],
         backgroundColor: [
           listening_gradient,
           reading_gradient,
@@ -31,6 +31,14 @@ const data = (canvas: any) => {
 }
 
 const options = {
+  tooltips: {
+    mode: 'index',
+    intersect: false,
+  },
+  hover: {
+    mode: 'nearest',
+    intersect: true
+  },
   animation: {
     onComplete: function(animation) {
       if (!window.segmentHovered) {

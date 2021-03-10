@@ -91,7 +91,7 @@ const Statistic: React.FC = () => {
         </Grid>
         <Grid item xs={3}>
           <Styled.Wrapper>
-            <h2 className="title">Test attempted by type</h2>
+            <h2 className="title">Performance by types</h2>
             <RoundedChart />
             <Styled.ChartLegend>
               <Styled.LegendItem $color="#F67A7C">

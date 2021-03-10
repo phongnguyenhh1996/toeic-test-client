@@ -38,6 +38,14 @@ const data = (canvas: any) => {
 }
 
 const options = {
+  tooltips: {
+    mode: 'index',
+    intersect: false,
+  },
+  hover: {
+    mode: 'nearest',
+    intersect: true
+  },
   showDatapoints: true,
   cornerRadius: 10,
   //Default: false; if true, this would round all corners of final box;

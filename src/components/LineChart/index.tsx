@@ -17,7 +17,7 @@ const labels = [
   "Test 10"
 ];
 
-const weight = [20.0, 80.2, 59.1, 10.4, 29.9, 60.2, 59.8, 80.6, 85.6, 59.2];
+const weight = [20.0, 80.2, 59.1, 40.4, 29.9, 60.2, 59.8, 80.6, 85.6, 59.2];
 
 
 const data = (canvas: any) => {
@@ -25,7 +25,7 @@ const data = (canvas: any) => {
   const ctx = canvas.getContext('2d');
   var gradientStroke = 'rgba(29, 151, 108, 1)';
   var gradientFill = ctx.createLinearGradient(0, 25, 0, 300);
-  gradientFill.addColorStop(0, 'rgba(29, 151, 108, 0.6)');
+  gradientFill.addColorStop(0, 'rgba(29, 151, 108, 0.5)');
   gradientFill.addColorStop(0.65, 'rgba(29, 151, 108, 0)');
   gradientFill.addColorStop(1, 'rgba(29, 151, 108, 0)');
   return {
@@ -39,10 +39,10 @@ const data = (canvas: any) => {
         pointBackgroundColor: gradientStroke,
         pointHoverBackgroundColor: gradientStroke,
         pointHoverBorderColor: gradientStroke,
-        pointBorderWidth: 5,
+        pointBorderWidth: 0,
         pointHoverRadius: 10,
-        pointHoverBorderWidth: 1,
-        pointRadius: 3,
+        pointHoverBorderWidth: 5,
+        pointRadius: 1,
         fill: true,
         backgroundColor: gradientFill,
         borderWidth: 3,
@@ -52,6 +52,14 @@ const data = (canvas: any) => {
 }
 
 const options = {
+  tooltips: {
+    mode: 'index',
+    intersect: false,
+  },
+  hover: {
+    mode: 'nearest',
+    intersect: true
+  },
   layout: {
     padding: {
       left: 0,
@@ -93,7 +101,7 @@ const ChartWrapper = styled.div`
 
 const LineChart = () => (
   <ChartWrapper>
-    <Line height={110} data={data} options={options} />
+    <Line height={120} data={data} options={options} />
   </ChartWrapper>
 )
 
