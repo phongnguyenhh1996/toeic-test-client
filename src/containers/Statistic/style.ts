@@ -1,5 +1,5 @@
 import Grid from "@material-ui/core/Grid";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { theme } from "../../utils/theme";
 import { ContentWrapperCss } from "../Dashboard/style";
 
@@ -74,4 +74,52 @@ export const LegendItem = styled.div<LegendItemProps>`
     background-color: ${props => props.$color};
     margin-right: 5px;
   }
+`
+
+export const List = styled.ul`
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin-top: 10px;
+`
+interface ListItemProps {
+  $bg?: string
+}
+
+export const ListItem = styled.li<ListItemProps>`
+  display: flex;
+  align-items: center;
+  color: ${theme.textDarkPrimary};
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px 8px;
+  border-radius: 5px;
+  ${props => props.$bg && css`
+    background-color: ${props.$bg};
+  `}
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+
+`
+
+export const TestInfor = styled.div`
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+`
+
+export const NameInfo = styled.div`
+`
+
+export const DateInfo = styled.div`
+  color: ${theme.textDarkSecondary};
+  margin-top: 5px;
+`
+
+export const LiNumber = styled.div`
+  margin-left: auto;
+  flex-grow: 0;
+  font-size: 18px;
+  font-weight: bold;
 `

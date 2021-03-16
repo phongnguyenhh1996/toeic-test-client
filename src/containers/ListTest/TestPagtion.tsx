@@ -16,6 +16,7 @@ const PaginationLink: React.FC<PaginationProps> = ({totalPage}) => {
 
     return (
         <PaginationTest
+            size="large"
             page={page}
             count={totalPage}
             renderItem={(item) => (

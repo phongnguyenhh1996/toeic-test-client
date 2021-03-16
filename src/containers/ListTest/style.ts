@@ -9,7 +9,6 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 // css style for grid *****************
 export const GridListTest = styled(Grid)`
     margin-top:50px;
-    
     min-height:450px;
 `;
 // css style for grid ending******************
@@ -103,7 +102,7 @@ export const DialogContentTop = styled.div`
             padding: 4px 6px;
             font-family: Arial, Helvetica, sans-serif;
         }
-    }       
+    }
 `;
 export const DialogContentBody = styled.div`
     padding: 15px 6px;
@@ -127,13 +126,12 @@ export const Dialogbottom = styled(MuiDialogActions)`
 export const PaginationTest = styled(Pagination)`
     .MuiPagination-ul li .MuiPaginationItem-page.Mui-selected{
         background-color: ${theme.backgroundPaginationBtn};
-        border: 1px solid ${theme.backgroundSecondary};
     }
     .MuiPaginationItem-root{
-        border-radius:4px;
-        border: 1px solid #B1B1B1;
+        border-radius: 4px;
+        background-color: #fff;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
     }
-    
 `;
 
 export const ContainerPagin = styled.div`
