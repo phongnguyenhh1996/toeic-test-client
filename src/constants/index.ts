@@ -83,12 +83,15 @@ export const TEST_TYPE_INFO = {
     },
     [TEST_TYPE.PART]: {
         [TEST_PART.PART_1]: {
+            isDisableQuestion: true,
             description: 'Look at the picture and listen to the sentences. Choose the sentence that best describes the picture:',
             partNumb: TEST_PART.PART_1,
             totalQuestion: 6,
             fromNumb: 1
         },
         [TEST_PART.PART_2]: {
+            isDisableQuestion: true,
+            isDisableImage: true,
             description: 'Listen to the question and the three responses. Choose the response that best answers the question:',
             partNumb: TEST_PART.PART_2,
             totalQuestion: 25,
@@ -108,18 +111,22 @@ export const TEST_TYPE_INFO = {
             fromNumb: 71,
         },
         [TEST_PART.PART_5]: {
+            isDisableImage: true,
+            isDisableAudio: true,
             description: 'Choose the word that best completes the sentence:',
             partNumb: TEST_PART.PART_5,
             totalQuestion: 30,
             fromNumb: 101
         },
         [TEST_PART.PART_6]: {
+            isDisableAudio: true,
             description: 'Choose the word or phrase that best completes the blanks:',
             partNumb: TEST_PART.PART_6,
             totalQuestion: 16,
             fromNumb: 131
         },
         [TEST_PART.PART_7]: {
+            isDisableAudio: true,
             description: 'Read the passage and choose the correct answer:',
             partNumb: TEST_PART.PART_7,
             totalQuestion: 54,

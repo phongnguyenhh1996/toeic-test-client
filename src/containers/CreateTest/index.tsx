@@ -2,11 +2,11 @@ import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import { get } from 'lodash'
+import { get, isEmpty } from 'lodash'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { FaPlus, FaTimes } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import { addNewQuestionToGroup, changeQuestionData, goToQuestion, initTest, removeQuestionFromGroup } from '../../actions/tests'
 import CustomButton from '../../components/CustomButton'
 import { Player } from '../../components/Player'
@@ -32,6 +32,7 @@ const CreateTest: React.FC = () => {
 
   const location = useLocation()
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const isExam = location.pathname === '/exam'
 
@@ -50,10 +51,12 @@ const CreateTest: React.FC = () => {
   const correctAnswerList = useSelector(state => get(state, `tests.test.correctAnswer`, {})) as { [key: string]: ICorrectAnswer }
   const testTypeByTest = useSelector(state => get(state, `tests.test.testType`))
   const testPartByTest = useSelector(state => get(state, `tests.test.testPart`))
+
   if (isExam) {
     testType = testTypeByTest
     testPart = testPartByTest
   }
+
   const listQuestionGroup = useMemo(() => {
     if (currentQuestion.questionGroupId) {
       const currentGroupQuestion = groupQuestion[currentQuestion.questionGroupId]
@@ -82,6 +85,12 @@ const CreateTest: React.FC = () => {
 
   const audioFile = questionData[0]?.question?.audioSrc
   const imageFile = questionData[0]?.question?.imageSrc
+
+  useEffect(() => {
+    if (isExam && isEmpty(questionList)) {
+      history.replace('/list-test')
+    }
+  }, [isExam, questionList, history])
 
   useEffect(() => {
     if (audioFile instanceof File) {
@@ -241,7 +250,7 @@ const CreateTest: React.FC = () => {
                 </RemoveMedia>
               }
             </MediaWrapper>
-            : isExam ? null :
+            : isExam || partInfo.isDisableAudio ? null :
               <UploadFile onLoadedFile={onUploadAudio(questionData[0].question.questionNumb)} type="audio" />
           }
           {media.image ?
@@ -269,11 +278,12 @@ const CreateTest: React.FC = () => {
                 </RemoveMedia>
               }
             </MediaWrapper>
-            : isExam ? null :
+            : isExam || partInfo.isDisableImage ? null :
               <UploadFile onLoadedFile={onUploadImage(questionData[0].question.questionNumb)} type="image" />}
         </UploadWrapper>
         {questionData.length === 1 &&
           <Question
+            disabled={partInfo?.isDisableQuestion}
             question={questionData[0].question}
             answers={questionData[0].answers}
             correctAnswer={questionData[0].correctAnswer}
@@ -285,6 +295,7 @@ const CreateTest: React.FC = () => {
             return (
               <MediaWrapper key={question.question.questionNumb} width="auto">
                 <Question
+                  disabled={partInfo?.isDisableQuestion}
                   currentQuestionNumb={currentQuestionNumb}
                   onClick={handleClickQuestion(question.question.questionNumb)}
                   question={question.question}
@@ -299,6 +310,7 @@ const CreateTest: React.FC = () => {
           }
           return (
             <Question
+              disabled={partInfo?.isDisableQuestion}
               isExam={isExam}
               currentQuestionNumb={currentQuestionNumb}
               onClick={handleClickQuestion(question.question.questionNumb)}

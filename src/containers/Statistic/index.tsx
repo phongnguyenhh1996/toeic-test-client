@@ -144,9 +144,48 @@ const Statistic: React.FC = () => {
         </Grid>
         <Grid item xs={3}>
           <Styled.Wrapper>
-            <h2 className="title">Test attempted by type</h2>
+            <h2 className="title">Top score</h2>
+            <Styled.List>
+              <Styled.ListItem>
+                <FaMedal size="20px" color="#FBD94B" />
+                <Styled.TestInfor>
+                  <Styled.NameInfo>EST TOEIC Test 2020</Styled.NameInfo>
+                  <Styled.DateInfo>21/11/2020</Styled.DateInfo>
+                </Styled.TestInfor>
+                <Styled.LiNumber>870</Styled.LiNumber>
+              </Styled.ListItem>
+              <Styled.ListItem>
+                <FaMedal size="20px" color="#D7D8C8" />
+                <Styled.TestInfor>
+                  <Styled.NameInfo>EST TOEIC Test 2020</Styled.NameInfo>
+                  <Styled.DateInfo>21/11/2020</Styled.DateInfo>
+                </Styled.TestInfor>
+                <Styled.LiNumber>820</Styled.LiNumber>
+              </Styled.ListItem>
+              <Styled.ListItem>
+                <FaMedal size="20px" color="#F4AA6C" />
+                <Styled.TestInfor>
+                  <Styled.NameInfo>EST TOEIC Test 2020</Styled.NameInfo>
+                  <Styled.DateInfo>21/11/2020</Styled.DateInfo>
+                </Styled.TestInfor>
+                <Styled.LiNumber>780</Styled.LiNumber>
+              </Styled.ListItem>
+              <Styled.ListItem>
+                <FaMedal size="20px" />
+                <Styled.TestInfor>
+                  <Styled.NameInfo>EST TOEIC Test 2020</Styled.NameInfo>
+                  <Styled.DateInfo>21/11/2020</Styled.DateInfo>
+                </Styled.TestInfor>
+                <Styled.LiNumber>660</Styled.LiNumber>
+              </Styled.ListItem>
+            </Styled.List>
           </Styled.Wrapper>
         </Grid>
+        {/* <Grid item xs={3}>
+          <Styled.Wrapper>
+            <h2 className="title">Test attempted by type</h2>
+          </Styled.Wrapper>
+        </Grid> */}
       </Styled.ChartGrid>
     </Container>
   );

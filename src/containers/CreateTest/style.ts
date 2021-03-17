@@ -63,7 +63,7 @@ export const UploadWrapper = styled.div<UploadWrapperProps>`
     }
     ` : css`
         justify-content: center;
-        & > *:not(:last-child) {
+        & > *:first-child {
             margin-right: 20px;
             margin-bottom: 20px;
         }
