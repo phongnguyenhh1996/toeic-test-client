@@ -46,6 +46,7 @@ export default function HeaderCreateTest(props: Props) {
   const handleSubmitTest = () => {
     setIsLoading(true);
     if (!isExam) {
+      handleClickOpen();
       dispatch(
         createTestRequest({
           onSuccess: () => {
@@ -60,9 +61,19 @@ export default function HeaderCreateTest(props: Props) {
             handleClose();
             history.push("/list-test?type=1&page=1");
           },
+          onFailure: (err: string) => {
+            enqueueSnackbar(err, {
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "right",
+              },
+              variant: "error",
+            });
+            setIsLoading(false);
+            handleClose();
+          }
         })
       );
-      handleClickOpen();
     } else {
       dispatch(postResultRequest())
     }

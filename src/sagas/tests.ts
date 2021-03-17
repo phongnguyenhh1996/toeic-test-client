@@ -7,15 +7,19 @@ import {
 } from "../constants/index";
 import { postTest, postResult, getDetailTest } from "../services/tests";
 import uploadFile from "../services/uploadFile";
-import { Question, Test } from "../utils/function";
+import { CorrectAnswer, Question, Test } from "../utils/function";
 import { uploadProgress, itemUploadDone } from "../actions/app";
 import { importPartSuccess, importPartFailed } from "../actions/tests";
 import { get, isString } from "lodash";
+import { AxiosResponse } from "axios";
 
 function* createTest(action: any) {
-  const test = yield select((state) => state.tests.test);
+  const test: Test = yield select((state) => state.tests.test);
 
-  const testDraft = createDraft(test) as Test;
+  const testDraft = createDraft(test);
+  if (!test.name) {
+    return action.callbacks.onFailure("Test name is required!");
+  }
 
   let avatarUrl = "";
   if (testDraft.avatarSrc) {
@@ -68,7 +72,7 @@ function* createTest(action: any) {
 
   const newTest = finishDraft(testDraft);
   try {
-    const res = yield call(postTest, newTest);
+    const res: AxiosResponse = yield call(postTest, newTest);
     if (res.status === 200) {
       action.callbacks.onSuccess();
     }
@@ -76,10 +80,10 @@ function* createTest(action: any) {
 }
 
 function* handlePostResult(action: any) {
-  const testResult = yield select((state) => state?.tests?.test?.correctAnswer);
-  const testId = yield select((state) => state?.tests?.test?.id);
+  const testResult: CorrectAnswer = yield select((state) => state?.tests?.test?.correctAnswer);
+  const testId: string = yield select((state) => state?.tests?.test?.id);
   try {
-    const res = yield call(postResult, testId, testResult);
+    const res: AxiosResponse = yield call(postResult, testId, testResult);
     if (res.status === 200) {
       console.log(res);
     }
@@ -92,7 +96,7 @@ function* handleImportTest(action: any) {
   const onFailure = get(action, 'callbacks.onFailure');
 
   try {
-    const testDetail = yield call(getDetailTest, action.testId, true);
+    const testDetail: AxiosResponse = yield call(getDetailTest, action.testId, true);
     if (testDetail.status === 200) {
       yield put(importPartSuccess(testDetail.data));
       onSuccess()
