@@ -153,6 +153,7 @@ export const TestInfo : React.FC<TestInfoProps> = ({ testType, testPart}) => {
                 </ImageUploadWrapper>
             }
             <Input
+                required
                 onChange={onInputChange}
                 name="name"
                 size="small"

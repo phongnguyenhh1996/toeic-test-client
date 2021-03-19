@@ -7,7 +7,7 @@ import {
 } from "../constants/index";
 import { postTest, postResult, getDetailTest } from "../services/tests";
 import uploadFile from "../services/uploadFile";
-import { CorrectAnswer, Question, Test } from "../utils/function";
+import { CorrectAnswer, Test, getPartInfoFromQuestion } from "../utils/function";
 import { uploadProgress, itemUploadDone } from "../actions/app";
 import { importPartSuccess, importPartFailed } from "../actions/tests";
 import { get, isString } from "lodash";
@@ -27,8 +27,23 @@ function* createTest(action: any) {
   }
   testDraft.avatarSrc = avatarUrl;
 
-  const questions = testDraft.questions as { [key: string]: Question };
+  const questions = testDraft.questions;
+  const answers = testDraft.answers;
+  const correctAnswer = testDraft.correctAnswer;
   const questionsKey = Object.keys(questions);
+
+  const invalidQuestion = Object.values(questions).findIndex(question => {
+    const partInfo = getPartInfoFromQuestion(question.questionNumb)
+    const isInvalidQuestion = !partInfo.isDisableQuestion && !question.question
+    const isInvalidAnswer = !partInfo.isDisableQuestion && answers[question.questionNumb]?.some(answer => !answer.answer)
+    const isInvalidCorrectAnswer = !correctAnswer[question.questionNumb]
+
+    return (isInvalidQuestion || isInvalidAnswer || isInvalidCorrectAnswer)
+  })
+
+  if (invalidQuestion !== -1) {
+    return action.callbacks.onFailure("Please fill all required information!", parseInt(questionsKey[invalidQuestion]));
+  }
 
   let totalFile = 0;
   Object.values(questions).forEach((question) => {

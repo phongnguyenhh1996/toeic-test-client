@@ -126,7 +126,18 @@ export const getLastQuestion = (testType: number, testPart: number) => {
     }
 }
 
-export const getPartInfoFromQuestion = (questionNumb: number) => {
+interface PartInfo {
+  partNumb: number
+  totalQuestion: number
+  fromNumb: number
+  description: string
+  isDisableQuestion: boolean
+  isDisableAudio: boolean
+  isDisableImage: boolean
+  isThreeAnswer: boolean
+}
+
+export const getPartInfoFromQuestion = (questionNumb: number): PartInfo => {
     const testPartId = Object.values(TEST_PART).find(testPart => {
         const partInfo = get(TEST_TYPE_INFO, `${TEST_TYPE.PART}.${testPart}`)
         return (questionNumb >= partInfo.fromNumb &&

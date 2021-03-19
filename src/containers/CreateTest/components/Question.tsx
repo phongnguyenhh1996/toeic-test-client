@@ -223,6 +223,7 @@ export const Question: React.FC<QuestionProps> = ({
         <Content>
           {!disabled && (
             <Input
+              required
               InputLabelProps={{ shrink: true }}
               onChange={onChange("question")}
               value={question.question}
@@ -249,6 +250,7 @@ export const Question: React.FC<QuestionProps> = ({
                 checkedIcon={<FaCheckCircle />}
               />
               <Input
+                required
                 InputLabelProps={{ shrink: true }}
                 onChange={onChange("answer")}
                 name={(answer.answerNumb - 1).toString()}

@@ -6,7 +6,7 @@ import { Logo } from "../Logo";
 import { LogoWrapper } from "../HeaderDashboard/Header.styled";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createTestRequest, postResultRequest } from "../../actions/tests";
+import { createTestRequest, postResultRequest, goToQuestion } from "../../actions/tests";
 import { useSnackbar } from "notistack";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -61,7 +61,7 @@ export default function HeaderCreateTest(props: Props) {
             handleClose();
             history.push("/list-test?type=1&page=1");
           },
-          onFailure: (err: string) => {
+          onFailure: (err: string, questionNumb: number) => {
             enqueueSnackbar(err, {
               anchorOrigin: {
                 vertical: "top",
@@ -70,6 +70,7 @@ export default function HeaderCreateTest(props: Props) {
               variant: "error",
             });
             setIsLoading(false);
+            questionNumb >= 0 && dispatch(goToQuestion(questionNumb));
             handleClose();
           }
         })
@@ -111,7 +112,7 @@ export default function HeaderCreateTest(props: Props) {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">{"Uploading..."}</DialogTitle>
-          {uploadProgress.total > 0 && 
+          {uploadProgress.total > 0 &&
             <DialogContent>
               <UploadingWrapper>
                 <SectionStatics
