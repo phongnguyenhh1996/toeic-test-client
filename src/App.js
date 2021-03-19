@@ -10,10 +10,15 @@ import { Reset } from 'styled-reset'
 import { Normalize } from 'styled-normalize'
 import { SnackbarProvider } from 'notistack';
 import { ConnectedRouter } from 'connected-react-router'
+import styled from 'styled-components'
+
+const CustomSnackbar = styled(SnackbarProvider)`
+  margin-top: 40px;
+`
 
 export default function App() {
   return (
-    <SnackbarProvider maxSnack={3}>
+    <CustomSnackbar maxSnack={3}>
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <Reset />
@@ -23,7 +28,7 @@ export default function App() {
           </StylesProvider>
         </ConnectedRouter>
       </Provider>
-    </SnackbarProvider>
+    </CustomSnackbar>
   );
 }
 

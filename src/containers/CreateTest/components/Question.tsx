@@ -1,6 +1,6 @@
 import Checkbox from "@material-ui/core/Checkbox";
 import React, { useEffect } from "react";
-import { FaCheckCircle, FaEllipsisV } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import {
@@ -37,10 +37,10 @@ const HeaderTitle = styled.div`
   line-height: 28px;
 `;
 
-const HeaderMenuIcon = styled(FaEllipsisV)`
-  margin-left: auto;
-  font-size: 18px;
-`;
+// const HeaderMenuIcon = styled(FaEllipsisV)`
+//   margin-left: auto;
+//   font-size: 18px;
+// `;
 
 const Content = styled.div`
   padding: 20px;
@@ -194,7 +194,7 @@ export const Question: React.FC<QuestionProps> = ({
     >
       <Header>
         <HeaderTitle>Question {question.questionNumb}</HeaderTitle>
-        <HeaderMenuIcon />
+        {/* <HeaderMenuIcon /> */}
       </Header>
       {isExam && (
         <Content>
