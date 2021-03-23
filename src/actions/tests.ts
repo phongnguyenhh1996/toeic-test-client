@@ -134,15 +134,17 @@ export const getDetailTestFailed = () => {
   }
 }
 
-export const postResultRequest = () => {
+export const postResultRequest = (callbacks: any) => {
   return {
-    type: POST_RESULT_REQUEST
+    type: POST_RESULT_REQUEST,
+    callbacks
   }
 }
 
-export const postResultSuccess = () => {
+export const postResultSuccess = (data: any) => {
   return {
-    type: POST_RESULT_SUCCESS
+    type: POST_RESULT_SUCCESS,
+    data
   }
 }
 

@@ -9,7 +9,7 @@ import { postTest, postResult, getDetailTest } from "../services/tests";
 import uploadFile from "../services/uploadFile";
 import { CorrectAnswer, Test, getPartInfoFromQuestion } from "../utils/function";
 import { uploadProgress, itemUploadDone } from "../actions/app";
-import { importPartSuccess, importPartFailed } from "../actions/tests";
+import { importPartSuccess, importPartFailed, postResultSuccess } from "../actions/tests";
 import { get, isString } from "lodash";
 import { AxiosResponse } from "axios";
 
@@ -95,14 +95,19 @@ function* createTest(action: any) {
 }
 
 function* handlePostResult(action: any) {
+  const onSuccess = get(action, 'callbacks.onSuccess');
+  const onFailure = get(action, 'callbacks.onFailure');
   const testResult: CorrectAnswer = yield select((state) => state?.tests?.test?.correctAnswer);
   const testId: string = yield select((state) => state?.tests?.test?.id);
   try {
     const res: AxiosResponse = yield call(postResult, testId, testResult);
     if (res.status === 200) {
-      console.log(res);
+      onSuccess()
+      yield put(postResultSuccess(res.data))
     }
-  } catch (err) {}
+  } catch (err) {
+    onFailure()
+  }
 }
 
 function* handleImportTest(action: any) {

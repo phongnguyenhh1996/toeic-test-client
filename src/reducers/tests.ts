@@ -7,16 +7,22 @@ export interface IGroupQuestion {
   [key: string]: number[]
 }
 
+interface IResult {
+  total_question: number
+  correct: number
+}
 interface IInitialState {
   currentQuestion: number
   test: ITest,
   groupQuestion: IGroupQuestion
+  result: IResult
 }
 
 const initialState: IInitialState = {
   currentQuestion: 1,
   test: {} as ITest,
-  groupQuestion: {}
+  groupQuestion: {},
+  result: {} as IResult
 }
 
 const testsReducer = (state = initialState, action: any) =>
@@ -159,6 +165,9 @@ const testsReducer = (state = initialState, action: any) =>
         }
         draft.currentQuestion = getFirstQuestion(partTest.testType, partTest.testPart)
         draft.groupQuestion = {...draft.groupQuestion, ...partTestGroupQuestion}
+        break
+      case CONSTANT.POST_RESULT_SUCCESS:
+        draft.result = action.data
         break
       default:
         break;

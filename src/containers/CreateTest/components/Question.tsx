@@ -198,8 +198,7 @@ export const Question: React.FC<QuestionProps> = ({
       </Header>
       {isExam && (
         <Content>
-          <QuestionExam>{question.question}</QuestionExam>
-
+          {question.question && <QuestionExam>{question.question}</QuestionExam>}
           {Object.values(answers).map((answer) => (
             <AnswerWrapper key={answer.answerNumb}>
               <CheckboxPrimary

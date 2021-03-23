@@ -27,7 +27,8 @@ export default function HeaderCreateTest(props: Props) {
   const isExam = history.location.pathname === "/exam";
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   const [open, setOpen] = React.useState(false);
   const uploadProgress = useSelector((state: any) => state.app.uploadProgress);
 
@@ -44,8 +45,8 @@ export default function HeaderCreateTest(props: Props) {
   };
 
   const handleSubmitTest = () => {
-    setIsLoading(true);
     if (!isExam) {
+      setIsUploading(true);
       handleClickOpen();
       dispatch(
         createTestRequest({
@@ -57,7 +58,7 @@ export default function HeaderCreateTest(props: Props) {
               },
               variant: "success",
             });
-            setIsLoading(false);
+            setIsUploading(false);
             handleClose();
             history.push("/list-test?type=1&page=1");
           },
@@ -69,14 +70,25 @@ export default function HeaderCreateTest(props: Props) {
               },
               variant: "error",
             });
-            setIsLoading(false);
+            setIsUploading(false);
             questionNumb >= 0 && dispatch(goToQuestion(questionNumb));
             handleClose();
           }
         })
       );
     } else {
-      dispatch(postResultRequest())
+      setIsSubmit(true);
+      handleClickOpen();
+      dispatch(postResultRequest({
+        onSuccess: () => {
+          setIsSubmit(false);
+          handleClose();
+        },
+        onFailure: () => {
+          setIsSubmit(false);
+          handleClose();
+        }
+      }))
     }
   };
 
@@ -89,15 +101,15 @@ export default function HeaderCreateTest(props: Props) {
         </LogoWrapper>
         <ButtonWrapper>
           <CustomButton
-            disabled={isLoading}
+            disabled={isUploading || isSubmit}
             onClick={handleExit}
             theme="green-solid-no-shadow"
           >
             EXIT
           </CustomButton>
           <CustomButton
-            $isLoading={isLoading}
-            disabled={isLoading}
+            $isLoading={isUploading || isSubmit}
+            disabled={isUploading || isSubmit}
             onClick={handleSubmitTest}
             theme="white"
           >
@@ -111,8 +123,11 @@ export default function HeaderCreateTest(props: Props) {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Uploading..."}</DialogTitle>
-          {uploadProgress.total > 0 &&
+          <DialogTitle id="alert-dialog-title">
+            {isUploading && "Uploading..."}
+            {isSubmit && "Submiting..."}
+          </DialogTitle>
+          {isUploading && uploadProgress.total > 0 &&
             <DialogContent>
               <UploadingWrapper>
                 <SectionStatics

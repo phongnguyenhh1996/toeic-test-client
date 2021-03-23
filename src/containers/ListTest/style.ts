@@ -41,6 +41,7 @@ export const TopImg = styled.div`
     background-position: center;
 `
 export const DialogTest = styled(Dialog)`
+    font-family: "Roboto";
     .MuiPaper-root {
         min-width: 450px;
     }
@@ -55,14 +56,12 @@ export const DialogTop = styled(MuiDialogTitle)`
             font-size: 40px;
             text-transform: uppercase;
             font-weight: 700;
-            font-family: Arial, Helvetica, sans-serif;
         }
         .dialog-top-span{
             position: absolute;
             background-color: ${theme.backgroundGray};
             border-radius: 4px;
             padding: 4px 6px;
-            font-family: Arial, Helvetica, sans-serif;
         }
         .dialog-top-span-1{
             bottom: -10px;
@@ -84,7 +83,6 @@ export const DialogContentTop = styled.div`
         font-size: 22px;
         text-transform: uppercase;
         font-weight: 600;
-        font-family: Arial, Helvetica, sans-serif;
         margin-bottom: 15px;
     }
     div{
