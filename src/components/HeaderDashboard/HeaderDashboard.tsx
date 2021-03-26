@@ -24,6 +24,8 @@ import {
   List,
   ListItemText,
   Collapse,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
 import { Logo } from "../Logo";
 import { TEST_TYPE, TEST_TYPE_INFO } from "../../constants";
@@ -40,6 +42,16 @@ export default function ElevateAppBar(props: Props) {
   
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [openCreateTest, setOpenCreateTest] = useState(false);
+
+  const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
+
+  const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl2(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl2(null);
+  };
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -65,6 +77,11 @@ export default function ElevateAppBar(props: Props) {
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    history.push('/login')
+  }
 
   return (
     <React.Fragment>
@@ -156,9 +173,19 @@ export default function ElevateAppBar(props: Props) {
             )})}
           </List>
         </Popover>
-        <HambergerButton>
+        <HambergerButton onClick={handleClickMenu}>
           <FaBars />
         </HambergerButton>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl2}
+          keepMounted
+          open={Boolean(anchorEl2)}
+          onClose={handleCloseMenu}
+        >
+          <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        </Menu>
       </Header>
     </React.Fragment>
   );

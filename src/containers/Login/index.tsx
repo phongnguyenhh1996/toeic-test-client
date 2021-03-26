@@ -1,7 +1,7 @@
 
 import Grid from '@material-ui/core/Grid'
-import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useLocation, useHistory } from 'react-router-dom'
 import { Background } from './components/Background';
 import CustomButton from "../../components/CustomButton";
 import {FaFacebookF,FaTwitter,FaGooglePlusG} from "react-icons/fa";
@@ -29,7 +29,13 @@ const Login: React.FC<LoginProps> = () => {
 
   const location = useLocation();
   const isLoginPage = location.pathname === '/login'
+  const history = useHistory();
 
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      history.replace('/');
+    }
+  },[])
 
   return (
     <Wrapper>
