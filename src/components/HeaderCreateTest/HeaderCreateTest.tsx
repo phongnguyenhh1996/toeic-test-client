@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { Header, ButtonWrapper } from "./Header.styled";
+import { Header, ButtonWrapper, ResultDialog, ResultCorrect, ActionButton } from "./Header.styled";
 import CustomButton from "../CustomButton";
 import { Logo } from "../Logo";
 import { LogoWrapper } from "../HeaderDashboard/Header.styled";
@@ -13,6 +13,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import { SectionStatics } from "../../containers/Dashboard/components/SectionStatics";
 import styled from "styled-components";
+import CircularProgress from "../CircularProgress";
 
 const UploadingWrapper = styled.div`
   min-width: 350px;
@@ -30,7 +31,18 @@ export default function HeaderCreateTest(props: Props) {
   const [isUploading, setIsUploading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const [openResult, setOpenResult] = React.useState(false);
   const uploadProgress = useSelector((state: any) => state.app.uploadProgress);
+  const result = useSelector((state: any) => state.tests.result);
+
+  const handleClickOpenResult = () => {
+    setOpenResult(true);
+  };
+
+  const handleCloseResult = () => {
+    setOpenResult(false);
+    history.push('/list-test?type=2&page=1')
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -83,6 +95,7 @@ export default function HeaderCreateTest(props: Props) {
         onSuccess: () => {
           setIsSubmit(false);
           handleClose();
+          handleClickOpenResult();
         },
         onFailure: () => {
           setIsSubmit(false);
@@ -143,6 +156,35 @@ export default function HeaderCreateTest(props: Props) {
               </UploadingWrapper>
             </DialogContent>
           }
+        </Dialog>
+        <Dialog
+          open={openResult}
+          disableBackdropClick
+          disableEscapeKeyDown
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <ResultDialog>
+            <CircularProgress percent={Math.round(result.correct/result.total_question*100)}>
+              <ResultCorrect>
+                {result.correct} / {result.total_question}
+              </ResultCorrect>
+            </CircularProgress>
+            <ActionButton>
+              <CustomButton
+                onClick={handleCloseResult}
+                theme="white"
+              >
+                Ok
+              </CustomButton>
+              <CustomButton
+                onClick={handleCloseResult}
+                theme="white"
+              >
+                Detail
+              </CustomButton>
+            </ActionButton>
+          </ResultDialog>
         </Dialog>
       </Header>
     </React.Fragment>

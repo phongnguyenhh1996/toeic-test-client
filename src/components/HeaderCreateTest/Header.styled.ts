@@ -19,3 +19,33 @@ export const ButtonWrapper = styled.div`
     margin-right: 20px;
   }
 `
+
+export const ResultDialog = styled.div`
+  padding: 30px;
+  background: ${theme.backgroundSecondary};
+  min-height: 100px;
+  min-width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
+export const ResultCorrect = styled.div`
+  color: #fff;
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: "roboto";
+`
+
+export const ActionButton = styled.div`
+  display: flex;
+  margin-top: 25px;
+  button:first-child {
+    margin-right: 20px;
+  }
+  button {
+    flex: 1;
+  }
+`
